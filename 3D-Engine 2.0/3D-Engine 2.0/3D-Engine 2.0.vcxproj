@@ -89,8 +89,9 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <AdditionalIncludeDirectories>$(SolutionDir)..\.Dependencies\$(PlatformShortName)\include;$(SolutionDir)3D-Engine 2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)..\.Dependencies\$(PlatformShortName)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -102,8 +103,9 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <AdditionalIncludeDirectories>$(SolutionDir)..\.Dependencies\$(PlatformShortName)\include;$(SolutionDir)3D-Engine 2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)..\.Dependencies\$(PlatformShortName)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -117,8 +119,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <AdditionalIncludeDirectories>$(SolutionDir)..\.Dependencies\$(PlatformShortName)\include;$(SolutionDir)3D-Engine 2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -136,8 +139,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <AdditionalIncludeDirectories>$(SolutionDir)..\.Dependencies\$(PlatformShortName)\include;$(SolutionDir)3D-Engine 2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -150,9 +154,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Core\3DEngine.hpp" />
+    <ClInclude Include="Core\Buffer.hpp" />
+    <ClInclude Include="Core\Components\Camera.hpp" />
+    <ClInclude Include="Core\Components\Material.hpp" />
+    <ClInclude Include="Core\Components\Renderable.hpp" />
+    <ClInclude Include="Core\Time.hpp" />
     <ClInclude Include="Core\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Buffer.cpp" />
+    <ClCompile Include="Core\Components\Camera.cpp" />
+    <ClCompile Include="Core\Components\Material.cpp" />
+    <ClCompile Include="Core\Components\Renderable.cpp" />
+    <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Core\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
