@@ -11,6 +11,9 @@
 #include <Core/Buffer.hpp>
 #include <Core/Buffer.cpp>
 
+#include <Core/Input.hpp>
+#include <Core/Input.cpp>
+
 //MANAGERS
 #include <Core/Managers/EntityManager.hpp>
 #include <Core/Managers/EntityManager.cpp>

@@ -162,6 +162,7 @@
     <ClInclude Include="Core\Components\Shader.hpp" />
     <ClInclude Include="Core\Components\Texture.hpp" />
     <ClInclude Include="Core\Components\Transform.hpp" />
+    <ClInclude Include="Core\Input.hpp" />
     <ClInclude Include="Core\Managers\EntityManager.hpp" />
     <ClInclude Include="Core\Managers\ResourceManager.hpp" />
     <ClInclude Include="Core\Managers\SystemManager.hpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Core\Components\Shader.cpp" />
     <ClCompile Include="Core\Components\Texture.cpp" />
     <ClCompile Include="Core\Components\Transform.cpp" />
+    <ClCompile Include="Core\Input.cpp" />
     <ClCompile Include="Core\Managers\EntityManager.cpp" />
     <ClCompile Include="Core\Managers\ResourceManager.cpp" />
     <ClCompile Include="Core\Managers\SystemManager.cpp" />

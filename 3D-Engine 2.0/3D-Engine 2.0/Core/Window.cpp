@@ -13,9 +13,9 @@ namespace Engine {
 	Window::~Window() {}
 
 	wchar_t* Window::GetLPWSTR(const char* lpcstr) {
-		unsigned size = strlen(lpcstr) + 1; // +1 to include NULL
+		size_t size = strlen(lpcstr) + 1; // +1 to include NULL
 		wchar_t* wc = new wchar_t[size];
-		unsigned outSize;
+		size_t outSize;
 		mbstowcs_s(&outSize, wc, size, lpcstr, size - 1);
 		return wc;
 	};
@@ -141,11 +141,12 @@ namespace Engine {
 	};
 
 	int Window::getMessage() {
-		if (PeekMessage(&_message, NULL, 0, 0, PM_REMOVE) == -1) {
+		int i = PeekMessage(&_message, NULL, 0, 0, PM_REMOVE);
+		if (i == -1) {
 			MessageBox(NULL, L"Message Error!", L"ERROR!", MB_ICONERROR | MB_OK);
 			return -1;
 		}
-		else {
+		else if (i != 0) {
 			TranslateMessage(&_message);
 			DispatchMessage(&_message);
 		}
