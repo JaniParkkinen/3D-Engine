@@ -63,9 +63,7 @@ namespace Engine
 
 		glm::vec3 const & GetPositionRef();
 		
-		glm::vec3 const & GetRotationCamRef();
 		glm::vec3 const & GetRotationRadRef();
-		glm::vec3 const & GetRotationDegRef();
 		glm::quat const & GetRotationQuatRef();
 
 		glm::vec3 const & GetScaleRef();

@@ -1,83 +1,43 @@
-#ifndef Engine_ResourceManager_hpp
-#define Engine_ResourceManager_hpp
+#ifndef RESOURCEMANAGER_H
+#define RESOURCEMANAGER_H
 
 
 #include <iostream>
 #include <vector>
-#include <string>
-#include <fstream>
+#include "Resource.h"
+#include "..\..\Dependencies\include\irrKlang\irrKlang.h"
 
-#include <Core/Components/Material.hpp>
+class ResourceManager
+{
+public:
 
-#include <GLM/glm.hpp>
+	static ResourceManager* GetInstance();
+	Resource* LoadResource(std::string filepath);
+	void UnLoadResource(int ID);
+	int GetResourceUsers(int ID);
+	irrklang::ISoundEngine* soundEngine = irrklang::createIrrKlangDevice();
 
-namespace Engine {
-	enum eType
-	{
-		Text = 1,
-		Audio = 2,
-		Image = 3,
-		Font = 4,
-		OBJ = 5,
-	};
+private:
 
-	class Resource
-	{
-	public:
-		Resource() {};
-		~Resource() {};
+	ResourceManager() {};
+	~ResourceManager() {};
 
-		std::string filepath;
-		eType type;
-		std::string scope;
-		int ID;
-		std::vector<int> resourceUsers;
+	ResourceManager(ResourceManager const&);
+	void operator=(ResourceManager const&);
 
-		Material* _material;
-		std::vector < glm::vec3 >  _vertices;
-		std::vector < glm::vec2 >  _uvs;
-		std::vector < glm::vec3 >  _normals;
+	std::vector<Resource*> _resources;
+	std::vector<Resource*>::iterator _it;
+	int ID_generator = 0;
+	static ResourceManager* Instance;
+	irrklang::ISoundSource* source;
 
-		std::vector < glm::uvec3 > _indices;
+	Resource* LoadTextResource(std::string filepath);
+	Resource* LoadImageResource(std::string filepath);
+	Resource* LoadAudioResource(std::string filepath);
+	Resource* LoadFontResource(std::string filepath);
+	Resource* LoadObjectResource(std::string filepath);
+	void dropSoundEngine() { soundEngine->drop(); }; //ft snoop dogg
 
-		void setTextData(std::string readFile) { textData = readFile; }
-		void setImageData(std::vector<unsigned char> imageFile, unsigned width, unsigned height) { std::cout << "setting image data" << std::endl; imageData = imageFile; iHeight = height; iWidth = width; }
-		std::string getTextData() { return textData; }
-		std::vector<unsigned char> getImageData() { return imageData; }
-
-		int iHeight, iWidth;
-	private:
-		std::string textData;
-		std::vector<unsigned char> imageData;
-	};
-
-	class ResourceManager
-	{
-	public:
-
-		static ResourceManager* GetInstance() {
-			static ResourceManager ResMan;
-			return &ResMan;
-		};
-
-		Resource* LoadResource(std::string filepath);
-		void UnLoadResource(int ID);
-		int GetResourceUsers(int ID);
-
-	private:
-
-		ResourceManager() {};
-		~ResourceManager() {};
-
-		ResourceManager(ResourceManager const&) {};
-		void operator=(ResourceManager const&) {};
-
-		std::vector<Resource*> _resources;
-		std::vector<Resource*>::iterator _it;
-		int ID_generator = 0;
-		static ResourceManager* Instance;
-
-		Resource* LoadTextResource(std::string filepath);
-	};
 };
+
 #endif
