@@ -46,6 +46,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_XBUTTONUP:
 		mouse.mouseEvent(GET_KEYSTATE_WPARAM(wParam), glm::vec2(LOWORD(lParam), HIWORD(lParam)));
 		break;
+	case WM_SETFOCUS:
+		break;
+	case WM_KILLFOCUS:
+		break;
 	case WM_SIZE:
 		window.Resize();
 		break;
