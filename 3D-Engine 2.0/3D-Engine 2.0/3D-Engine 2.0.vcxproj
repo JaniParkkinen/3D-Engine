@@ -158,6 +158,9 @@
     <ClInclude Include="Core\Components\Camera.hpp" />
     <ClInclude Include="Core\Components\Material.hpp" />
     <ClInclude Include="Core\Components\Renderable.hpp" />
+    <ClInclude Include="Core\Components\Shader.hpp" />
+    <ClInclude Include="Core\Components\Texture.hpp" />
+    <ClInclude Include="Core\Components\Transform.hpp" />
     <ClInclude Include="Core\Time.hpp" />
     <ClInclude Include="Core\Window.hpp" />
   </ItemGroup>
@@ -166,6 +169,9 @@
     <ClCompile Include="Core\Components\Camera.cpp" />
     <ClCompile Include="Core\Components\Material.cpp" />
     <ClCompile Include="Core\Components\Renderable.cpp" />
+    <ClCompile Include="Core\Components\Shader.cpp" />
+    <ClCompile Include="Core\Components\Texture.cpp" />
+    <ClCompile Include="Core\Components\Transform.cpp" />
     <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Core\Window.cpp" />
   </ItemGroup>

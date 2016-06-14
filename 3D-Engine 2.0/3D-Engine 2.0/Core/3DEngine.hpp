@@ -15,10 +15,19 @@
 #include <Core/Components/Camera.hpp>
 #include <Core/Components/Camera.cpp>
 
+#include <Core/Components/Material.hpp>
+#include <Core/Components/Material.cpp>
+
 #include <Core/Components/Renderable.hpp>
 #include <Core/Components/Renderable.cpp>
 
-#include <Core/Components/Material.hpp>
-#include <Core/Components/Material.cpp>
+#include <Core/Components/Shader.hpp>
+#include <Core/Components/Shader.cpp>
+
+#include <Core/Components/Texture.hpp>
+#include <Core/Components/Texture.cpp>
+
+#include <Core/Components/Transform.hpp>
+#include <Core/Components/Transform.cpp>
 
 #endif
