@@ -2,7 +2,10 @@
 #define Engine_Texture_h
 
 #include <GL/glew.h>
-#include <Core/ResourceManager.hpp>
+
+#include <Core/Time.hpp>
+#include <Core/Managers/ResourceManager.hpp>
+#include <Core/Managers/EntityManager.hpp>
 
 namespace Engine
 {
@@ -17,7 +20,6 @@ namespace Engine
 		virtual void Update(DeltaTime deltaTime) override;
 
 		void BindTexture(GLint id);
-		void RenderReflection();
 	private:
 		Resource* tex;
 		GLuint texid;

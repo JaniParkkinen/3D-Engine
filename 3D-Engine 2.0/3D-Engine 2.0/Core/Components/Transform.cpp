@@ -131,19 +131,17 @@ namespace Engine {
 
 	///-----------------------------------------------------
 
-	glm::vec3 Transform::GetPosition() { return _position; };
-	glm::vec3 Transform::GetRotationCam() { return glm::degrees(glm::vec3(cos(_rotation.x), tan(_rotation.y), sin(_rotation.x))); };
-	glm::vec3 Transform::GetRotationRad() { return _rotation; };
-	glm::vec3 Transform::GetRotationDeg() { return glm::degrees(_rotation); };
-	glm::quat Transform::GetRotationQuat() { return _rotationQuat; }
-	glm::vec3 Transform::GetScale() { return _scale; };
-
-	glm::vec3 const & Transform::GetPositionRef() { return _position; };
-	glm::vec3 const & Transform::GetRotationCamRef() { return glm::degrees(glm::vec3(cos(_rotation.x), tan(_rotation.y), sin(_rotation.x))); };
-	glm::vec3 const & Transform::GetRotationRadRef() { return _rotation; };
-	glm::vec3 const & Transform::GetRotationDegRef() { return glm::degrees(_rotation); };
+	glm::vec3 Transform::GetPosition()		{ return _position; };
+	glm::vec3 Transform::GetRotationCam()	{ return glm::degrees(glm::vec3(cos(_rotation.x), tan(_rotation.y), sin(_rotation.x))); };
+	glm::vec3 Transform::GetRotationRad()	{ return _rotation; };
+	glm::vec3 Transform::GetRotationDeg()	{ return glm::degrees(_rotation); };
+	glm::quat Transform::GetRotationQuat()	{ return _rotationQuat; }
+	glm::vec3 Transform::GetScale()			{ return _scale; };
+	
+	glm::vec3 const & Transform::GetPositionRef()		{ return _position; };
+	glm::vec3 const & Transform::GetRotationRadRef()	{ return _rotation; };
 	glm::quat const & Transform::GetRotationQuatRef() { return _rotationQuat; }
-	glm::vec3 const & Transform::GetScaleRef() { return _scale; };
+	glm::vec3 const & Transform::GetScaleRef()		{ return _scale; };
 
 	///-----------------------------------------------------
 

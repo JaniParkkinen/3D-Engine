@@ -11,7 +11,27 @@
 #include <Core/Buffer.hpp>
 #include <Core/Buffer.cpp>
 
+//MANAGERS
+#include <Core/Managers/EntityManager.hpp>
+#include <Core/Managers/EntityManager.cpp>
+
+#include <Core/Managers/ResourceManager.hpp>
+#include <Core/Managers/ResourceManager.cpp>
+
+#include <Core/Managers/SystemManager.hpp>
+#include <Core/Managers/SystemManager.cpp>
+
+//SYSTEMS
+#include <Core/Systems/PhysicsSystem.hpp>
+#include <Core/Systems/PhysicsSystem.cpp>
+
+#include <Core/Systems/RenderingSystem.hpp>
+#include <Core/Systems/RenderingSystem.cpp>
+
 //COMPONENTS
+#include <Core/Components/AABB.hpp>
+#include <Core/Components/AABB.cpp>
+
 #include <Core/Components/Camera.hpp>
 #include <Core/Components/Camera.cpp>
 

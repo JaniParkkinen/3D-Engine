@@ -9,7 +9,7 @@
 #include <GL/GL.h>
 
 #include <Core/Time.hpp>
-#include <Core/ResourceManager.h>
+#include <Core/Managers/ResourceManager.hpp>
 #include <Core/Managers/EntityManager.hpp>
 
 namespace Engine {

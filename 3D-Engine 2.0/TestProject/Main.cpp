@@ -8,6 +8,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+	case WM_KEYDOWN:
+		break;
+	case WM_KEYUP:
+		break;
 	case WM_SIZE:
 		window.Resize();
 		break;
