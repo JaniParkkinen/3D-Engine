@@ -66,55 +66,67 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 }
 
 int main() {
-	window.createWindow("3D-Engine", glm::vec2(800.0f, 600.0f), glm::vec2(0.0f, 0.0f), "", "", ENGINE_WINDOWED, WndProc);
-	window.InitOpenGL();
+	try {
+		try {
+			window.createWindow("3D-Engine", glm::vec2(800.0f, 600.0f), glm::vec2(0.0f, 0.0f), "", "", ENGINE_WINDOWED, WndProc);
+			window.InitOpenGL();
 
-	Engine::Time deltaTime;
-	int counter = 0;
-	while (window.IsOpen()) {
-		deltaTime.Update();
+			Engine::Time deltaTime;
+			int counter = 0;
+			while (window.IsOpen()) {
+				deltaTime.Update();
 
-		if (keyboard.getKeyDown('W'))
-		{
-			std::cout << "Pressed W" << std::endl;
-		}
-		if (keyboard.getKeyUp('W'))
-		{
-			std::cout << "Released W" << std::endl;
-		}
-		if (mouse.getMouseDown(MK_LBUTTON))
-		{
-			std::cout << "Left mousebutton pressed" << std::endl;
-		}
-		if (mouse.getMouseUp(MK_LBUTTON))
-		{
-			std::cout << "Left mousebutton released" << std::endl;
-		}
-		if (mouse.getMouseDown(MK_XBUTTON1))
-		{
-			std::cout << "Xbutton1 mousebutton pressed" << std::endl;
-		}
-		if (mouse.getMouseUp(MK_XBUTTON1))
-		{
-			std::cout << "Xbutton1 mousebutton released" << std::endl;
-		}
-		if (mouse.mouseWheelUp())
-		{
-			std::cout << ++counter << std::endl;
-		}
-		if (mouse.mouseWheelDown())
-		{
-			std::cout << --counter << std::endl;
-		}
-		if (keyboard.getKey(VK_ESCAPE))
-		{
+				if (keyboard.getKeyDown('W'))
+				{
+					std::cout << "Pressed W" << std::endl;
+				}
+				if (keyboard.getKeyUp('W'))
+				{
+					std::cout << "Released W" << std::endl;
+				}
+				if (mouse.getMouseDown(MK_LBUTTON))
+				{
+					std::cout << "Left mousebutton pressed" << std::endl;
+				}
+				if (mouse.getMouseUp(MK_LBUTTON))
+				{
+					std::cout << "Left mousebutton released" << std::endl;
+				}
+				if (mouse.getMouseDown(MK_XBUTTON1))
+				{
+					std::cout << "Xbutton1 mousebutton pressed" << std::endl;
+				}
+				if (mouse.getMouseUp(MK_XBUTTON1))
+				{
+					std::cout << "Xbutton1 mousebutton released" << std::endl;
+				}
+				if (mouse.mouseWheelUp())
+				{
+					std::cout << ++counter << std::endl;
+				}
+				if (mouse.mouseWheelDown())
+				{
+					std::cout << --counter << std::endl;
+				}
+				if (keyboard.getKey(VK_ESCAPE))
+				{
+					exit(0);
+				}
+
+				keyboard.update();
+				mouse.update();
+				window.getMessage();
+			};
+
 			exit(0);
-		}
-
-		keyboard.update();
-		mouse.update();
-		window.getMessage();
-	};
-
-	exit(0);
+		} catch (int i) {
+			return i;
+		} catch (...) {
+			Message("Undefined Error!", Engine::MessageType::Fatal);
+		};
+	} catch (int i) {
+		return i;
+	} catch (...) {
+		return -1;
+	} ;
 };

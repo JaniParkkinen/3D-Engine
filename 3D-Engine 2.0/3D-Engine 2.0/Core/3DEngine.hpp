@@ -1,7 +1,24 @@
 #ifndef Engine_3DEngine_hpp
 #define Engine_3DEngine_hpp
 
+//SYSTEM
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <chrono>
+#include <ctime>
+#include <windows.h>
+#include <conio.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <io.h>
+#include <process.h>
+#include <math.h>
+#include <memory>
+
 //CORE
+#include <Core/Message.hpp>
+
 #include <Core/Window.hpp>
 #include <Core/Window.cpp>
 

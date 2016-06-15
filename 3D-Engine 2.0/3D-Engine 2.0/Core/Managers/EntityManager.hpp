@@ -29,7 +29,7 @@ namespace Engine {
 
 		virtual void Update(DeltaTime deltaTime) = 0;
 
-		std::shared_ptr<Entity> getOwner() { return _owner; };
+		std::shared_ptr<struct Entity> getOwner() { return _owner; };
 
 	protected:
 		std::shared_ptr<struct Entity> _owner;
