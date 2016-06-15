@@ -4,8 +4,7 @@
 
 //http://gamedev.stackexchange.com/questions/17066/designing-a-resourcemanager-class/17082#17082
 namespace Engine {
-	typedef enum class Resource_Type
-	{
+	typedef enum class Resource_Type {
 		Resource_Null = 0,
 		Resource_Graphics = 1,
 		Resource_Movie = 2,
@@ -16,25 +15,25 @@ namespace Engine {
 	class Resource //: public EngineObject
 	{
 	public:
-		Resource() : resourceID(0), _scope(0), _type(Resource_Type::Resource_Null) {}
-		~Resource() {}
-		void Load();
-		void Unload();
+		Resource( ) : resourceID( 0 ), _scope( 0 ), _type( Resource_Type::Resource_Null ) { }
+		~Resource( ) { }
+		void Load( );
+		void Unload( );
 
-		void SetResourceID(unsigned ID) { resourceID = ID; }
-		unsigned GetResourceID() const { return resourceID; }
+		void SetResourceID( unsigned ID ) { resourceID = ID; }
+		unsigned GetResourceID( ) const { return resourceID; }
 
-		void SetFilename(std::string filename) { _filename = filename; }
-		std::string GetFilename() const { return _filename; }
+		void SetFilename( std::string filename ) { _filename = filename; }
+		std::string GetFilename( ) const { return _filename; }
 
-		void SetResourceType(Resource_Type type) { _type = type; }
-		Resource_Type GetResourceType() const { return _type; }
+		void SetResourceType( Resource_Type type ) { _type = type; }
+		Resource_Type GetResourceType( ) const { return _type; }
 
-		void SetResourceScope(unsigned scope) { _scope = scope; }
-		signed GetResourceScope() const { return _scope; }
+		void SetResourceScope( unsigned scope ) { _scope = scope; }
+		signed GetResourceScope( ) const { return _scope; }
 
-		bool IsLoaded() const { return _loaded; }
-		void SetLoaded(bool value) { _loaded = value; }
+		bool IsLoaded( ) const { return _loaded; }
+		void SetLoaded( bool value ) { _loaded = value; }
 
 	protected:
 		signed resourceID;

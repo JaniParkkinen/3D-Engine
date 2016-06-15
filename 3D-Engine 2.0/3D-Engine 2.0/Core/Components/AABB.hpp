@@ -7,23 +7,22 @@
 
 namespace Engine {
 
-	class AxisAlignedBoundingBox : public Component
-	{
+	class AxisAlignedBoundingBox : public Component {
 	public:
 		friend class PhysicsSystem;
 
-		AxisAlignedBoundingBox() {};
-		virtual ~AxisAlignedBoundingBox() {};
+		AxisAlignedBoundingBox( ) { };
+		virtual ~AxisAlignedBoundingBox( ) { };
 
-		virtual void Init() override;
-		virtual void Cleanup() override;
+		virtual void Init( ) override;
+		virtual void Cleanup( ) override;
 
-		virtual void Update(DeltaTime deltaTime) override;
+		virtual void Update( DeltaTime deltaTime ) override;
 
-		void UpdateAABB(glm::vec3 min, glm::vec3 max);
+		void UpdateAABB( glm::vec3 min, glm::vec3 max );
 
-		std::vector<glm::vec3> GetVertexData() { return _AABBVetrexData; };
-		std::vector<glm::uvec3> GetIndiceData() { return _AABBIndiceData; };
+		std::vector<glm::vec3> GetVertexData( ) { return _AABBVetrexData; };
+		std::vector<glm::uvec3> GetIndiceData( ) { return _AABBIndiceData; };
 	private:
 		std::vector<glm::vec3> _AABBVetrexData;
 		std::vector<glm::uvec3> _AABBIndiceData;

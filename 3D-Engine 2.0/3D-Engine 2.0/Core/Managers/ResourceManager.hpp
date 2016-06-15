@@ -8,11 +8,10 @@
 //#include "..\..\Dependencies\include\irrKlang\irrKlang.h"
 
 namespace Engine {
-	class ResourceManager
-	{
+	class ResourceManager {
 	public:
-		ResourceManager() : currentScope(0), resourceCount(0) {};
-		virtual ~ResourceManager();
+		ResourceManager( ) : currentScope( 0 ), resourceCount( 0 ) { };
+		virtual ~ResourceManager( );
 
 	};
 }

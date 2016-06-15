@@ -3,21 +3,17 @@
 
 #include <chrono>
 
-namespace Engine
-{
+namespace Engine {
 	typedef double DeltaTime;
 
-	class Time
-	{
+	class Time {
 	public:
-		Time();
-		~Time();
-		DeltaTime Update();
-		DeltaTime GetDeltaTime();
+		DeltaTime Update( void );
+		DeltaTime GetDeltaTime( void );
 	private:
-		std::chrono::time_point<std::chrono::high_resolution_clock> _start;
-		std::chrono::time_point<std::chrono::high_resolution_clock> _end;
-		DeltaTime _deltaTime;
+		std::chrono::time_point<std::chrono::high_resolution_clock>	_start;
+		std::chrono::time_point<std::chrono::high_resolution_clock>	_end;
+		DeltaTime													_deltaTime;
 	};
 };
 #endif
