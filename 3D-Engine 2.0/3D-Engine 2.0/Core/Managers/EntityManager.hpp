@@ -22,6 +22,7 @@ namespace Engine {
 #define PHYSICS		0x00000049u
 
 	typedef struct Component{
+		Component() : _owner(nullptr) {};
 		virtual ~Component() {};
 
 		virtual void Init() = 0;

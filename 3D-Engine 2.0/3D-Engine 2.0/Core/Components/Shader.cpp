@@ -23,19 +23,19 @@ namespace Engine {
 	void Shader::Update(DeltaTime deltaTime) {};
 
 	void Shader::CompileShader(const char* source, GLenum shaderType) {
-		Resource* asd = ResourceManager::GetInstance()->LoadResource(source);
+		//Resource* asd = ResourceManager::GetInstance()->LoadResource(source);
 
-		std::string temp = asd->getTextData();
-		const char* fuck = temp.c_str();
+		//std::string temp = asd->getTextData();
+		//const char* fuck = temp.c_str();
 
-		GLuint shaderID = glCreateShader(shaderType);
-		glShaderSource(shaderID, 1, &fuck, 0);
+		//GLuint shaderID = glCreateShader(shaderType);
+		//glShaderSource(shaderID, 1, &fuck, 0);
 
-		glCompileShader(shaderID);
+		//glCompileShader(shaderID);
 
-		glAttachShader(_programID, shaderID);
+		//glAttachShader(_programID, shaderID);
 
-		glLinkProgram(_programID);
+		//glLinkProgram(_programID);
 	};
 
 	void Shader::SetBinding(std::string name, void* value, eValue type) {

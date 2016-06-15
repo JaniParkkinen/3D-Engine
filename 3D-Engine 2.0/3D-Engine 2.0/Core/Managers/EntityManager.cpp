@@ -1,6 +1,7 @@
 #include <Core/Managers/EntityManager.hpp>
 
 namespace Engine {
+	//ENTITY
 	std::vector<std::shared_ptr<Component>> Entity::GetComponents() {
 		return _components;
 	};
@@ -10,6 +11,7 @@ namespace Engine {
 		child->_parent = std::shared_ptr<Entity>(shared_from_this());
 	};
 
+	//ENTITY MANAGER
 	std::shared_ptr<Entity> EntityManager::AddEntity(std::string name, std::shared_ptr<Entity> entity) {
 		_entities.insert(std::make_pair(name, entity));
 		entity->SetName(name.c_str());

@@ -67,66 +67,61 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 int main() {
 	try {
-		try {
-			window.createWindow("3D-Engine", glm::vec2(800.0f, 600.0f), glm::vec2(0.0f, 0.0f), "", "", ENGINE_WINDOWED, WndProc);
-			window.InitOpenGL();
+		window.createWindow("3D-Engine", glm::vec2(800.0f, 600.0f), glm::vec2(0.0f, 0.0f), "", "", ENGINE_WINDOWED, WndProc);
+		window.InitOpenGL();
 
-			Engine::Time deltaTime;
-			int counter = 0;
-			while (window.IsOpen()) {
-				deltaTime.Update();
+		Engine::Time deltaTime;
+		int counter = 0;
 
-				if (keyboard.getKeyDown('W'))
-				{
-					std::cout << "Pressed W" << std::endl;
-				}
-				if (keyboard.getKeyUp('W'))
-				{
-					std::cout << "Released W" << std::endl;
-				}
-				if (mouse.getMouseDown(MK_LBUTTON))
-				{
-					std::cout << "Left mousebutton pressed" << std::endl;
-				}
-				if (mouse.getMouseUp(MK_LBUTTON))
-				{
-					std::cout << "Left mousebutton released" << std::endl;
-				}
-				if (mouse.getMouseDown(MK_XBUTTON1))
-				{
-					std::cout << "Xbutton1 mousebutton pressed" << std::endl;
-				}
-				if (mouse.getMouseUp(MK_XBUTTON1))
-				{
-					std::cout << "Xbutton1 mousebutton released" << std::endl;
-				}
-				if (mouse.mouseWheelUp())
-				{
-					std::cout << ++counter << std::endl;
-				}
-				if (mouse.mouseWheelDown())
-				{
-					std::cout << --counter << std::endl;
-				}
-				if (keyboard.getKey(VK_ESCAPE))
-				{
-					exit(0);
-				}
+		while (window.IsOpen()) {
+			deltaTime.Update();
 
-				keyboard.update();
-				mouse.update();
-				window.getMessage();
-			};
+			if (keyboard.getKeyDown('W'))
+			{
+				Message("W pressed.", Engine::MessageType::Trace);
+			}
+			if (keyboard.getKeyUp('W'))
+			{
+				Message("W released.", Engine::MessageType::Trace);
+			}
+			if (mouse.getMouseDown(MK_LBUTTON))
+			{
+				Message("Left mousebutton pressed.", Engine::MessageType::Trace);
+			}
+			if (mouse.getMouseUp(MK_LBUTTON))
+			{
+				Message("Left mousebutton released.", Engine::MessageType::Trace);
+			}
+			if (mouse.getMouseDown(MK_XBUTTON1))
+			{
+				Message("Xbutton1 mousebutton pressed.", Engine::MessageType::Trace);
+			}
+			if (mouse.getMouseUp(MK_XBUTTON1))
+			{
+				Message("Xbutton1 mousebutton released.", Engine::MessageType::Trace);
+			}
+			if (mouse.mouseWheelUp())
+			{
+				Message(std::to_string(++counter), Engine::MessageType::Trace);
+			}
+			if (mouse.mouseWheelDown())
+			{
+				Message(std::to_string(--counter), Engine::MessageType::Trace);
+			}
+			if (keyboard.getKey(VK_ESCAPE))
+			{
+				exit(0);
+			}
 
-			exit(0);
-		} catch (int i) {
-			return i;
-		} catch (...) {
-			Message("Undefined Error!", Engine::MessageType::Fatal);
+			keyboard.update();
+			mouse.update();
+			window.getMessage();
 		};
+
+		exit(0);
 	} catch (int i) {
 		return i;
 	} catch (...) {
 		return -1;
-	} ;
+	};
 };
