@@ -22,7 +22,7 @@ namespace Engine {
 		for (auto it = entities.begin(); it != entities.end(); it++) {
 			auto transformable = it->get()->GetComponent<Transform>();
 			auto renderable = it->get()->GetComponent<Render>();
-			auto aabb = it->get()->GetComponent<AABB>();
+			auto aabb = it->get()->GetComponent<AxisAlignedBoundingBox>();
 
 			if (transformable != nullptr && renderable != nullptr && aabb != nullptr) {
 				glm::mat4 scale = glm::mat4(1);
@@ -66,8 +66,8 @@ namespace Engine {
 	};
 
 	bool PhysicsSystem::CheckAABBCollision(std::shared_ptr<Entity> lhsEntity, std::shared_ptr<Entity> rhsEntity) {
-		std::shared_ptr<AABB> lhsAABB = lhsEntity->GetComponent<AABB>();
-		std::shared_ptr<AABB> rhsAABB = rhsEntity->GetComponent<AABB>();
+		std::shared_ptr<AxisAlignedBoundingBox> lhsAABB = lhsEntity->GetComponent<AxisAlignedBoundingBox>();
+		std::shared_ptr<AxisAlignedBoundingBox> rhsAABB = rhsEntity->GetComponent<AxisAlignedBoundingBox>();
 
 		if (lhsAABB != nullptr && rhsAABB != nullptr) {
 			std::shared_ptr<Transform> lhsTransform = lhsEntity->GetComponent<Transform>();

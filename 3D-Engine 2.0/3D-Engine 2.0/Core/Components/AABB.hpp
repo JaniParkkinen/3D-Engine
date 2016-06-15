@@ -7,13 +7,13 @@
 
 namespace Engine {
 
-	class AABB : public Component
+	class AxisAlignedBoundingBox : public Component
 	{
 	public:
 		friend class PhysicsSystem;
 
-		AABB() {};
-		virtual ~AABB() {};
+		AxisAlignedBoundingBox() {};
+		virtual ~AxisAlignedBoundingBox() {};
 
 		virtual void Init() override;
 		virtual void Cleanup() override;

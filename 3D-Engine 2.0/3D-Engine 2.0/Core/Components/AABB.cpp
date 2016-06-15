@@ -1,7 +1,7 @@
 #include <Core/Components/AABB.hpp>
 
 namespace Engine {
-	void AABB::Init() {
+	void AxisAlignedBoundingBox::Init() {
 		_AABBIndiceData.push_back(glm::uvec3(0, 1, 2));
 		_AABBIndiceData.push_back(glm::uvec3(2, 3, 0));
 		_AABBIndiceData.push_back(glm::uvec3(0, 5, 6));
@@ -10,11 +10,11 @@ namespace Engine {
 		_AABBIndiceData.push_back(glm::uvec3(3, 4, 5));
 	};
 
-	void AABB::Cleanup() {};
+	void AxisAlignedBoundingBox::Cleanup() {};
 
-	void AABB::Update(DeltaTime deltaTime) {};
+	void AxisAlignedBoundingBox::Update(DeltaTime deltaTime) {};
 
-	void AABB::UpdateAABB(glm::vec3 min, glm::vec3 max) {
+	void AxisAlignedBoundingBox::UpdateAABB(glm::vec3 min, glm::vec3 max) {
 		_min = min;
 		_max = max;
 

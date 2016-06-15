@@ -8,29 +8,41 @@
 #include <Core\Time.hpp>																							
 
 namespace Engine {
-	struct Component
-	{
-		friend struct Entity;
+///flag components
+#define AABB		0x00000001u
+#define CAMERA		0x00000002u
+#define MATERIAL	0x00000004u
+#define RENDERABLE	0x00000008u
+#define SHADER		0x00000010u
+#define TEXTURE		0x00000020u
+#define TRANSFORM	0x00000040u
 
-		Component() {};
+///flags
+#define RENDER		0x00000048u
+#define PHYSICS		0x00000049u
+
+	typedef struct Component{
 		virtual ~Component() {};
 
 		virtual void Init() = 0;
 		virtual void Cleanup() = 0;
 
 		virtual void Update(DeltaTime deltaTime) = 0;
+
+		std::shared_ptr<struct Entity> getOwner() { return _owner; };
+
 	protected:
 		std::shared_ptr<struct Entity> _owner;
-	};
-	
-	struct Entity : std::enable_shared_from_this<Entity> {
+	} Component;
+
+	typedef struct Entity : std::enable_shared_from_this<Entity> {
 		Entity() : _parent(nullptr) {};
 		virtual ~Entity() {};
 
-		virtual void Init() {};
-		virtual void Cleanup() {};
+		virtual void Init() = 0;
+		virtual void Cleanup() = 0;
 
-		virtual void Update(DeltaTime deltaTime) {};
+		virtual void Update(DeltaTime deltaTime) = 0;
 
 		template <typename T, typename ...args> std::shared_ptr<T> AddComponent(args&&... param);
 		template <typename T> void RemoveComponent();
@@ -51,14 +63,14 @@ namespace Engine {
 		std::vector<std::shared_ptr<Component>> _components;
 		std::vector<std::shared_ptr<Entity>> _children;
 		std::shared_ptr<Entity> _parent;
-	};
-	
-	class EntityManager
+	} Entity;
+
+	typedef class EntityManager
 	{
 	public:
 		static EntityManager* GetInstance() {
-			static EntityManager EnMan;
-			return &EnMan;
+			static EntityManager entityManager;
+			return &entityManager;
 		};
 
 		std::shared_ptr<Entity> AddEntity(std::string name, std::shared_ptr<Entity> entity);
@@ -86,7 +98,7 @@ namespace Engine {
 
 		EntityManager(EntityManager const&) {};
 		void operator=(EntityManager const&) {};
-	};
+	} EntityManager;
 
 	template <typename T, typename ...args> std::shared_ptr<T> Entity::AddComponent(args&&... param) {
 		for (auto it : _components) {
@@ -103,7 +115,8 @@ namespace Engine {
 			if (std::dynamic_pointer_cast<T>(*it) != nullptr) {
 				it->get()->Cleanup();
 				it = _components.erase(it);
-			} else {
+			}
+			else {
 				it++;
 			};
 		};

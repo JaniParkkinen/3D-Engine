@@ -167,6 +167,7 @@
     <ClInclude Include="Core\Managers\ResourceManager.hpp" />
     <ClInclude Include="Core\Managers\SystemManager.hpp" />
     <ClInclude Include="Core\Resource.h" />
+    <ClInclude Include="Core\Message.hpp" />
     <ClInclude Include="Core\Systems\PhysicsSystem.hpp" />
     <ClInclude Include="Core\Systems\RenderingSystem.hpp" />
     <ClInclude Include="Core\Time.hpp" />

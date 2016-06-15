@@ -69,6 +69,9 @@
     <ClInclude Include="Core\Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Message.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Window.cpp">

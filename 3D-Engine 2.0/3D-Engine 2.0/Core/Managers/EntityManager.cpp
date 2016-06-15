@@ -46,7 +46,7 @@ namespace Engine {
 		};
 		return temp;
 	};
-	
+
 	std::vector<std::shared_ptr<Component>> EntityManager::GetComponents() {
 		std::vector <std::shared_ptr<Component>> tempCompVec;
 		for (auto it : _entities) {
@@ -62,4 +62,5 @@ namespace Engine {
 		tempCompVec.insert(tempCompVec.end(), temp.begin(), temp.end());
 		return tempCompVec;
 	};
+
 };

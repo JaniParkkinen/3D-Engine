@@ -42,7 +42,6 @@ namespace Engine {
 	void Mouse::update()
 	{
 		mouseWheel = 0;
-		std::cout << mousePos.x << " " << mousePos.y << std::endl;
 		lastMouse = currentMouse;
 	}
 
