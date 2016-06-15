@@ -40,6 +40,7 @@ namespace Engine {
 		signed resourceID;
 		signed _scope;
 		std::string _filename;
+		std::string _filepath;
 		Resource_Type _type;
 		bool _loaded;
 	};

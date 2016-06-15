@@ -39,8 +39,11 @@ namespace Engine {
 		static ResourceManager* instance;
 		//irrklang::ISoundSource* source;
 
-		Resource* LoadResourceType(std::string filepath);
-	
+		Resource* LoadTextResource(std::string filepath);
+		Resource* LoadImageResource(std::string filepath);
+		Resource* LoadAudioResource(std::string filepath);
+		Resource* LoadFontResource(std::string filepath);
+		Resource* LoadObjectResource(std::string filepath);
 	};
 }
 
