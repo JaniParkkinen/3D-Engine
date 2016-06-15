@@ -65,8 +65,10 @@ namespace Engine {
 			break;
 		};
 		case MessageType::Info: {
+#ifdef _DEBUG
 			Msg << "[INFO] " << message.c_str() << std::endl;
 			OutputDebugString(Msg.str().c_str());
+#endif
 			break;
 		};
 		case MessageType::Warning: {
@@ -84,9 +86,10 @@ namespace Engine {
 			break;
 		};
 		case MessageType::Error: {
+#ifdef _DEBUG
 			Msg << "[ERROR] " << message.c_str() << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
 			OutputDebugString(Msg.str().c_str());
-
+#endif
 			std::wofstream log_file("MessageLog.txt", std::ios_base::out | std::ios_base::app);
 			std::wstringstream fileMsg;
 			for (i = 0; i < 24; i++) { fileMsg << str[i]; }; fileMsg << ": ";
@@ -94,14 +97,15 @@ namespace Engine {
 			log_file << fileMsg.str();
 			log_file.close();
 
-			throw -1;
+			throw 0;
 
 			break;
 		};
 		case MessageType::Fatal: {
+#ifdef _DEBUG
 			Msg << "[FATAL] " << message.c_str() << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
 			OutputDebugString(Msg.str().c_str());
-
+#endif
 			std::wofstream log_file("MessageLog.txt", std::ios_base::out | std::ios_base::app);
 			std::wstringstream fileMsg;
 			for (i = 0; i < 24; i++) { fileMsg << str[i]; }; fileMsg << ": ";
@@ -109,7 +113,7 @@ namespace Engine {
 			log_file << fileMsg.str();
 			log_file.close();
 
-			throw -1;
+			throw "FATAL";
 
 			break;
 		};
