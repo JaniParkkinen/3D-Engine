@@ -10,7 +10,7 @@ namespace Engine {
 		_windowHandle			= NULL;
 	};
 
-	Window::~Window( ) { }
+	Window::~Window( ) { };
 
 	wchar_t* Window::GetLPWSTR( const char* lpcstr ) {
 		size_t size = strlen( lpcstr ) + 1;
