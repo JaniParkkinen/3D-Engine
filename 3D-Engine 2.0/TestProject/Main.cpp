@@ -71,42 +71,24 @@ int main() {
 		window.InitOpenGL();
 
 		Engine::Time deltaTime;
-		int counter = 0;
 
 		while (window.IsOpen()) {
 			deltaTime.Update();
 
-			if (keyboard.getKeyDown('W'))
+			if (keyboard.getKeyDown('1'))
 			{
-				Message("W pressed.", Engine::MessageType::Trace);
+				Engine::ResourceManager::GetInstance()->LoadResource("../../Assets/Test.txt");
+				Message("Text resource loaded.", Engine::MessageType::Info);
 			}
-			if (keyboard.getKeyUp('W'))
+			if (keyboard.getKeyDown('2'))
 			{
-				Message("W released.", Engine::MessageType::Trace);
+				Engine::ResourceManager::GetInstance()->LoadResource("../../Assets/Test.png");
+				Message("Image resource loaded.", Engine::MessageType::Info);
 			}
-			if (mouse.getMouseDown(MK_LBUTTON))
+			if (keyboard.getKeyDown('3'))
 			{
-				Message("Left mousebutton pressed.", Engine::MessageType::Trace);
-			}
-			if (mouse.getMouseUp(MK_LBUTTON))
-			{
-				Message("Left mousebutton released.", Engine::MessageType::Trace);
-			}
-			if (mouse.getMouseDown(MK_XBUTTON1))
-			{
-				Message("Xbutton1 mousebutton pressed.", Engine::MessageType::Trace);
-			}
-			if (mouse.getMouseUp(MK_XBUTTON1))
-			{
-				Message("Xbutton1 mousebutton released.", Engine::MessageType::Trace);
-			}
-			if (mouse.mouseWheelUp())
-			{
-				Message(std::to_string(++counter), Engine::MessageType::Trace);
-			}
-			if (mouse.mouseWheelDown())
-			{
-				Message(std::to_string(--counter), Engine::MessageType::Trace);
+				Engine::ResourceManager::GetInstance()->LoadResource("../../Assets/Test.obj");
+				Message("Object resource loaded.", Engine::MessageType::Info);
 			}
 			if (keyboard.getKey(VK_ESCAPE))
 			{
