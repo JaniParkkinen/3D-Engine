@@ -1,46 +1,69 @@
 #ifndef Resource_H
 #define Resource_H
+
+#include <iostream>
 #include <string>
+#include <vector>
+#include <memory>
 
 //http://gamedev.stackexchange.com/questions/17066/designing-a-resourcemanager-class/17082#17082
 namespace Engine {
-	typedef enum class Resource_Type {
+	typedef enum class Resource_Type
+	{
 		Resource_Null = 0,
-		Resource_Graphics = 1,
-		Resource_Movie = 2,
+		Resource_Image = 1,
+		Resource_Font = 2,
 		Resource_Audio = 3,
 		Resource_Text = 4,
+		Resource_Obj = 5,
 	}Resource_Type;
 
 	class Resource //: public EngineObject
 	{
 	public:
-		Resource( ) : resourceID( 0 ), _scope( 0 ), _type( Resource_Type::Resource_Null ) { }
-		~Resource( ) { }
-		void Load( );
-		void Unload( );
+		Resource() : resourceID(0), _scope(0), _type(Resource_Type::Resource_Null) {}
+		~Resource() {}
 
-		void SetResourceID( unsigned ID ) { resourceID = ID; }
-		unsigned GetResourceID( ) const { return resourceID; }
+		void Load();
+		void Unload();
+		void setTextData(std::string readFile) { textData = readFile; }
+		void setImageData(std::vector<unsigned char> imageFile, unsigned width, unsigned height) { std::cout << "setting image data" << std::endl; imageData = imageFile; iHeight = height; iWidth = width; }
+		//void setAudioData(irrklang::ISoundSource* audioFile) { std::cout << "Setting audio data " << std::endl; audioData = audioFile; }
+		//void setAudioEngine(irrklang::ISoundEngine* engine) { audio->setEngine(engine); }
+		//void setAudio(std::string filename) { audio->includeAudio(filename); }
+		void pushResourceUsers(int i) { resourceUsers.push_back(i); };
+		void popResourceUsers() { resourceUsers.pop_back(); }
+		void setType(Resource_Type type) { _type = type; }
+		bool setID(unsigned id) { resourceID = id; return true; }
 
-		void SetFilename( std::string filename ) { _filename = filename; }
-		std::string GetFilename( ) const { return _filename; }
-
-		void SetResourceType( Resource_Type type ) { _type = type; }
-		Resource_Type GetResourceType( ) const { return _type; }
-
-		void SetResourceScope( unsigned scope ) { _scope = scope; }
-		signed GetResourceScope( ) const { return _scope; }
-
-		bool IsLoaded( ) const { return _loaded; }
-		void SetLoaded( bool value ) { _loaded = value; }
+		std::string getTextData() { return textData; }
+		
+		std::vector<unsigned char> getImageData() { return imageData; }
+		
+		void setFilePath(std::string filepath) { this->filepath = filepath; }
+		std::string getFilePath() { return filepath; }
+		
+		
+		int sizeResourceUsers() { return resourceUsers.size(); }
 
 	protected:
-		signed resourceID;
-		signed _scope;
+		std::string filepath;
 		std::string _filename;
 		Resource_Type _type;
+		unsigned _scope;
+		unsigned resourceID;
+		std::vector<int> resourceUsers;
 		bool _loaded;
+		int iHeight, iWidth;
+		//Engine::Material* _material;
+		//std::vector < glm::vec3 >  _vertices;
+		//std::vector < glm::vec2 >  _uvs;
+		//std::vector < glm::vec3 >  _normals;
+
+		//std::vector < glm::uvec3 > _indices;
+	private:
+		std::string textData;
+		std::vector<unsigned char> imageData;
 	};
 }
 
