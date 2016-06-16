@@ -191,6 +191,9 @@
     <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Core\Window.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Core\Managers\EntityManager.inl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,22 +1,19 @@
 #include <Core/Time.hpp>
 
 namespace Engine {
-	Time::Time() {
-		_start = std::chrono::high_resolution_clock::now();
-		_end = _start;
+	Time::Time( ) {
+		_start	= std::chrono::high_resolution_clock::now( );
+		_end	= _start;
 	};
 
-	Time::~Time()
-	{};
-
-	DeltaTime Time::Update() {
-		_start = _end;
-		_end = std::chrono::high_resolution_clock::now();
-		_deltaTime = std::chrono::duration<double>(_end - _start).count();
+	DeltaTime Time::Update( ) {
+		_start		= _end;
+		_end		= std::chrono::high_resolution_clock::now( );
+		_deltaTime	= std::chrono::duration<double>( _end - _start ).count( );
 		return _deltaTime;
 	};
 
-	DeltaTime Time::GetDeltaTime() {
+	DeltaTime Time::GetDeltaTime( ) {
 		return _deltaTime;
 	};
 };

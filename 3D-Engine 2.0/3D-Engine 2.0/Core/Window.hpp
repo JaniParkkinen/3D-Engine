@@ -8,24 +8,23 @@
 
 namespace Engine {
 /*!< Window style flags*/
-#define ENGINE_WINDOWED		0x00000001
-#define ENGINE_BORDERLESS	0x00000010
-#define ENGINE_FULLSCREEN	0x00000100
+	#define ENGINE_WINDOWED		0x00000001
+	#define ENGINE_BORDERLESS	0x00000010
+	#define ENGINE_FULLSCREEN	0x00000100
 
-	class Window
-	{
+	class Window {
 	public:
-		Window();
-		~Window();
+		Window( );
+		~Window( );
 
-		wchar_t* Window::GetLPWSTR(const char* lpcstr);
+		wchar_t* Window::GetLPWSTR( const char* lpcstr );
 		//! Converts const char* to wchar_t*.
 		/*!
 		\param[in] const char* lpcstr
 		\return Return wchar_t*.
 		*/
 
-		int createWindow(const char* windowName, glm::vec2 size, glm::vec2 position, const char* icon, const char* cursor, int style, WNDPROC messageCallback);
+		int createWindow( const char* windowName, glm::vec2 size, glm::vec2 position, const char* icon, const char* cursor, int style, WNDPROC messageCallback );
 		//! A basic function to create a window.
 		/*!
 		\param[in] windowName A constant character pointer
@@ -38,69 +37,69 @@ namespace Engine {
 		\return Returns 1 if it succeeds or -1 if it fails.
 		*/
 
-		int InitOpenGL();
+		int InitOpenGL( );
 		//! A function to create the OpenGL rendering context for the window.
 		/*!
 		\return Returns 1 if it succeeds or -1 if it fails.
 		*/
 
-		int Uninit();
+		int Uninit( );
 		//! A function to free the OpenGL rendering context and window.
 
-		int getMessage();
+		int getMessage( );
 
 
-		bool IsOpen() { return IsWindow(_windowHandle) != 0; }
+		bool IsOpen( ) { return IsWindow( _windowHandle ) != 0; }
 		//! Checks if the window is still open.
 		/*!
 		\return Return true if still open, false if closed.
 		*/
 
-		void SetSize(glm::vec2 const & newSize);
+		void SetSize( glm::vec2 const & newSize );
 		//! Change the size of the window.
 		/*!
 		\param[in] newSize glm::vec2 const &
 		*/
 
-		void SetPosition(glm::vec2 const & newPosition);
+		void SetPosition( glm::vec2 const & newPosition );
 		//! Change the position of the window.
 		/*!
 		\param[in] newPosition glm::vec2 const &
 		*/
 
-		void Resize();
+		void Resize( );
 		//! Resize window.
 		/*!
 		\
 		*/
 
 		//GETTERS
-		
-		glm::vec2 GetSize();
+
+		glm::vec2 GetSize( );
 		//! Get window size.
 		/*!
 		\return Returns glm::vec2 with screen size.
 		*/
 
-		glm::vec2 GetPosition();
+		glm::vec2 GetPosition( );
 		//! Get window position.
 		/*!
 		\return Returns glm::vec2 with screens top left corner position.
 		*/
 
-		HDC GetHDC() { return _deviceContextHandle; };
+		HDC GetHDC( ) { return _deviceContextHandle; };
 		//! Get device context handle.
 		/*!
 		\return Returns HDC.
 		*/
 
-		HGLRC GetHGLRC() { return _glRenderingContextHandle; };
+		HGLRC GetHGLRC( ) { return _glRenderingContextHandle; };
 		//! Get rendering context handle.
 		/*!
 		\return Returns HGLRC.
 		*/
 
-		HWND GetHWND() { return _windowHandle; };
+		HWND GetHWND( ) { return _windowHandle; };
 		//! Get window handle.
 		/*!
 		\return Returns HWND.

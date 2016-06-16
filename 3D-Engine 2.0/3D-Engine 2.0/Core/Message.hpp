@@ -31,98 +31,104 @@ namespace Engine {
 		Fatal
 	};
 
-	void MessageFunction(int line, const char* file, std::string message, MessageType type) {
+	void MessageFunction( int line, const char* file, std::string message, MessageType type ) {
 		//Store message in temporary container and convert line end to null
 		size_t i = 0;
-		while (message[i] != NULL) {
-			if (message[i] == '\n') { message[i] = NULL; };
+		while ( message[ i ] != NULL ) {
+			if ( message[ i ] == '\n' ) { message[ i ] = NULL; };
 			i++;
-		};
+		}
 
 		std::wstringstream Msg;
 
 		//Get time and format it
-		std::time_t timeNow = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-		char str[26];
-		ctime_s(str, sizeof(str), &timeNow);
-		for (i = 0; i < 24; i++) { Msg << str[i]; }; Msg << ": ";
+		std::time_t timeNow = std::chrono::system_clock::to_time_t( std::chrono::system_clock::now( ) );
+		char str[ 26 ];
+		ctime_s( str, sizeof( str ), &timeNow );
+		for ( i = 0; i < 24; i++ ) { Msg << str[ i ]; }; Msg << ": ";
 
 		//Handle each type of error separately
-		switch (type)
-		{
-		case MessageType::Trace: {
-#ifdef _DEBUG
-			Msg << "[TRACE] " << message.c_str() << std::endl;
-			OutputDebugString(Msg.str().c_str());
-#endif
-			break;
-		};
-		case MessageType::Debug: {
-#ifdef _DEBUG
-			Msg << "[DEBUG] " << message.c_str() << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
-			OutputDebugString(Msg.str().c_str());
-#endif
-			break;
-		};
-		case MessageType::Info: {
-#ifdef _DEBUG
-			Msg << "[INFO] " << message.c_str() << std::endl;
-			OutputDebugString(Msg.str().c_str());
-#endif
-			break;
-		};
-		case MessageType::Warning: {
-#ifdef _DEBUG
-			Msg << "[WARNING] " << message.c_str() << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
-			OutputDebugString(Msg.str().c_str());
+		switch ( type ) {
+			case MessageType::Trace:
+			{
+				#ifdef _DEBUG
+				Msg << "[TRACE] " << message.c_str( ) << std::endl;
+				OutputDebugString( Msg.str( ).c_str( ) );
+				#endif
+				break;
+			}
+			case MessageType::Debug:
+			{
+				#ifdef _DEBUG
+				Msg << "[DEBUG] " << message.c_str( ) << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
+				OutputDebugString( Msg.str( ).c_str( ) );
+				#endif
+				break;
+			}
+			case MessageType::Info:
+			{
+				#ifdef _DEBUG
+				Msg << "[INFO] " << message.c_str( ) << std::endl;
+				OutputDebugString( Msg.str( ).c_str( ) );
+				#endif
+				break;
+			}
+			case MessageType::Warning:
+			{
+				#ifdef _DEBUG
+				Msg << "[WARNING] " << message.c_str( ) << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
+				OutputDebugString( Msg.str( ).c_str( ) );
 
-			std::wofstream log_file("MessageLog.txt", std::ios_base::out | std::ios_base::app);
-			std::wstringstream fileMsg;
-			for (i = 0; i < 24; i++) { fileMsg << str[i]; }; fileMsg << ": ";
-			fileMsg << "[WARNING] " << message.c_str() << "\n\t\t    File: " << file << "\n\t\t    Line: " << line << std::endl;
-			log_file << fileMsg.str();
-			log_file.close();
-#endif
-			break;
-		};
-		case MessageType::Error: {
-#ifdef _DEBUG
-			Msg << "[ERROR] " << message.c_str() << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
-			OutputDebugString(Msg.str().c_str());
-#endif
-			std::wofstream log_file("MessageLog.txt", std::ios_base::out | std::ios_base::app);
-			std::wstringstream fileMsg;
-			for (i = 0; i < 24; i++) { fileMsg << str[i]; }; fileMsg << ": ";
-			fileMsg << "[ERROR] " << message.c_str() << "\n\t\t    File: " << file << "\n\t\t    Line: " << line << std::endl;
-			log_file << fileMsg.str();
-			log_file.close();
+				std::wofstream log_file( "MessageLog.txt", std::ios_base::out | std::ios_base::app );
+				std::wstringstream fileMsg;
+				for ( i = 0; i < 24; i++ ) { fileMsg << str[ i ]; }; fileMsg << ": ";
+				fileMsg << "[WARNING] " << message.c_str( ) << "\n\t\t    File: " << file << "\n\t\t    Line: " << line << std::endl;
+				log_file << fileMsg.str( );
+				log_file.close( );
+				#endif
+				break;
+			}
+			case MessageType::Error:
+			{
+				#ifdef _DEBUG
+				Msg << "[ERROR] " << message.c_str( ) << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
+				OutputDebugString( Msg.str( ).c_str( ) );
+				#endif
+				std::wofstream log_file( "MessageLog.txt", std::ios_base::out | std::ios_base::app );
+				std::wstringstream fileMsg;
+				for ( i = 0; i < 24; i++ ) { fileMsg << str[ i ]; }; fileMsg << ": ";
+				fileMsg << "[ERROR] " << message.c_str( ) << "\n\t\t    File: " << file << "\n\t\t    Line: " << line << std::endl;
+				log_file << fileMsg.str( );
+				log_file.close( );
 
-			throw 0;
+				throw 0;
 
-			break;
-		};
-		case MessageType::Fatal: {
-#ifdef _DEBUG
-			Msg << "[FATAL] " << message.c_str() << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
-			OutputDebugString(Msg.str().c_str());
-#endif
-			std::wofstream log_file("MessageLog.txt", std::ios_base::out | std::ios_base::app);
-			std::wstringstream fileMsg;
-			for (i = 0; i < 24; i++) { fileMsg << str[i]; }; fileMsg << ": ";
-			fileMsg << "[FATAL] " << message.c_str() << "\n\t\t    File: " << file << "\n\t\t    Line: " << line << std::endl;
-			log_file << fileMsg.str();
-			log_file.close();
+				break;
+			}
+			case MessageType::Fatal:
+			{
+				#ifdef _DEBUG
+				Msg << "[FATAL] " << message.c_str( ) << "\n\t\t\t\t    File: " << file << "\n\t\t\t\t    Line: " << line << std::endl;
+				OutputDebugString( Msg.str( ).c_str( ) );
+				#endif
+				std::wofstream log_file( "MessageLog.txt", std::ios_base::out | std::ios_base::app );
+				std::wstringstream fileMsg;
+				for ( i = 0; i < 24; i++ ) { fileMsg << str[ i ]; }; fileMsg << ": ";
+				fileMsg << "[FATAL] " << message.c_str( ) << "\n\t\t    File: " << file << "\n\t\t    Line: " << line << std::endl;
+				log_file << fileMsg.str( );
+				log_file.close( );
 
-			throw "FATAL";
+				throw "FATAL";
 
-			break;
-		};
-		default: {
-			break;
-		};
-		};
-	};
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+	}
 
-#define Message(message, type) Engine::MessageFunction(__LINE__, __FILE__, message, type);
-};
+	#define Message(message, type) Engine::MessageFunction(__LINE__, __FILE__, message, type);
+}
 #endif

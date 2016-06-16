@@ -12,21 +12,19 @@
 #include <Core/Managers/EntityManager.hpp>
 #include <Core/Components/Transform.hpp>
 
-namespace Engine
-{
-	class Camera : public Component
-	{
+namespace Engine {
+	class Camera : public Component {
 	public:
-		Camera(glm::vec3 offset = glm::vec3(0.0f));
-		virtual ~Camera();
+		Camera( glm::vec3 offset = glm::vec3( 0.0f ) );
+		virtual ~Camera( );
 
-		virtual void Init();
-		virtual void Cleanup();
+		virtual void Init( );
+		virtual void Cleanup( );
 
-		virtual void Update(DeltaTime deltaTime);
+		virtual void Update( DeltaTime deltaTime );
 
-		glm::mat4 const GetViewMatrix();
-		glm::vec3 const GetPosition();
+		glm::mat4 const GetViewMatrix( );
+		glm::vec3 const GetPosition( );
 	private:
 		std::shared_ptr<Transform> _ownerTransform;
 		glm::vec3 _offset;

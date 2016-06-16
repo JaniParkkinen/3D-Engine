@@ -1,68 +1,49 @@
 #include <Core/Managers/EntityManager.hpp>
 
 namespace Engine {
-	//ENTITY
-	std::vector<std::shared_ptr<Component>> Entity::GetComponents() {
-		return _components;
-	};
+	// COMPONENT
+	size_t Component::GetType( ) {
+		return _type;
+	} // GetType
 
-	void Entity::AddChild(std::shared_ptr<Entity> child) {
-		_children.push_back(child);
-		child->_parent = std::shared_ptr<Entity>(shared_from_this());
-	};
+	// ENTITY
+	void Entity::SetName( std::string name ) {
+		_name = name;
+	} // SetName
 
-	//ENTITY MANAGER
-	std::shared_ptr<Entity> EntityManager::AddEntity(std::string name, std::shared_ptr<Entity> entity) {
-		_entities.insert(std::make_pair(name, entity));
-		entity->SetName(name.c_str());
-		entity->Init();
-		return entity;
-	};
+	std::string Entity::GetName( ) {
+		return _name;
+	} // GetName
 
-	void EntityManager::RemoveEntity(std::string name) {
-		_entities.find(name)->second->Cleanup();
-		_entities.erase(name);
-	};
+	std::vector < std::shared_ptr<Entity>> Entity::GetChildren( ) {
+		return _children;
+	}
 
-	void EntityManager::Update(DeltaTime deltaTime) {
-		for (auto it : _entities) {
-			it.second->Update(deltaTime);
-		};
-	};
+	void Entity::RemoveComponent( size_t flag ) {
+		if ( _components.find( flag ) != _components.end( ) ) {
+			_components.erase( flag );
+		}
+	} // RemoveComponent
 
-	void EntityManager::Clear() {
-		while (!_entities.empty()) {
-			_entities.begin()->second->Cleanup();
-			_entities.erase(_entities.begin());
-		};
-	};
+	// ENTITY MANAGER
+	std::vector<std::shared_ptr<Entity>> EntityManager::GetEntities( ) {
+		std::vector<std::shared_ptr<Entity>> entities;
+		for ( std::pair<std::string, std::shared_ptr<Entity>> entity : _entities ) {
+			entities.push_back( entity.second );
+		}
+		return entities;
+	} // GetEntities
 
-	std::shared_ptr<Entity> EntityManager::GetEntity(std::string name) {
-		return _entities.find(name)->second;
-	};
+	void EntityManager::RemoveEntity( std::string name ) {
+		if ( _entities.find( name ) != _entities.end( ) ) {
+			_entities.erase( name );
+		}
+	} // RemoveEntity
 
-	std::vector<std::shared_ptr<Entity>> EntityManager::GetEntities() {
-		std::vector<std::shared_ptr<Entity>> temp;
-		for (auto it : _entities) {
-			temp.push_back(it.second);
-		};
-		return temp;
-	};
-
-	std::vector<std::shared_ptr<Component>> EntityManager::GetComponents() {
-		std::vector <std::shared_ptr<Component>> tempCompVec;
-		for (auto it : _entities) {
-			std::vector<std::shared_ptr<Component>> temp = it.second->GetComponents();
-			tempCompVec.insert(tempCompVec.end(), temp.begin(), temp.end());
-		};
-		return tempCompVec;
-	};
-
-	std::vector<std::shared_ptr<Component>> EntityManager::GetComponents(std::string name) {
-		std::vector <std::shared_ptr<Component>> tempCompVec;
-		std::vector<std::shared_ptr<Component>> temp = _entities.find(name)->second->GetComponents();
-		tempCompVec.insert(tempCompVec.end(), temp.begin(), temp.end());
-		return tempCompVec;
-	};
-
-};
+	void EntityManager::RemoveComponent( std::string name, size_t flag ) {
+		std::unordered_map<std::string, std::shared_ptr<Entity>>::iterator it = _entities.find( name );
+		if ( it != _entities.end( ) ) {
+			it->second->RemoveComponent( flag );
+		}
+	} // RemoveComponent
+}
