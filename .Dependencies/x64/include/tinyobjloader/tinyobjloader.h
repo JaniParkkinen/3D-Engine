@@ -226,7 +226,7 @@ void LoadMtl(std::map<std::string, int> &material_map, // [output]
 #include <fstream>
 #include <sstream>
 
-#include "tiny_obj_loader.h"
+#include <tinyobjloader/tinyobjloader.h>
 
 namespace tinyobj {
 
