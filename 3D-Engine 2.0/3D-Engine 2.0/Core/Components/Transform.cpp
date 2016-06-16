@@ -5,8 +5,6 @@ namespace Engine {
 
 	void Transform::Cleanup( ) { }
 
-	void Transform::Update( DeltaTime deltaTime ) { }
-
 	///-----------------------------------------------------
 
 	void Transform::SetPosition( glm::vec3 position ) {
@@ -148,7 +146,7 @@ namespace Engine {
 	void Transform::MoveChildren( glm::vec3 move ) {
 		std::vector<std::shared_ptr<Entity>> children = _owner->GetChildren( );
 		for ( std::shared_ptr<Entity> child : children ) {
-			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( );
+			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( TRANSFORM );
 			if ( childTransform != nullptr ) {
 				childTransform->Move( move );
 			};
@@ -160,7 +158,7 @@ namespace Engine {
 	void Transform::SetRotationChildren( glm::vec3 rotation ) {
 		std::vector<std::shared_ptr<Entity>> children = _owner->GetChildren( );
 		for ( std::shared_ptr<Entity> child : children ) {
-			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( );
+			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( TRANSFORM );
 			if ( childTransform != nullptr ) {
 
 				//KORJATAAN!!!
@@ -176,7 +174,7 @@ namespace Engine {
 	void Transform::RotateChildren( glm::vec3 rotate ) {
 		std::vector<std::shared_ptr<Entity>> children = _owner->GetChildren( );
 		for ( std::shared_ptr<Entity> child : children ) {
-			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( );
+			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( TRANSFORM );
 			if ( childTransform != nullptr ) {
 
 				//KORJATAAN!!!
@@ -194,7 +192,7 @@ namespace Engine {
 	void Transform::ScaleChildren( GLfloat scale ) {
 		std::vector<std::shared_ptr<Entity>> children = _owner->GetChildren( );
 		for ( std::shared_ptr<Entity> child : children ) {
-			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( );
+			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( TRANSFORM );
 			if ( childTransform != nullptr ) {
 				childTransform->Scale( scale );
 			};
@@ -204,7 +202,7 @@ namespace Engine {
 	void Transform::ScaleChildren( glm::vec3 scale ) {
 		std::vector<std::shared_ptr<Entity>> children = _owner->GetChildren( );
 		for ( std::shared_ptr<Entity> child : children ) {
-			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( );
+			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( TRANSFORM );
 			if ( childTransform != nullptr ) {
 				childTransform->Scale( scale );
 			};

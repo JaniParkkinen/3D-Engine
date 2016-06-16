@@ -20,8 +20,6 @@ namespace Engine {
 		glDeleteShader( _programID );
 	};
 
-	void Shader::Update( DeltaTime deltaTime ) { };
-
 	void Shader::CompileShader( const char* source, GLenum shaderType ) {
 		//Resource* asd = ResourceManager::GetInstance()->LoadResource(source);
 

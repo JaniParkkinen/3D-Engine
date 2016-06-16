@@ -17,8 +17,6 @@ namespace Engine {
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
 
-		virtual void Update( DeltaTime deltaTime ) override;
-
 		void SetEmission( glm::vec3 emission ) { _emission = emission; };
 		void SetAmbient( glm::vec3 ambient ) { _ambient = ambient; };
 		void SetDiffuse( glm::vec3 diffuse ) { _diffuse = diffuse; };

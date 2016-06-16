@@ -19,8 +19,6 @@ namespace Engine {
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
 
-		virtual void Update( DeltaTime deltaTime ) override;
-
 		std::vector<glm::vec3> GetVertexData( ) { return _vertexData; };
 		std::vector<glm::uvec3> GetIndiceData( ) { return _vertexIndexData; };
 	private:

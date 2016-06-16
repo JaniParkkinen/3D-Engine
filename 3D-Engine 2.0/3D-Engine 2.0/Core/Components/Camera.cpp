@@ -7,7 +7,7 @@ namespace Engine {
 	Camera::~Camera( ) { };
 
 	void Camera::Init( ) {
-		_ownerTransform = _owner->GetComponent<Transform>( );
+		_ownerTransform = _owner->GetComponent<Transform>( TRANSFORM );
 	};
 
 	void Camera::Cleanup( ) { };

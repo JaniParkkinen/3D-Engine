@@ -12,8 +12,6 @@ namespace Engine {
 
 	void AxisAlignedBoundingBox::Cleanup( ) { };
 
-	void AxisAlignedBoundingBox::Update( DeltaTime deltaTime ) { };
-
 	void AxisAlignedBoundingBox::UpdateAABB( glm::vec3 min, glm::vec3 max ) {
 		_min = min;
 		_max = max;

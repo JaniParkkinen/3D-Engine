@@ -37,8 +37,6 @@ namespace Engine {
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
 
-		virtual void Update( DeltaTime deltaTime ) override;
-
 		void CompileShader( const char* source, GLenum shaderType );
 
 		void SetBinding( std::string name, void* value, eValue type );

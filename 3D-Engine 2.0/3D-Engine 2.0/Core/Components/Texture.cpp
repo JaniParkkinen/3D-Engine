@@ -25,8 +25,6 @@ namespace Engine {
 
 	void Texture::Cleanup( ) { };
 
-	void Texture::Update( DeltaTime deltaTime ) { };
-
 	void Texture::BindTexture( GLint id ) {
 		glActiveTexture( GL_TEXTURE0 );
 		glBindTexture( GL_TEXTURE_2D, texid );

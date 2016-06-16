@@ -17,8 +17,6 @@ namespace Engine {
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
 
-		virtual void Update( DeltaTime deltaTime ) override;
-
 		void UpdateAABB( glm::vec3 min, glm::vec3 max );
 
 		std::vector<glm::vec3> GetVertexData( ) { return _AABBVetrexData; };

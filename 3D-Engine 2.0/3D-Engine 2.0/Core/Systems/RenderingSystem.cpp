@@ -41,11 +41,11 @@ namespace Engine {
 			for ( std::shared_ptr<Entity> entity : entities ) {
 
 				//Get components needded for rendering
-				std::shared_ptr<Transform>	transform = entity->GetComponent<Transform>( );
-				std::shared_ptr<Render>		render = entity->GetComponent<Render>( );
-				std::shared_ptr<AxisAlignedBoundingBox>		aabb = entity->GetComponent<AxisAlignedBoundingBox>( );
-				std::shared_ptr<Texture>	texture = entity->GetComponent<Texture>( );
-				std::shared_ptr<Shader>		shader = entity->GetComponent<Shader>( );
+				std::shared_ptr<Transform>	transform = entity->GetComponent<Transform>( TRANSFORM );
+				std::shared_ptr<Render>		render = entity->GetComponent<Render>( RENDERABLE );
+				std::shared_ptr<AxisAlignedBoundingBox>		aabb = entity->GetComponent<AxisAlignedBoundingBox>( AABB );
+				std::shared_ptr<Texture>	texture = entity->GetComponent<Texture>( TEXTURE );
+				std::shared_ptr<Shader>		shader = entity->GetComponent<Shader>( SHADER );
 
 				//Check for the bare minimum components needed for rendering
 				if ( transform != nullptr && render != nullptr ) {

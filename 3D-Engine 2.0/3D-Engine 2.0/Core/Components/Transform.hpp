@@ -17,13 +17,11 @@ namespace Engine {
 	class Transform : public Component {
 	public:
 		Transform( glm::vec3 pos = glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3 rot = glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3 scale = glm::vec3( 1.0f, 1.0f, 1.0f ) )
-			: _position( pos ), _rotation( glm::radians( rot ) ), _rotationQuat( glm::radians( rot ) ), _scale( scale ) { };
+			: Component( TRANSFORM ), _position( pos ), _rotation( glm::radians( rot ) ), _rotationQuat( glm::radians( rot ) ), _scale( scale ) { };
 		virtual ~Transform( ) { };
 
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
-
-		virtual void Update( DeltaTime deltaTime ) override;
 
 		void SetPosition( glm::vec3 position );
 		void SetPosition( GLfloat x, GLfloat y, GLfloat z );

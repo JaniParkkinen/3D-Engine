@@ -15,8 +15,6 @@ namespace Engine {
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
 
-		virtual void Update( DeltaTime deltaTime ) override;
-
 		void BindTexture( GLint id );
 	private:
 		Resource* tex;

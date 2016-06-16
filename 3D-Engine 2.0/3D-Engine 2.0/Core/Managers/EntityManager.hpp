@@ -25,17 +25,18 @@ namespace Engine {
 	// COMPONENT
 	struct Component {
 	public:
+		Component( size_t type = NONE ) : _type( type ) { };
 		virtual void Init( ) = 0;
 		virtual void Cleanup( ) = 0;
 
 		size_t GetType( );
 	protected:
 		size_t _type;
-
+		std::shared_ptr<struct Entity> _owner;
 	};
 
 	// ENTITY
-	struct Entity {
+	struct Entity : std::enable_shared_from_this<Entity> {
 	public:
 		Entity( std::string name ) : _name( name ) { };
 		virtual ~Entity( ) { };
@@ -46,15 +47,18 @@ namespace Engine {
 		virtual void Update( DeltaTime deltaTime ) = 0;
 
 		template <typename T> std::shared_ptr<T> AddComponent( std::shared_ptr<Component> component );
+
 		template <typename T> std::shared_ptr<T> GetComponent( size_t flag );
+
 		void Entity::RemoveComponent( size_t flag );
 
 		void SetName( std::string name );
 		std::string GetName( );
-
+		std::vector<std::shared_ptr<Entity>> GetChildren( );
 	protected:
 		std::string _name;
 
+		std::vector<std::shared_ptr<Entity>> _children;
 		std::unordered_map<size_t, std::shared_ptr<Component>> _components;
 		size_t key;
 
@@ -63,10 +67,29 @@ namespace Engine {
 	// ENTITY MANAGER
 	class EntityManager {
 	public:
+		static EntityManager* GetInstance( ) {
+			static EntityManager entityManager;
+			return &entityManager;
+		}
+
 		template <typename T> std::shared_ptr<T> AddEntity( std::shared_ptr<Entity> entity );
-		template <typename T> std::shared_ptr<T> AddComponent( std::string name, std::shared_ptr<Component> component);
+		template <typename T> std::shared_ptr<T> AddComponent( std::string name, std::shared_ptr<Component> component );
+
+		template <typename T> std::shared_ptr<T> GetEntity( std::string name );
+		template <typename T> std::shared_ptr<T> GetComponent( std::string name, size_t flag );
+
+		std::vector<std::shared_ptr<Entity>> GetEntities( );
+
+		void RemoveEntity( std::string name );
+		void RemoveComponent( std::string name, size_t flag );
 
 	private:
+		EntityManager( ) { }
+		~EntityManager( ) { }
+
+		EntityManager( EntityManager const & ) { }
+		void operator=( EntityManager const & ) { }
+
 		std::unordered_map<std::string, std::shared_ptr<Entity>> _entities;
 	};
 

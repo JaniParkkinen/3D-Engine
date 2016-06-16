@@ -8,6 +8,8 @@ namespace Engine {
 
 	class Time {
 	public:
+		Time( );
+
 		DeltaTime Update( void );
 		DeltaTime GetDeltaTime( void );
 	private:

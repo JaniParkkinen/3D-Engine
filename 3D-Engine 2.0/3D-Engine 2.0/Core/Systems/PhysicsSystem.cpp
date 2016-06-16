@@ -20,9 +20,9 @@ namespace Engine {
 	void PhysicsSystem::Update( DeltaTime deltaTime ) {
 		std::vector<std::shared_ptr<Entity>> entities = _entityManager->GetEntities( );
 		for ( auto it = entities.begin( ); it != entities.end( ); it++ ) {
-			auto transformable = it->get( )->GetComponent<Transform>( );
-			auto renderable = it->get( )->GetComponent<Render>( );
-			auto aabb = it->get( )->GetComponent<AxisAlignedBoundingBox>( );
+			auto transformable = it->get( )->GetComponent<Transform>( TRANSFORM );
+			auto renderable = it->get( )->GetComponent<Render>( RENDERABLE );
+			auto aabb = it->get( )->GetComponent<AxisAlignedBoundingBox>( AABB );
 
 			if ( transformable != nullptr && renderable != nullptr && aabb != nullptr ) {
 				glm::mat4 scale = glm::mat4( 1 );
@@ -66,12 +66,12 @@ namespace Engine {
 	};
 
 	bool PhysicsSystem::CheckAABBCollision( std::shared_ptr<Entity> lhsEntity, std::shared_ptr<Entity> rhsEntity ) {
-		std::shared_ptr<AxisAlignedBoundingBox> lhsAABB = lhsEntity->GetComponent<AxisAlignedBoundingBox>( );
-		std::shared_ptr<AxisAlignedBoundingBox> rhsAABB = rhsEntity->GetComponent<AxisAlignedBoundingBox>( );
+		std::shared_ptr<AxisAlignedBoundingBox> lhsAABB = lhsEntity->GetComponent<AxisAlignedBoundingBox>( AABB );
+		std::shared_ptr<AxisAlignedBoundingBox> rhsAABB = rhsEntity->GetComponent<AxisAlignedBoundingBox>( AABB );
 
 		if ( lhsAABB != nullptr && rhsAABB != nullptr ) {
-			std::shared_ptr<Transform> lhsTransform = lhsEntity->GetComponent<Transform>( );
-			std::shared_ptr<Transform> rhsTransform = rhsEntity->GetComponent<Transform>( );
+			std::shared_ptr<Transform> lhsTransform = lhsEntity->GetComponent<Transform>( TRANSFORM );
+			std::shared_ptr<Transform> rhsTransform = rhsEntity->GetComponent<Transform>( TRANSFORM );
 
 			glm::mat4 lhsModel = glm::translate( glm::mat4( 1 ), lhsTransform->GetPosition( ) );
 			glm::mat4 rhsModel = glm::translate( glm::mat4( 1 ), rhsTransform->GetPosition( ) );
