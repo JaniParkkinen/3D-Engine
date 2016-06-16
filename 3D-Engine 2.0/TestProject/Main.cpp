@@ -78,17 +78,14 @@ int main() {
 			if (keyboard.getKeyDown('1'))
 			{
 				Engine::ResourceManager::GetInstance()->LoadResource("../../Assets/Test.txt");
-				Message("Text resource loaded.", Engine::MessageType::Info);
 			}
 			if (keyboard.getKeyDown('2'))
 			{
 				Engine::ResourceManager::GetInstance()->LoadResource("../../Assets/Test.png");
-				Message("Image resource loaded.", Engine::MessageType::Info);
 			}
 			if (keyboard.getKeyDown('3'))
 			{
 				Engine::ResourceManager::GetInstance()->LoadResource("../../Assets/Test.obj");
-				Message("Object resource loaded.", Engine::MessageType::Info);
 			}
 			if (keyboard.getKey(VK_ESCAPE))
 			{

@@ -1,27 +1,18 @@
-#include <Core/Managers/ResourceManager.hpp>
 #include <iostream>
 #include <Windows.h>
+
 #include <lodepng/lodepng.h>
 #include <lodepng/lodepng.cpp>
-#include <Core/Components/Material.hpp>
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tinyobjloader/tinyobjloader.h>
 
+#include <Core/Message.hpp>
+#include <Core/Components/Material.hpp>
+#include <Core/Managers/ResourceManager.hpp>
+
 namespace Engine {
 
-	ResourceManager* ResourceManager::instance = nullptr;
-
-	ResourceManager* ResourceManager::GetInstance()
-	{
-		if (instance == nullptr)
-		{
-			std::cout << "Creating a new resource manager. " << std::endl;
-			instance = new ResourceManager;
-
-		}
-		return instance;
-	}
 	std::shared_ptr<Resource> ResourceManager::LoadResource(std::string filepath)
 	{
 		try {
@@ -29,7 +20,7 @@ namespace Engine {
 			{
 				if (i->getFilePath() == filepath)
 				{
-					std::cout << "resource already loaded" << std::endl;
+					Message("Resource already loaded.", Engine::MessageType::Warning);
 					i->pushResourceUsers(1);
 					
 					return i;
@@ -41,26 +32,21 @@ namespace Engine {
 			//TextFile
 			if (filepath.substr(filepath.size() - 4) == ".txt" || filepath.substr(filepath.size() - 3) == ".vs" || filepath.substr(filepath.size() - 3) == ".fs")
 			{
-				if (filepath.substr(filepath.size() - 3) == ".vs" || filepath.substr(filepath.size() - 3) == ".fs")
-				{
-					std::cout << "Loading shader file" << std::endl;
-					// load shader file
-				}
-				std::cout << "A text file" << std::endl;
+				Message("Loading text file.", Engine::MessageType::Info);
 				res = ResourceManager::LoadTextResource(filepath);
 				return res;
 			}
 			//ImageFile
 			else if (filepath.substr(filepath.size() - 4) == ".png")
 			{
-				std::cout << "An image file" << std::endl;
+				Message("Loading image file.", Engine::MessageType::Info);
 				res = ResourceManager::LoadImageResource(filepath);
 				return res;
 			}
 			//AudioFile
 			else if (filepath.substr(filepath.size() - 4) == ".wav")
 			{
-				std::cout << "An audio file" << std::endl;
+				Message("Loading audio file.", Engine::MessageType::Info);
 				res = ResourceManager::LoadAudioResource(filepath);
 
 				return res;
@@ -68,7 +54,7 @@ namespace Engine {
 			//FontFile
 			else if (filepath.substr(filepath.size() - 4) == ".ttf")
 			{
-				std::cout << "a font file" << std::endl;
+				Message("Loading font file.", Engine::MessageType::Info);
 
 
 				size_t size = strlen(filepath.c_str()) + 1; // +1 to include NULL
@@ -83,7 +69,7 @@ namespace Engine {
 			}
 			else if (filepath.substr(filepath.size() - 4) == ".obj")
 			{
-				std::cout << "An object file" << std::endl;
+				Message("Loading obj file.", Engine::MessageType::Info);
 				res = ResourceManager::LoadObjectResource(filepath);
 
 				return res;
@@ -91,8 +77,7 @@ namespace Engine {
 			//UnknownFile
 			else
 			{
-				std::cout << "filetype not regognized" << std::endl;
-				return 0;
+				Message("Filetype not recognized.", Engine::MessageType::Error);
 			}
 		}
 		catch (...) {
@@ -107,11 +92,11 @@ namespace Engine {
 		{
 			if ((*_it)->setID(ID))
 			{
-				std::cout << "Deleting resource" << std::endl;
+				Message("Deleting resource user.", Engine::MessageType::Info);
 				(*_it)->popResourceUsers();
 				if ((*_it)->sizeResourceUsers() <= 0)
 				{
-					std::cout << "unloading resource" << std::endl;
+					Message("Unloading resource.", Engine::MessageType::Info);
 					_it = _resources.erase(_it);
 				}
 				else
@@ -123,22 +108,29 @@ namespace Engine {
 	}
 	int ResourceManager::GetResourceUsers(int ID)
 	{
-		_it = _resources.begin();
-		while (_it != _resources.end())
+		try
 		{
-			if ((*_it)->setID(ID))
+			_it = _resources.begin();
+			while (_it != _resources.end())
 			{
-				return (*_it)->sizeResourceUsers();
+				if ((*_it)->setID(ID))
+				{
+					return (*_it)->sizeResourceUsers();
+				}
+				_it++;
 			}
-			_it++;
+			Message("Resource not found.", Engine::MessageType::Error);
 		}
-		std::cout << "Resource not found" << std::endl;
-		return 0;
+		catch (int i) {
+			return i;
+		}
+		catch (...) {
+			return -1;
+		}
 	}
 
 	std::shared_ptr<Resource> ResourceManager::LoadTextResource(std::string filepath)
 	{
-		std::cout << "Loading Resource" << std::endl;
 		std::shared_ptr<Resource> res = std::make_shared<Resource>();
 		res->setFilePath(filepath);
 		res->setType(Resource_Type::Resource_Text);
@@ -169,13 +161,14 @@ namespace Engine {
 			res->setTextData(readFile);		//
 
 		}
+		else {
+			Message("Couldn't open file.", Engine::MessageType::Error);
+		}
 		_resources.push_back(res);
 		return res;
 	}
 	std::shared_ptr<Resource> ResourceManager::LoadImageResource(std::string filepath)
 	{
-
-		std::cout << "Loading resource" << std::endl;
 		unsigned width, height;
 
 		std::shared_ptr<Resource> res = std::make_shared<Resource>();
@@ -187,6 +180,10 @@ namespace Engine {
 		std::vector<unsigned char> image;
 		unsigned error = lodepng::decode(image, width, height, filepath);
 
+		if (error) {
+			Message("Error loading image file.", Engine::MessageType::Error);
+		}
+
 		res->setImageData(image, width, height);
 
 		_resources.push_back(res);
@@ -194,7 +191,6 @@ namespace Engine {
 	}
 	std::shared_ptr<Resource> ResourceManager::LoadAudioResource(std::string filepath)
 	{
-		std::cout << "Loading Resource" << std::endl;
 
 		std::shared_ptr<Resource> res = std::make_shared<Resource>();
 		res->setFilePath(filepath);
@@ -211,7 +207,6 @@ namespace Engine {
 	}
 	std::shared_ptr<Resource> ResourceManager::LoadFontResource(std::string filepath)
 	{
-		std::cout << "Loading Resource" << std::endl;
 
 		std::shared_ptr<Resource> res = std::make_shared<Resource>();
 		res->setFilePath(filepath);
@@ -224,8 +219,6 @@ namespace Engine {
 	}
 	std::shared_ptr<Resource> ResourceManager::LoadObjectResource(std::string filepath)
 	{
-
-		std::cout << "Loading Resource" << std::endl;
 
 		std::shared_ptr<Resource> res = std::make_shared<Resource>();
 		res->setFilePath(filepath);
@@ -246,7 +239,7 @@ namespace Engine {
 		tinyobj::LoadObj(shapes, materials, err, filepath.c_str(), filedir.c_str());
 
 		if (!err.empty()) {
-			std::cout << err << std::endl;
+			Message(std::string("Error loading obj file. ").append(err), Engine::MessageType::Error);
 		}
 
 		//!shapes->texcoordinates.empty()

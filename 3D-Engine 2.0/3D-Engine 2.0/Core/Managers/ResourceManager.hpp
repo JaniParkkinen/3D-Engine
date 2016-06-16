@@ -10,7 +10,10 @@ namespace Engine {
 		{
 		public:
 
-			static ResourceManager* GetInstance();
+			static ResourceManager* GetInstance() {
+				static ResourceManager resourceManager;
+				return &resourceManager;
+			}
 
 			std::shared_ptr<Resource> LoadResource(std::string filepath);
 			void unLoadResource(int ID);
@@ -28,7 +31,6 @@ namespace Engine {
 			std::vector<std::shared_ptr<Resource>> _resources;
 			std::vector<std::shared_ptr<Resource>>::iterator _it;
 			int ID_generator = 0;
-			static ResourceManager* instance;
 			//irrklang::ISoundSource* source;
 
 			std::shared_ptr<Resource> LoadTextResource(std::string filepath);
