@@ -242,31 +242,9 @@ namespace Engine {
 			Message(std::string("Error loading obj file. ").append(err), Engine::MessageType::Error);
 		}
 
-		//!shapes->texcoordinates.empty()
+		res->setShapes(shapes);
+		res->setMaterials(materials);
 		
-		//for (size_t i = 0; i < shapes.size(); i++) {
-		//	size_t offset = res->_vertices.size();
-		//	for (size_t j = 0; j < shapes[i].mesh.positions.size() / 3; j++)
-		//	{
-		//		res->_vertices.push_back(glm::vec3(shapes[i].mesh.positions[3 * j + 0], shapes[i].mesh.positions[3 * j + 1], shapes[i].mesh.positions[3 * j + 2]));
-		//		res->_vertices.push_back(glm::vec3(shapes[i].mesh.texcoords[2 * j + 0], shapes[i].mesh.texcoords[2 * j + 1], 0.0f));
-		//		res->_vertices.push_back(glm::vec3(shapes[i].mesh.normals[3 * j + 0], shapes[i].mesh.normals[3 * j + 1], shapes[i].mesh.normals[3 * j + 2]));
-		//	}
-		//	for (size_t j = 0; j < shapes[i].mesh.indices.size() / 3; j++) {
-		//		res->_indices.push_back(glm::uvec3(shapes[i].mesh.indices[3 * j + 0] + offset, shapes[i].mesh.indices[3 * j + 1] + offset, shapes[i].mesh.indices[3 * j + 2] + offset));
-		//	}
-		//}
-
-
-		//for (size_t i = 0; i < materials.size(); i++) {
-		//	res->_material = new Engine::Material(glm::vec3(materials[i].emission[0], materials[i].emission[1], materials[i].emission[2]),
-		//		glm::vec3(materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]),
-		//		glm::vec3(materials[i].diffuse[0], materials[i].diffuse[1], materials[i].diffuse[2]),
-		//		glm::vec3(materials[i].specular[0], materials[i].specular[1], materials[i].specular[2]),
-		//		glm::vec3(materials[i].transmittance[0], materials[i].transmittance[1], materials[i].transmittance[2]),
-		//		materials[i].ior, materials[i].shininess, materials[i].dissolve, materials[i].illum, materials[i].dummy);
-		//}
-
 		_resources.push_back(res);
 		return res;
 	}

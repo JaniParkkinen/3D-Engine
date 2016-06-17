@@ -34,15 +34,18 @@ namespace Engine {
 		void pushResourceUsers(int i) { resourceUsers.push_back(i); };
 		void popResourceUsers() { resourceUsers.pop_back(); }
 		void setType(Resource_Type type) { _type = type; }
-		bool setID(unsigned id) { resourceID = id; return true; }
 
-		std::string getTextData() { return textData; }
+		void setFilePath(std::string filepath) { this->filepath = filepath; }
+		void setShapes(std::vector<tinyobj::shape_t> shapes) { _shapes.insert(_shapes.begin(), shapes.begin(), shapes.end()); }
+		void setMaterials(std::vector<tinyobj::material_t> materials) { _materials.insert(_materials.begin(), materials.begin(), materials.end()); }
+		bool setID(unsigned id) { resourceID = id; return true; }
 		
 		std::vector<unsigned char> getImageData() { return imageData; }
-		
-		void setFilePath(std::string filepath) { this->filepath = filepath; }
+		std::vector<tinyobj::shape_t> getShapes() { return _shapes; }
+		std::vector<tinyobj::material_t> getMaterial() { return _materials; }
+
 		std::string getFilePath() { return filepath; }
-		
+		std::string getTextData() { return textData; }
 		
 		int sizeResourceUsers() { return resourceUsers.size(); }
 
@@ -55,15 +58,13 @@ namespace Engine {
 		std::vector<int> resourceUsers;
 		bool _loaded;
 		int iHeight, iWidth;
-		//Engine::Material* _material;
-		//std::vector < glm::vec3 >  _vertices;
-		//std::vector < glm::vec2 >  _uvs;
-		//std::vector < glm::vec3 >  _normals;
+		std::vector<tinyobj::shape_t> _shapes;
+		std::vector<tinyobj::material_t> _materials;
 
-		//std::vector < glm::uvec3 > _indices;
 	private:
 		std::string textData;
 		std::vector<unsigned char> imageData;
+
 	};
 }
 
