@@ -18,14 +18,12 @@ namespace Engine {
 	#define TEXTURE		0x00000020u
 	#define TRANSFORM	0x00000040u
 
-	///System flags
-	#define RENDER		0x00000048u
-	#define PHYSICS		0x00000049u
-
 	// COMPONENT
 	struct Component {
 	public:
-		Component( size_t type = NONE ) : _type( type ) { };
+		Component( size_t type = NONE ) : _type( type ) { }
+		virtual ~Component( ) { }
+
 		virtual void Init( ) = 0;
 		virtual void Cleanup( ) = 0;
 
@@ -38,8 +36,8 @@ namespace Engine {
 	// ENTITY
 	struct Entity : std::enable_shared_from_this<Entity> {
 	public:
-		Entity( std::string name ) : _name( name ) { };
-		virtual ~Entity( ) { };
+		Entity( std::string name ) : _name( name ) { }
+		virtual ~Entity( ) { }
 
 		virtual void Init( ) = 0;
 		virtual void Cleanup( ) = 0;
@@ -51,6 +49,7 @@ namespace Engine {
 		template <typename T> std::shared_ptr<T> GetComponent( size_t flag );
 
 		void Entity::RemoveComponent( size_t flag );
+		void Entity::RemoveComponents( );
 
 		void SetName( std::string name );
 		std::string GetName( );
@@ -80,12 +79,13 @@ namespace Engine {
 
 		std::vector<std::shared_ptr<Entity>> GetEntities( );
 
+		void RemoveEntities( );
 		void RemoveEntity( std::string name );
 		void RemoveComponent( std::string name, size_t flag );
 
+		void Update( DeltaTime deltaTime );
 	private:
 		EntityManager( ) { }
-		~EntityManager( ) { }
 
 		EntityManager( EntityManager const & ) { }
 		void operator=( EntityManager const & ) { }

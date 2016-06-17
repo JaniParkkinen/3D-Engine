@@ -127,5 +127,8 @@
     <None Include="Core\Managers\EntityManager.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="Core\Managers\SystemManager.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
