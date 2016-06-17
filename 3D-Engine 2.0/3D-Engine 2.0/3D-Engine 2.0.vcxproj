@@ -193,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Managers\EntityManager.inl" />
+    <None Include="Core\Managers\SystemManager.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

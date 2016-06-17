@@ -22,11 +22,10 @@ namespace Engine {
 
 		private:
 
-			ResourceManager() {};
-			~ResourceManager() {};
+			ResourceManager() {}
 
-			ResourceManager(ResourceManager const&) {};
-			void operator=(ResourceManager const&) {};
+			ResourceManager( ResourceManager const& );
+			void operator=( ResourceManager const& );
 
 			std::vector<std::shared_ptr<Resource>> _resources;
 			std::vector<std::shared_ptr<Resource>>::iterator _it;

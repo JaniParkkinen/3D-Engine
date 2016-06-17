@@ -18,8 +18,6 @@ template <typename T> std::shared_ptr<T> Entity::GetComponent( size_t flag ) {
 	return nullptr;
 } // GetComponent
 
-
-
 // ENTITY MANAGER
 template <typename T> std::shared_ptr<T> EntityManager::AddEntity( std::shared_ptr<Entity> entity ) {
 	if ( _entities.find( entity->GetName( ) ) == _entities.end( ) ) {

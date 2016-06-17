@@ -3,12 +3,18 @@
 
 #include <vector>
 #include <memory>
+#include <unordered_map>
 
-#include <Core\Time.hpp>
+#include <Core/Time.hpp>
 
 namespace Engine {
+	///System flags
+	#define NONE		0x00000000u
+	#define RENDER		0x00000048u
+	#define PHYSICS		0x00000049u
+
 	struct System {
-		System( ) : _paused( false ) { };
+		System( size_t flag = NONE ) : _paused( false ), _flag(flag) { };
 		virtual ~System( ) { };
 
 		virtual void Init( ) = 0;
@@ -19,80 +25,33 @@ namespace Engine {
 
 		virtual void Update( DeltaTime deltaTime ) = 0;
 
+		size_t GetFlag( );
+
 	protected:
 		bool _paused;
+		size_t _flag;
 	};
 
 	class SystemManager {
 	public:
 		static SystemManager* GetInstance( ) {
-			static SystemManager SysMan;
-			return &SysMan;
-		};
+			static SystemManager systemManager;
+			return &systemManager;
+		}
 
-		template <typename T, typename ...args> std::shared_ptr<T> AddSystem( args... param );
-		template <typename T> void RemoveSystem( );
-		template <typename T> void PauseSystem( );
-		template <typename T> void ResumeSystem( );
+		template <typename T> std::shared_ptr<T> AddSystem( std::shared_ptr<System> system );
+		template <typename T> std::shared_ptr<T> GetSystem( size_t flag );
 
-		void Update( DeltaTime deltaTime );
-		void Clear( );
-
-		template <typename T> std::shared_ptr<T> GetSystem( );
+		void RemoveSystem( size_t flag );
 
 	private:
-		std::vector<std::shared_ptr<System>> _systems;
+		SystemManager( ) { }
+		SystemManager( SystemManager const & );
+		void operator=( SystemManager const & );
 
-		SystemManager( ) { };
-		~SystemManager( ) { Clear( ); };
-
-		SystemManager( SystemManager const& );
-		void operator=( SystemManager const& );
+		std::unordered_map<size_t, std::shared_ptr<System>> _systems;
 	};
 
-	template <typename T, typename ...args> std::shared_ptr<T> SystemManager::AddSystem( args... param ) {
-		for ( auto it : _systems ) {
-			if ( std::dynamic_pointer_cast< T >( it ) != nullptr ) { return nullptr; }
-		};
-		_systems.push_back( std::make_shared<T>( param... ) );
-		_systems.back( )->Init( );
-		return std::dynamic_pointer_cast< T >( _systems.back( ) );
-	};
-
-	template <typename T> void SystemManager::RemoveSystem( ) {
-		for ( auto it = _systems.begin( ); it != _systems.end( );) {
-			if ( std::dynamic_pointer_cast< T >( *it ) != nullptr ) {
-				it->get( )->Cleanup( );
-				it = _systems.erase( it );
-			} else {
-				it++;
-			};
-		};
-	};
-
-	template <typename T> void SystemManager::PauseSystem( ) {
-		for ( auto it : _systems ) {
-			if ( std::dynamic_pointer_cast< T >( it ) != nullptr ) {
-				it->Pause( );
-			};
-		};
-	};
-
-	template <typename T> void SystemManager::ResumeSystem( ) {
-		for ( auto it : _systems ) {
-			if ( std::dynamic_pointer_cast< T >( it ) != nullptr ) {
-				it->Resume( );
-			};
-		};
-	};
-
-	template <typename T> std::shared_ptr<T> SystemManager::GetSystem( ) {
-		for ( std::shared_ptr<System> sys : _systems ) {
-			if ( std::dynamic_pointer_cast< T >( sys ) != nullptr ) {
-				return std::dynamic_pointer_cast< T >( sys );
-			};
-		};
-		return nullptr;
-	};
-};
+	#include <Core/Managers/SystemManager.inl>
+}
 #endif

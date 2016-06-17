@@ -1,16 +1,13 @@
 #include <Core/Managers/SystemManager.hpp>
 
 namespace Engine {
-	inline void SystemManager::Clear( ) {
-		while ( !_systems.empty( ) ) {
-			_systems.back( )->Cleanup( );
-			_systems.pop_back( );
-		};
-	};
+	size_t System::GetFlag( ) {
+		return _flag;
+	} // GetFlag
 
-	inline void SystemManager::Update( DeltaTime deltaTime ) {
-		for ( auto it : _systems ) {
-			it->Update( deltaTime );
-		};
-	};
-};
+	void SystemManager::RemoveSystem( size_t flag ) {
+		if ( _systems.find( flag ) != _systems.end( ) ) {
+			_systems.erase( flag );
+		}
+	} // RemoveSystem
+}
