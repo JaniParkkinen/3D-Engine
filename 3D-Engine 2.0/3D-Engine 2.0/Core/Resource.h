@@ -6,6 +6,9 @@
 #include <vector>
 #include <memory>
 
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tinyobjloader/tinyobjloader.h>
+
 //http://gamedev.stackexchange.com/questions/17066/designing-a-resourcemanager-class/17082#17082
 namespace Engine {
 	typedef enum class Resource_Type

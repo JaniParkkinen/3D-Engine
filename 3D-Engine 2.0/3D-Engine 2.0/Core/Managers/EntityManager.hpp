@@ -54,6 +54,8 @@ namespace Engine {
 		void SetName( std::string name );
 		std::string GetName( );
 		std::vector<std::shared_ptr<Entity>> GetChildren( );
+		size_t const & GetKey( );
+
 	protected:
 		std::string _name;
 

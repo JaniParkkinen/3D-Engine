@@ -76,13 +76,13 @@ int main( ) {
 			deltaTime.Update( );
 
 			if ( keyboard.getKeyDown( '1' ) ) {
-				Engine::ResourceManager::GetInstance( )->LoadResource( "../../Assets/Test.txt" );
+				Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Test.txt" );
 			}
 			if ( keyboard.getKeyDown( '2' ) ) {
-				Engine::ResourceManager::GetInstance( )->LoadResource( "../../Assets/Test.png" );
+				Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Test.png" );
 			}
 			if ( keyboard.getKeyDown( '3' ) ) {
-				Engine::ResourceManager::GetInstance( )->LoadResource( "../../Assets/Test.obj" );
+				Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Test.obj" );
 			}
 			if ( keyboard.getKey( VK_ESCAPE ) ) {
 				exit( 0 );

@@ -24,7 +24,7 @@ namespace Engine {
 	class RenderingSystem : public System {
 	public:
 		RenderingSystem( Window* window, const char* vertexShaderPath = "Resources/Vert.txt", const char* fragmentShaderPath = "Resources/Frag.txt" )
-			: _window( window ), System( RENDER ) { };
+			: _window( window ), _vertexShaderPath( vertexShaderPath ), _fragmentShaderPath( fragmentShaderPath ), System( RENDER ) { };
 
 		virtual ~RenderingSystem( ) { };
 
@@ -36,7 +36,7 @@ namespace Engine {
 
 		virtual void Update( DeltaTime deltaTime ) override;
 
-		void SetCamera( std::shared_ptr<Camera> cam ) { _cam = cam; };
+		void SetActiveCamera( std::shared_ptr<Camera> cam ) { _cam = cam; };
 
 	private:
 		EntityManager* _entityManager;
@@ -46,6 +46,9 @@ namespace Engine {
 		Buffer _indiceBuffer;
 
 		std::shared_ptr<Camera> _cam;
+
+		std::string _vertexShaderPath;
+		std::string _fragmentShaderPath;
 	};
 };
 

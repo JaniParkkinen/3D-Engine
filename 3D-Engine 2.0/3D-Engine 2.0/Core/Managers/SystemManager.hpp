@@ -10,7 +10,7 @@
 namespace Engine {
 	///System flags
 	#define NONE		0x00000000u
-	#define RENDER		0x00000048u
+	#define RENDER		0x00000058u
 	#define PHYSICS		0x00000049u
 
 	struct System {

@@ -1,7 +1,12 @@
 #ifndef Engine_Material_hpp
 #define Engine_Material_hpp
 
-#include <glm/glm.hpp>
+#include <vector>
+
+#include <GLM/glm.hpp>
+
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tinyobjloader/tinyobjloader.h>
 
 #include <Core/Time.hpp>
 #include <Core/Managers/EntityManager.hpp>
