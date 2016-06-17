@@ -12,4 +12,18 @@ namespace Engine {
 			_systems.erase( flag );
 		}
 	} // RemoveSystem
+
+	void SystemManager::PauseSystem( size_t flag ) {
+		_systems.find( flag )->second->Pause( );
+	} // PauseSystem
+
+	void SystemManager::ResumeSystem( size_t flag ) {
+		_systems.find( flag )->second->Resume( );
+	} // ResumeSystem
+
+	void SystemManager::Update( DeltaTime deltaTime ) {
+		for ( std::pair<size_t, std::shared_ptr<System>> system : _systems ) {
+			system.second->Update( deltaTime );
+		}
+	} // Update
 }

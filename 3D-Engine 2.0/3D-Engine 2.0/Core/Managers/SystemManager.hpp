@@ -44,6 +44,11 @@ namespace Engine {
 
 		void RemoveSystem( size_t flag );
 
+		void PauseSystem( size_t flag );
+		void ResumeSystem( size_t flag );
+
+		void Update( DeltaTime deltaTime );
+
 	private:
 		SystemManager( ) { }
 		SystemManager( SystemManager const & );

@@ -60,4 +60,10 @@ namespace Engine {
 			it->second->RemoveComponent( flag );
 		}
 	} // RemoveComponent
+
+	void EntityManager::Update( DeltaTime deltaTime ) {
+		for ( std::pair<std::string, std::shared_ptr<Entity>> entity : _entities ) {
+			entity.second->Update( deltaTime );
+		}
+	} // Update
 }

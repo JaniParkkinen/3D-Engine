@@ -83,6 +83,7 @@ namespace Engine {
 		void RemoveEntity( std::string name );
 		void RemoveComponent( std::string name, size_t flag );
 
+		void Update( DeltaTime deltaTime );
 	private:
 		EntityManager( ) { }
 
