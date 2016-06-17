@@ -5,19 +5,17 @@
 
 #include <GL/glew.h>
 
-namespace Engine
-{
-	class Buffer
-	{
+namespace Engine {
+	class Buffer {
 	public:
-		Buffer() : _bufferID(0), _bufferSize(1), _bufferType(GL_NONE) {};
-		~Buffer() {};
+		Buffer( ) : _bufferID( 0 ), _bufferSize( 1 ), _bufferType( GL_NONE ) { };
+		~Buffer( ) { };
 
-		void CreateBuffer(GLenum bufferType);
-		void BindBufferData(GLuint size, void* data);
+		void CreateBuffer( GLenum bufferType );
+		void BindBufferData( GLuint size, void* data );
 
 	private:
-		void Resize(GLuint size);
+		void Resize( GLuint size );
 
 		GLuint _bufferID;
 		GLuint _bufferSize;

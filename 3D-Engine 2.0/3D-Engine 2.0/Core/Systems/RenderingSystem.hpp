@@ -19,25 +19,23 @@
 #include <Core/Components/Texture.hpp>
 #include <Core/Components/Camera.hpp>
 
-namespace Engine
-{
-	class RenderingSystem : public System
-	{
+namespace Engine {
+	class RenderingSystem : public System {
 	public:
-		RenderingSystem(Window* window, const char* vertexShaderPath = "Resources/Vert.txt", const char* fragmentShaderPath = "Resources/Frag.txt")
-			: _window(window), System() {};
+		RenderingSystem( Window* window, const char* vertexShaderPath = "Resources/Vert.txt", const char* fragmentShaderPath = "Resources/Frag.txt" )
+			: _window( window ), System( ) { };
 
-		virtual ~RenderingSystem() {};
+		virtual ~RenderingSystem( ) { };
 
-		virtual void Init() override;
-		virtual void Cleanup() override;
+		virtual void Init( ) override;
+		virtual void Cleanup( ) override;
 
-		virtual void Pause() override;
-		virtual void Resume() override;
+		virtual void Pause( ) override;
+		virtual void Resume( ) override;
 
-		virtual void Update(DeltaTime deltaTime) override;
+		virtual void Update( DeltaTime deltaTime ) override;
 
-		void SetCamera(std::shared_ptr<Camera> cam) { _cam = cam; };
+		void SetCamera( std::shared_ptr<Camera> cam ) { _cam = cam; };
 
 	private:
 		EntityManager* _entityManager;
