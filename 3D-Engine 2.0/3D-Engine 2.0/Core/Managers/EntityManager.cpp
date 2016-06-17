@@ -25,6 +25,10 @@ namespace Engine {
 		}
 	} // RemoveComponent
 
+	void Entity::RemoveComponents( ) {
+		_components.clear( );
+	} // RemoveComponents
+
 	// ENTITY MANAGER
 	std::vector<std::shared_ptr<Entity>> EntityManager::GetEntities( ) {
 		std::vector<std::shared_ptr<Entity>> entities;
@@ -35,10 +39,20 @@ namespace Engine {
 	} // GetEntities
 
 	void EntityManager::RemoveEntity( std::string name ) {
-		if ( _entities.find( name ) != _entities.end( ) ) {
+		std::unordered_map<std::string, std::shared_ptr<Entity>>::iterator it = _entities.find( name );
+		if ( it != _entities.end( ) ) {
+			it->second->RemoveComponents( );
+			it->second->Cleanup( );
 			_entities.erase( name );
 		}
 	} // RemoveEntity
+
+	void EntityManager::RemoveEntities( ) {
+		for ( std::pair<std::string, std::shared_ptr<Entity>> entity : _entities ) {
+			entity.second->RemoveComponents( );
+		}
+		_entities.clear( );
+	} // RemoveEntities
 
 	void EntityManager::RemoveComponent( std::string name, size_t flag ) {
 		std::unordered_map<std::string, std::shared_ptr<Entity>>::iterator it = _entities.find( name );
@@ -46,4 +60,10 @@ namespace Engine {
 			it->second->RemoveComponent( flag );
 		}
 	} // RemoveComponent
+
+	void EntityManager::Update( DeltaTime deltaTime ) {
+		for ( std::pair<std::string, std::shared_ptr<Entity>> entity : _entities ) {
+			entity.second->Update( deltaTime );
+		}
+	} // Update
 }

@@ -1,6 +1,7 @@
 template <typename T> std::shared_ptr<T> SystemManager::AddSystem( std::shared_ptr<System> system ) {
-	if ( _systems.find( system->GetFlag( ) ) == _entities.end( ) ) {
+	if ( _systems.find( system->GetFlag( ) ) == _systems.end( ) ) {
 		_systems.insert( std::make_pair( system->GetFlag( ), system ) );
+		system->Init( );
 		return std::static_pointer_cast< T >( system );
 	}
 	return nullptr;

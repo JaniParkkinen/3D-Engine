@@ -12,18 +12,19 @@
 
 #include <Core/Managers/SystemManager.hpp>
 
-#include <Core/Components/Transform.hpp>
-#include <Core/Components/Renderable.hpp>
 #include <Core/Components/AABB.hpp>
+#include <Core/Components/Camera.hpp>
+#include <Core/Components/Material.hpp>
+#include <Core/Components/Renderable.hpp>
 #include <Core/Components/Shader.hpp>
 #include <Core/Components/Texture.hpp>
-#include <Core/Components/Camera.hpp>
+#include <Core/Components/Transform.hpp>
 
 namespace Engine {
 	class RenderingSystem : public System {
 	public:
 		RenderingSystem( Window* window, const char* vertexShaderPath = "Resources/Vert.txt", const char* fragmentShaderPath = "Resources/Frag.txt" )
-			: _window( window ), System( ) { };
+			: _window( window ), System( RENDER ) { };
 
 		virtual ~RenderingSystem( ) { };
 
