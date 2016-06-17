@@ -63,7 +63,7 @@ namespace Engine {
 		float _ior;
 		float _shininess;
 		float _dissolve;
-		float _illum; //Illuminati
+		float _illum;
 		float _dummy;
 	};
 };
