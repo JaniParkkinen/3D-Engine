@@ -5,12 +5,11 @@ namespace Engine {
 		_entityManager = EntityManager::GetInstance( );
 
 		glEnable( GL_DEPTH_TEST );
-		glEnable( GL_LIGHTING );
 
 		glUseProgram( 0 );
 
 		_vertexBuffer.CreateBuffer( GL_ARRAY_BUFFER );
-		_indiceBuffer.CreateBuffer( GL_ELEMENT_ARRAY_BUFFER );
+		_indexBuffer.CreateBuffer( GL_ELEMENT_ARRAY_BUFFER );
 
 		glClearColor( 0.0f, 0.0f, 1.0f, 1.0f );
 	} // Init
@@ -36,7 +35,9 @@ namespace Engine {
 			std::vector<std::shared_ptr<Entity>> entities = _entityManager->GetEntities( );
 			for ( std::shared_ptr<Entity> entity : entities ) {
 				//Check if entity has rendering flags
-				if ( entity->GetKey( ) & RENDER == RENDER ) {
+				if ( entity->GetKey( ) & RENDER ) {
+
+					GLAssert( );
 
 					// Get components needed for rendering
 					std::shared_ptr<AxisAlignedBoundingBox>		aabb = entity->GetComponent<AxisAlignedBoundingBox>( AABB );
@@ -46,7 +47,12 @@ namespace Engine {
 					std::shared_ptr<Texture>					texture = entity->GetComponent<Texture>( TEXTURE );
 					std::shared_ptr<Transform>					transform = entity->GetComponent<Transform>( TRANSFORM );
 
-					glUseProgram( shader->GetProgramID( ) );
+					GLAssert( );
+
+					GLuint shaderID = shader->GetProgramID( );
+					glUseProgram( shaderID );
+
+					GLAssert( );
 
 					// Get Data
 					glm::mat4 translate = glm::translate( glm::mat4( 1.0f ), transform->GetPosition( ) );
@@ -57,71 +63,61 @@ namespace Engine {
 
 					glm::mat4 Model = translate * Rotate * Scale;
 
-					glm::mat4 View = _cam->GetViewMatrix( );
+					glm::mat4 View = glm::lookAt( glm::vec3(0.0f, 0.0f, 0.0f ), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3( 0.0f, 1.0f, 0.0f ) );
+
+					//glm::mat4 View = _cam->GetViewMatrix( );
 
 					glm::mat4 Projection = glm::perspective( glm::radians( 60.0f ), _window->GetSize( ).x / _window->GetSize( ).y, 0.01f, 400.0f );
 
-					glm::vec3 ViewPosition = _cam->GetPosition( );
+					//glm::vec3 ViewPosition = _cam->GetPosition( );
 
+					GLAssert( );
 
 					// Bind Data
-					if ( entity->GetKey( ) & TEXTURE == TEXTURE ) {
-						texture->BindTexture( shader->GetProgramID( ) );
+					if ( entity->GetKey( ) & TEXTURE ) {
+						texture->BindTexture( shaderID );
 					};
 
-					//GLint ModelLocation = glGetUniformLocation( shader->GetProgramID( ), "Model" );
-					//GLint ViewLocation = glGetUniformLocation( shader->GetProgramID( ), "View" );
-					//GLint ProjectionLocation = glGetUniformLocation( shader->GetProgramID( ), "Projection" );
-					//GLint ViewPositionLocation = glGetUniformLocation( shader->GetProgramID( ), "ViewPosition" );
-					//GLint LightPositionLocation = glGetUniformLocation( shader->GetProgramID( ), "LightPosition" );
+					GLAssert( );
 
-					//GLint PositionLocation = glGetAttribLocation( shader->GetProgramID( ), "in_Position" );
-					//GLint TexCoordinateLocation = glGetAttribLocation( shader->GetProgramID( ), "in_TexCoord" );
-					//GLint NormalLocation = glGetAttribLocation( shader->GetProgramID( ), "in_Normal" );
+					GLint ModelLocation = glGetUniformLocation( shaderID, "Model" );
+					GLint ViewLocation = glGetUniformLocation( shaderID, "View" );
+					GLint ProjectionLocation = glGetUniformLocation( shaderID, "Projection" );
+					//GLint ViewPositionLocation = glGetUniformLocation( shaderID, "ViewPosition" );
 
-					//glUniformMatrix4fv( ModelLocation, 1, GL_FALSE, glm::value_ptr( Model ) );
-					//glUniformMatrix4fv( ViewLocation, 1, GL_FALSE, glm::value_ptr( View ) );
-					//glUniformMatrix4fv( ProjectionLocation, 1, GL_FALSE, glm::value_ptr( Projection ) );
+					GLAssert( );
+
+					glUniformMatrix4fv( ModelLocation, 1, GL_FALSE, glm::value_ptr( Model ) );
+					glUniformMatrix4fv( ViewLocation, 1, GL_FALSE, glm::value_ptr( View ) );
+					glUniformMatrix4fv( ProjectionLocation, 1, GL_FALSE, glm::value_ptr( Projection ) );
 					//glUniform3fv( ViewPositionLocation, 1, glm::value_ptr( ViewPosition ) );
-					//glUniform3fv( LightPositionLocation, 1, glm::value_ptr( LightPosition ) );
 
 					shader->BindShader( );
 
-					//if ( PositionLocation != -1 ) {
-					//	glEnableVertexAttribArray( PositionLocation );
-					//	glVertexAttribPointer( PositionLocation, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( glm::vec3 ), ( void* )( 0 * sizeof( GLfloat ) ) );
-					//}; // if (PositionLocation != -1)
+					render->bind( _vertexBuffer, _indexBuffer, shaderID );
 
-					//if ( TexCoordinateLocation != -1 ) {
-					//	glEnableVertexAttribArray( TexCoordinateLocation );
-					//	glVertexAttribPointer( TexCoordinateLocation, 2, GL_FLOAT, GL_FALSE, 3 * sizeof( glm::vec3 ), ( void* )( 3 * sizeof( GLfloat ) ) );
-					//}; // if (TexCoordinateLocation != -1)
-
-					//if ( NormalLocation != -1 ) {
-					//	glEnableVertexAttribArray( NormalLocation );
-					//	glVertexAttribPointer( NormalLocation, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( glm::vec3 ), ( void* )( 6 * sizeof( GLfloat ) ) );
-					//}; // if (NormalLocation != -1)
+					GLAssert( );
 
 					// Draw object
-//					glDrawElements( GL_TRIANGLES, render->GetIndiceData( ).size( ) * 3, GL_UNSIGNED_INT, ( void* )0 );
-					#ifdef  DRAW_AABB
-					if ( aabb != nullptr ) {
-						_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ), &aabb->GetVertexData( )[ 0 ].x );
-						_indiceBuffer.BindBufferData( aabb->GetIndiceData( ).size( ), &aabb->GetIndiceData( )[ 0 ].x );
+					glDrawElements( GL_TRIANGLES, render->GetIndices(), GL_UNSIGNED_INT, ( void* )0 );
+					//#ifdef  DRAW_AABB
+					//if ( aabb != nullptr ) {
+					//	_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ), &aabb->GetVertexData( )[ 0 ].x );
+					//	_indiceBuffer.BindBufferData( aabb->GetIndiceData( ).size( ), &aabb->GetIndiceData( )[ 0 ].x );
 
-						Model = glm::translate( glm::mat4( 1 ), transform->GetPosition( ) );
+					//	Model = glm::translate( glm::mat4( 1 ), transform->GetPosition( ) );
 
-						glUniformMatrix4fv( ModelLocation, 1, GL_FALSE, glm::value_ptr( Model ) );
+					//	glUniformMatrix4fv( ModelLocation, 1, GL_FALSE, glm::value_ptr( Model ) );
 
-						if ( PositionLocation != -1 ) {
-							glEnableVertexAttribArray( PositionLocation );
-							glVertexAttribPointer( PositionLocation, 3, GL_FLOAT, GL_FALSE, 0 * sizeof( glm::vec3 ), ( void* )( 0 * sizeof( GLfloat ) ) );
-							GLAssert( );
-						}; // if (PositionLocation != -1)
+					//	if ( PositionLocation != -1 ) {
+					//		glEnableVertexAttribArray( PositionLocation );
+					//		glVertexAttribPointer( PositionLocation, 3, GL_FLOAT, GL_FALSE, 0 * sizeof( glm::vec3 ), ( void* )( 0 * sizeof( GLfloat ) ) );
+					//		GLAssert( );
+					//	}; // if (PositionLocation != -1)
 
-						glDrawElements( GL_LINE_STRIP, aabb->GetIndiceData( ).size( ) * 3, GL_UNSIGNED_INT, ( void* )0 );
-					}; // if (aabb != nullptr)
-					#endif // DRAW_AABB
+					//	glDrawElements( GL_LINE_STRIP, aabb->GetIndiceData( ).size( ) * 3, GL_UNSIGNED_INT, ( void* )0 );
+					//}; // if (aabb != nullptr)
+					//#endif // DRAW_AABB
 
 				}; // for (std::shared_ptr<Entity> entity : entities)
 

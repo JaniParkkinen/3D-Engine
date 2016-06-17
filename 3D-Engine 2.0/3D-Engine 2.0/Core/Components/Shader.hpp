@@ -8,6 +8,7 @@
 #include <GL/glew.h>
 #include <GL/GL.h>
 
+#include <Core/Message.hpp>
 #include <Core/Time.hpp>
 #include <Core/Managers/ResourceManager.hpp>
 #include <Core/Managers/EntityManager.hpp>
@@ -31,7 +32,6 @@ namespace Engine {
 	class Shader : public Component {
 	public:
 		Shader( const char* vertexSource, const char* fragmentSource );
-		Shader( );
 		virtual ~Shader( );
 
 		virtual void Init( ) override;

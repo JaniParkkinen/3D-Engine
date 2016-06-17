@@ -63,6 +63,14 @@ LRESULT CALLBACK WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam ) {
 	return 0;
 }
 
+struct Player : Engine::Entity {
+	Player( std::string name ) : Entity( name ) { };
+	virtual ~Player( ) { };
+	virtual void Init( ) override { };
+	virtual void Cleanup( ) override { };
+	virtual void Update( Engine::DeltaTime deltaTime ) override { };
+};
+
 int main( ) {
 	try {
 		window.createWindow( "3D-Engine", glm::vec2( 800.0f, 600.0f ), glm::vec2( 0.0f, 0.0f ), "", "", ENGINE_WINDOWED, WndProc );
@@ -72,23 +80,28 @@ int main( ) {
 
 		Engine::Time deltaTime;
 
+		Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Player" ) );
+		std::shared_ptr<Engine::Render> rend	= Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Player", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Test.obj" )->getShapes( ) ) );
+		std::shared_ptr<Engine::Transform> tran = Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Player", std::make_shared<Engine::Transform>( glm::vec3( 0.0f, 0.0f, 5.0f ) ) );
+		std::shared_ptr<Engine::Shader> shad	= Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Player", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
+
 		while ( window.IsOpen( ) ) {
 			deltaTime.Update( );
 
-			if ( keyboard.getKeyDown( '1' ) ) {
-				Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Test.txt" );
+			if ( keyboard.getKey( '1' ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->RotateWithoutChildren( glm::vec3( 1.0f, 0.0f, 0.0f ) );
 			}
-			if ( keyboard.getKeyDown( '2' ) ) {
-				Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Test.png" );
+			if ( keyboard.getKey( '2' ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->RotateWithoutChildren( glm::vec3( 0.0f, 1.0f, 0.0f ) );
 			}
-			if ( keyboard.getKeyDown( '3' ) ) {
-				Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Test.obj" );
+			if ( keyboard.getKey( '3' ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->RotateWithoutChildren( glm::vec3( 0.0f, 0.0f, 1.0f ) );
 			}
 			if ( keyboard.getKey( VK_ESCAPE ) ) {
 				exit( 0 );
 			}
 
-			Engine::SystemManager::GetInstance( )->Update( deltaTime.GetDeltaTime() );
+			Engine::SystemManager::GetInstance( )->Update( deltaTime.GetDeltaTime( ) );
 			keyboard.update( );
 			mouse.update( );
 			window.getMessage( );

@@ -7,6 +7,7 @@
 #include <GLM/gtc/matrix_transform.hpp>
 #include <GLM/gtc/type_ptr.hpp>
 
+#include <Core/Message.hpp>
 #include <Core/Window.hpp>
 #include <Core/Buffer.hpp>
 
@@ -43,7 +44,7 @@ namespace Engine {
 		Window* _window;
 
 		Buffer _vertexBuffer;
-		Buffer _indiceBuffer;
+		Buffer _indexBuffer;
 
 		std::shared_ptr<Camera> _cam;
 

@@ -16,12 +16,13 @@ namespace Engine {
 
 	class Render : public Component {
 	public:
-		Render(std::vector<tinyobj::shape_t> shapes) : _shapes(shapes), _indices(0) { };
+		Render( std::vector<tinyobj::shape_t> shapes ) : _shapes( shapes ), _indices( 0 ), Component( RENDERABLE ) { };
 		virtual ~Render( ) { };
 
-		void bind(Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID);
-		void unbind();
+		void bind( Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID );
+		void unbind( );
 
+		size_t GetIndices( ) { return _indices; }
 
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
@@ -30,6 +31,10 @@ namespace Engine {
 
 	private:
 		std::vector<tinyobj::shape_t> _shapes;
+
+		size_t _vertices;
+		size_t _uvs;
+		size_t _normals;
 		size_t _indices;
 	};
 };

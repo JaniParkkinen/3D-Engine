@@ -11,6 +11,8 @@
 #include <chrono>
 #include <string>
 
+#include <GL/glew.h>
+
 //Trace	- Only when I would be "tracing" the code and trying to find one part of a function specifically
 //Debug	- Information that is diagnostically helpful to people more than just developers (IT, sysadmins, etc)
 //Info	- Generally useful information to log (service start / stop, configuration assumptions, etc). Info I want to always have available but usually dont care about under normal circumstances. This is my out - of - the - box config level
@@ -130,5 +132,17 @@ namespace Engine {
 	}
 
 	#define Message(message, type) Engine::MessageFunction(__LINE__, __FILE__, message, type);
+
+	void glAssert( int line, const char* file ) {
+		GLenum error = glGetError( );
+
+		if ( error != GL_NO_ERROR ) {
+			std::stringstream Msg;
+			Msg << "OpenGL error: " << error;
+			MessageFunction( line, file, Msg.str( ).c_str( ), MessageType::Fatal );
+		}
+	}
+
+	#define GLAssert() Engine::glAssert(__LINE__, __FILE__);
 }
 #endif
