@@ -162,29 +162,26 @@ namespace Engine {
 
 		}
 		else {
-			Message("Couldn't open file.", Engine::MessageType::Error);
+			Message("Couldn't open text file.", Engine::MessageType::Error);
 		}
 		_resources.push_back(res);
 		return res;
 	}
 	std::shared_ptr<Resource> ResourceManager::LoadImageResource(std::string filepath)
 	{
-		unsigned width, height;
-
 		std::shared_ptr<Resource> res = std::make_shared<Resource>();
 		res->setFilePath(filepath);
 		res->setType(Resource_Type::Resource_Image);
 		res->setID(++ID_generator);
 		res->pushResourceUsers(1);
-
-		std::vector<unsigned char> image;
-		unsigned error = lodepng::decode(image, width, height, filepath);
+		Image img;
+		unsigned error = lodepng::decode(img.imageData, img.size.x, img.size.y, filepath);
 
 		if (error) {
 			Message("Error loading image file.", Engine::MessageType::Error);
 		}
 
-		res->setImageData(image, width, height);
+		res->setImageData(img);
 
 		_resources.push_back(res);
 		return res;
