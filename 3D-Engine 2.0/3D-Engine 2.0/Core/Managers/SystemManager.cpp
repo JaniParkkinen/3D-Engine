@@ -6,7 +6,9 @@ namespace Engine {
 	} // GetFlag
 
 	void SystemManager::RemoveSystem( size_t flag ) {
-		if ( _systems.find( flag ) != _systems.end( ) ) {
+		std::unordered_map<size_t, std::shared_ptr<System>>::iterator it = _systems.find( flag );
+		if (it != _systems.end( ) ) {
+			it->second->Cleanup( );
 			_systems.erase( flag );
 		}
 	} // RemoveSystem

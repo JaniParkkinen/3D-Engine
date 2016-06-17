@@ -49,6 +49,7 @@ namespace Engine {
 		template <typename T> std::shared_ptr<T> GetComponent( size_t flag );
 
 		void Entity::RemoveComponent( size_t flag );
+		void Entity::RemoveComponents( );
 
 		void SetName( std::string name );
 		std::string GetName( );
@@ -78,6 +79,7 @@ namespace Engine {
 
 		std::vector<std::shared_ptr<Entity>> GetEntities( );
 
+		void RemoveEntities( );
 		void RemoveEntity( std::string name );
 		void RemoveComponent( std::string name, size_t flag );
 
