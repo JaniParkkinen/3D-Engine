@@ -77,8 +77,8 @@ namespace Engine {
 						texture->BindTexture( shaderID );
 					};
 
-					_vertexBuffer.BindBufferData( render->GetVertexData( ).size( ), &render->GetVertexData( )[ 0 ].x );
-					_indiceBuffer.BindBufferData( render->GetIndiceData( ).size( ), &render->GetIndiceData( )[ 0 ].x );
+					//_vertexBuffer.BindBufferData( render->GetVertexData( ).size( ), &render->GetVertexData( )[ 0 ].x );
+					//_indiceBuffer.BindBufferData( render->GetIndiceData( ).size( ), &render->GetIndiceData( )[ 0 ].x );
 
 					GLint ModelLocation = glGetUniformLocation( shaderID, "Model" );
 					GLint ViewLocation = glGetUniformLocation( shaderID, "View" );
@@ -114,7 +114,7 @@ namespace Engine {
 					}; //if (NormalLocation != -1)
 
 					  //Draw object
-					glDrawElements( GL_TRIANGLES, render->GetIndiceData( ).size( ) * 3, GL_UNSIGNED_INT, ( void* )0 );
+					//glDrawElements( GL_TRIANGLES, render->GetIndiceData( ).size( ) * 3, GL_UNSIGNED_INT, ( void* )0 );
 					#ifdef  DRAW_AABB
 					if ( aabb != nullptr ) {
 						_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ), &aabb->GetVertexData( )[ 0 ].x );

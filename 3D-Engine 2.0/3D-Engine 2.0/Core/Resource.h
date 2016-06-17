@@ -6,6 +6,11 @@
 #include <vector>
 #include <memory>
 
+#include <GLM/glm.hpp>
+
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tinyobjloader/tinyobjloader.h>
+
 //http://gamedev.stackexchange.com/questions/17066/designing-a-resourcemanager-class/17082#17082
 namespace Engine {
 	typedef enum class Resource_Type
@@ -18,6 +23,11 @@ namespace Engine {
 		Resource_Obj = 5,
 	}Resource_Type;
 
+	struct Image {
+		std::vector<unsigned char> imageData;
+		glm::uvec2 size;
+	};
+
 	class Resource //: public EngineObject
 	{
 	public:
@@ -27,7 +37,7 @@ namespace Engine {
 		void Load();
 		void Unload();
 		void setTextData(std::string readFile) { textData = readFile; }
-		void setImageData(std::vector<unsigned char> imageFile, unsigned width, unsigned height) { std::cout << "setting image data" << std::endl; imageData = imageFile; iHeight = height; iWidth = width; }
+		void setImageData(Image img) { _image = img; }
 		//void setAudioData(irrklang::ISoundSource* audioFile) { std::cout << "Setting audio data " << std::endl; audioData = audioFile; }
 		//void setAudioEngine(irrklang::ISoundEngine* engine) { audio->setEngine(engine); }
 		//void setAudio(std::string filename) { audio->includeAudio(filename); }
@@ -40,7 +50,7 @@ namespace Engine {
 		void setMaterials(std::vector<tinyobj::material_t> materials) { _materials.insert(_materials.begin(), materials.begin(), materials.end()); }
 		bool setID(unsigned id) { resourceID = id; return true; }
 		
-		std::vector<unsigned char> getImageData() { return imageData; }
+		std::vector<unsigned char> getImageData() { return _image.imageData; }
 		std::vector<tinyobj::shape_t> getShapes() { return _shapes; }
 		std::vector<tinyobj::material_t> getMaterial() { return _materials; }
 
@@ -57,14 +67,15 @@ namespace Engine {
 		unsigned resourceID;
 		std::vector<int> resourceUsers;
 		bool _loaded;
-		int iHeight, iWidth;
+		//int iHeight, iWidth;
 		std::vector<tinyobj::shape_t> _shapes;
 		std::vector<tinyobj::material_t> _materials;
-
+		
 	private:
 		std::string textData;
-		std::vector<unsigned char> imageData;
-
+		Image _image;
+		//std::vector<unsigned char> imageData;
+		
 	};
 }
 
