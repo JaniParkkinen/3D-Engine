@@ -4,6 +4,7 @@
 template <typename T> std::shared_ptr<T> Entity::AddComponent( std::shared_ptr<Component> component ) {
 	if ( _components.find( component->GetType( ) ) == _components.end( ) ) {
 		_components.insert( std::make_pair( component->GetType( ), component ) );
+		component->Init( );
 		component->SetOwner( shared_from_this( ) );
 		key = key | component->GetType( );
 		return std::static_pointer_cast< T >( component );
@@ -23,6 +24,7 @@ template <typename T> std::shared_ptr<T> Entity::GetComponent( size_t flag ) {
 template <typename T> std::shared_ptr<T> EntityManager::AddEntity( std::shared_ptr<Entity> entity ) {
 	if ( _entities.find( entity->GetName( ) ) == _entities.end( ) ) {
 		_entities.insert( std::make_pair( entity->GetName( ), entity ) );
+		entity->Init( );
 		return std::static_pointer_cast< T >( entity );
 	}
 	return nullptr;

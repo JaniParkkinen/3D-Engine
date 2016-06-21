@@ -77,6 +77,7 @@ int main( ) {
 		window.InitOpenGL( );
 
 		Engine::SystemManager::GetInstance( )->AddSystem<Engine::RenderingSystem>( std::make_shared<Engine::RenderingSystem>( &window ) );
+		Engine::SystemManager::GetInstance( )->AddSystem<Engine::PhysicsSystem>( std::make_shared<Engine::PhysicsSystem>( ) );
 
 		Engine::Time deltaTime;
 
@@ -86,6 +87,7 @@ int main( ) {
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Player", std::make_shared<Engine::Transform>( glm::vec3( 2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.5f, 0.5f, 0.5f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Player", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Player", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( "Player", std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
 
 		Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Child" ) );
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::Material>("Child", std::make_shared<Engine::Material>(Engine::ResourceManager::GetInstance()->LoadResource("Assets/Box.obj")->getMaterial()));
@@ -93,6 +95,7 @@ int main( ) {
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Child", std::make_shared<Engine::Transform>( glm::vec3( -2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.25f, 0.25f, 0.25f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Child", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Child", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( "Child", std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
 
 		Engine::EntityManager::GetInstance( )->GetEntity<Player>( "Player" )->SetChild( "Child" );
 
@@ -104,7 +107,7 @@ int main( ) {
 			if ( mouse.getMouseDown( MK_LBUTTON ) ) {
 				asd = mouse.getPosition( );
 			} else if ( mouse.getMouse( MK_LBUTTON ) ) {
-				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->RotateWithoutChildren( glm::vec3( ( mouse.getPosition( ) - asd ).x, ( mouse.getPosition( ) - asd ).y, 0.0f ) );
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->Rotate( glm::vec3( -( mouse.getPosition( ) - asd ).y, ( mouse.getPosition( ) - asd ).x, 0.0f ) );
 				asd = mouse.getPosition( );
 			}
 
