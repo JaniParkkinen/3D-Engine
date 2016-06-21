@@ -78,6 +78,10 @@ namespace Engine {
 						texture->Bind( );
 					}
 
+					if (entity->GetKey() & MATERIAL) {
+						material->bind(shaderID);
+					}
+
 					GLAssert( );
 
 					GLint ModelLocation = glGetUniformLocation( shaderID, "Model" );

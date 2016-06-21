@@ -19,6 +19,8 @@ namespace Engine {
 		Render( std::vector<tinyobj::shape_t> shapes ) : _shapes( shapes ), _indices( 0 ), Component( RENDERABLE ) { };
 		virtual ~Render( ) { };
 
+		void bind(Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID);
+
 		void unbind( );
 
 		size_t GetIndices( ) { return _indices; }

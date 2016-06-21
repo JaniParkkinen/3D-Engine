@@ -2,7 +2,7 @@
 
 namespace Engine {
 	Camera::Camera( glm::vec3 offset )
-		: _offset( offset ) { };
+		: _offset( offset ), Component(CAMERA) { };
 
 	Camera::~Camera( ) { };
 

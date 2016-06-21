@@ -11,7 +11,7 @@ namespace Engine {
 	public:
 		friend class PhysicsSystem;
 
-		AxisAlignedBoundingBox( ) { };
+		AxisAlignedBoundingBox( ) : Component(AABB) { };
 		virtual ~AxisAlignedBoundingBox( ) { };
 
 		virtual void Init( ) override;

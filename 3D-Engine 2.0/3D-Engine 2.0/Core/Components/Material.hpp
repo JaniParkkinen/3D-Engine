@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include <GL/glew.h>
+
 #include <GLM/glm.hpp>
 
 #define TINYOBJLOADER_IMPLEMENTATION
@@ -18,10 +20,10 @@ namespace Engine {
 
 	class Material : public Component {
 	public:
-		Material( std::vector<tinyobj::material_t> materials) : _materials(materials) { };
+		Material( std::vector<tinyobj::material_t> materials) : _materials(materials), Component(MATERIAL) { };
 		virtual ~Material( ) { };
 
-		void bind();
+		void bind(GLuint shaderID);
 		void unbind();
 
 		virtual void Init( ) override;
