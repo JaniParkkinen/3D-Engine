@@ -100,28 +100,29 @@ namespace Engine {
 
 					// Draw object
 					glDrawElements( GL_TRIANGLES, render->GetIndices( ), GL_UNSIGNED_INT, ( void* )0 );
-					//#ifdef  DRAW_AABB
-					//if ( aabb != nullptr ) {
-					//	_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ), &aabb->GetVertexData( )[ 0 ].x );
-					//	_indiceBuffer.BindBufferData( aabb->GetIndiceData( ).size( ), &aabb->GetIndiceData( )[ 0 ].x );
-
-					//	Model = glm::translate( glm::mat4( 1 ), transform->GetPosition( ) );
-
-					//	glUniformMatrix4fv( ModelLocation, 1, GL_FALSE, glm::value_ptr( Model ) );
-
-					//	if ( PositionLocation != -1 ) {
-					//		glEnableVertexAttribArray( PositionLocation );
-					//		glVertexAttribPointer( PositionLocation, 3, GL_FLOAT, GL_FALSE, 0 * sizeof( glm::vec3 ), ( void* )( 0 * sizeof( GLfloat ) ) );
-					//		GLAssert( );
-					//	}; // if (PositionLocation != -1)
-
-					//	glDrawElements( GL_LINE_STRIP, aabb->GetIndiceData( ).size( ) * 3, GL_UNSIGNED_INT, ( void* )0 );
-					//}; // if (aabb != nullptr)
-					//#endif // DRAW_AABB
 
 					if ( entity->GetKey( ) & TEXTURE ) {
 						texture->Unbind( );
 					}
+
+					#ifdef  DRAW_AABB
+					if ( entity->GetKey() & AABB ) {
+						_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ), &aabb->GetVertexData( )[ 0 ].x );
+						_indiceBuffer.BindBufferData( aabb->GetIndiceData( ).size( ), &aabb->GetIndiceData( )[ 0 ].x );
+
+						Model = glm::translate( glm::mat4( 1 ), transform->GetPosition( ) );
+
+						glUniformMatrix4fv( ModelLocation, 1, GL_FALSE, glm::value_ptr( Model ) );
+
+						if ( PositionLocation != -1 ) {
+							glEnableVertexAttribArray( PositionLocation );
+							glVertexAttribPointer( PositionLocation, 3, GL_FLOAT, GL_FALSE, 0 * sizeof( glm::vec3 ), ( void* )( 0 * sizeof( GLfloat ) ) );
+							GLAssert( );
+						}; // if (PositionLocation != -1)
+
+						glDrawElements( GL_LINE_STRIP, aabb->GetIndiceData( ).size( ) * 3, GL_UNSIGNED_INT, ( void* )0 );
+					}; // if (aabb != nullptr)
+					#endif // DRAW_AABB
 
 				} // if ( entity->GetKey( ) & RENDER )
 

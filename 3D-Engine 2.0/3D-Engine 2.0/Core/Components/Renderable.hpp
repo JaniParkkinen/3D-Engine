@@ -28,6 +28,7 @@ namespace Engine {
 		virtual void Cleanup( ) override;
 
 		std::vector<tinyobj::shape_t> getShapes( ) { return _shapes; };
+		std::vector<glm::vec3> getVertexData( );
 
 		void ScaleTexture( float scale );
 		void ScaleTexture( glm::vec2 scale );
