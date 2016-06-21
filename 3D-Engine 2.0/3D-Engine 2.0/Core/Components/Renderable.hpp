@@ -22,8 +22,6 @@ namespace Engine {
 
 		void bind(Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID);
 
-		void bind( Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID );
-
 		void unbind( );
 
 		size_t GetIndices( ) { return _indices; }
