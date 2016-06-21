@@ -47,45 +47,53 @@ namespace Engine {
 					location = glGetUniformLocation( _programID, binding->_name.c_str( ) );
 					if ( location != -1 ) {
 						glUniformMatrix4fv( location, 1, GL_FALSE, ( GLfloat* )binding->_value );
-					};
+					}
 					break;
-				};
+				}
 				case eValue::UNIFORM_VEC2:
 				{
 					location = glGetUniformLocation( _programID, binding->_name.c_str( ) );
 					if ( location != -1 ) {
 						glUniform2fv( location, 1, ( GLfloat* )binding->_value );
-					};
+					}
 					break;
-				};
+				}
 				case eValue::UNIFORM_VEC3:
 				{
 					location = glGetUniformLocation( _programID, binding->_name.c_str( ) );
 					if ( location != -1 ) {
 						glUniform3fv( location, 1, ( GLfloat* )binding->_value );
-					};
+					}
 					break;
-				};
+				}
 				case eValue::UNIFORM_VEC4:
 				{
 					location = glGetUniformLocation( _programID, binding->_name.c_str( ) );
 					if ( location != -1 ) {
 						glUniform3fv( location, 1, ( GLfloat* )binding->_value );
-					};
+					}
 					break;
-				};
+				}
 				case eValue::UNIFORM_FLOAT:
 				{
 					location = glGetUniformLocation( _programID, binding->_name.c_str( ) );
 					if ( location != -1 ) {
 						glUniform1fv( location, 1, ( GLfloat* )binding->_value );
-					};
+					}
 					break;
-				};
+				}
+				case eValue::UNIFORM_DOUBLE:
+				{
+					location = glGetUniformLocation( _programID, binding->_name.c_str( ) );
+					if ( location != -1 ) {
+						glUniform1dv( location, 1, ( GLdouble* )binding->_value );
+					}
+					break;
+				}
 				default:
 				{
 					break;
-				};
+				}
 			};
 		};
 	};

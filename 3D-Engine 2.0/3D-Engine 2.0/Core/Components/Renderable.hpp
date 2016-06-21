@@ -19,9 +19,6 @@ namespace Engine {
 		Render( std::vector<tinyobj::shape_t> shapes ) : _shapes( shapes ), _indices( 0 ), Component( RENDERABLE ) { };
 		virtual ~Render( ) { };
 
-
-		void bind(Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID);
-
 		void bind( Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID );
 
 		void unbind( );
@@ -34,6 +31,9 @@ namespace Engine {
 
 		std::vector<tinyobj::shape_t> getShapes( ) { return _shapes; };
 
+		void ScaleTexture( float scale );
+		void ScaleTexture( glm::vec2 scale );
+		void ScaleTexture( float x, float y );
 	private:
 		std::vector<tinyobj::shape_t> _shapes;
 

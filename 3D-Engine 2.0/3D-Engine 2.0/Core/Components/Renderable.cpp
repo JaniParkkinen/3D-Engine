@@ -44,7 +44,7 @@ namespace Engine {
 
 		if ( NormalLocation != -1 ) {
 			glEnableVertexAttribArray( NormalLocation );
-			glVertexAttribPointer( NormalLocation, 3, GL_FLOAT, GL_FALSE, 0, ( void* )( (_vertices + _uvs) * sizeof( GLfloat ) ) );
+			glVertexAttribPointer( NormalLocation, 3, GL_FLOAT, GL_FALSE, 0, ( void* )( ( _vertices + _uvs ) * sizeof( GLfloat ) ) );
 		}; //if (NormalLocation != -1)
 	}
 
@@ -53,4 +53,40 @@ namespace Engine {
 	void Render::Init( ) { }
 
 	void Render::Cleanup( ) { }
-};
+
+	void Render::ScaleTexture( float scale ) {
+		scale = 1.0f / scale;
+		for ( size_t i = 0; i < _shapes.size( ); i++ ) {
+			for ( size_t k = 0; k < _shapes[ i ].mesh.texcoords.size( ); k++ ) {
+				_shapes[ i ].mesh.texcoords[ k ] *= scale;
+			}
+		}
+	}
+
+	void Render::ScaleTexture( glm::vec2 scale ) {
+		scale = 1.0f / scale;
+		for ( size_t i = 0; i < _shapes.size( ); i++ ) {
+			for ( size_t k = 0; k < _shapes[ i ].mesh.texcoords.size( ); k++ ) {
+				if ( k % 2 == 0 ) {
+					_shapes[ i ].mesh.texcoords[ k ] *= scale.x;
+				} else {
+					_shapes[ i ].mesh.texcoords[ k ] *= scale.y;
+				}
+			}
+		}
+	}
+
+	void Render::ScaleTexture( float x, float y ) {
+		x = 1.0f / x;
+		y = 1.0f / y;
+		for ( size_t i = 0; i < _shapes.size( ); i++ ) {
+			for ( size_t k = 0; k < _shapes[ i ].mesh.texcoords.size( ); k++ ) {
+				if ( k % 2 == 0 ) {
+					_shapes[ i ].mesh.texcoords[ k ] *= x;
+				} else {
+					_shapes[ i ].mesh.texcoords[ k ] *= y;
+				}
+			}
+		}
+	}
+}
