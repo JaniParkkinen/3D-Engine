@@ -11,7 +11,7 @@ namespace Engine {
 		_vertexBuffer.CreateBuffer( GL_ARRAY_BUFFER );
 		_indexBuffer.CreateBuffer( GL_ELEMENT_ARRAY_BUFFER );
 
-		glClearColor( 0.0f, 0.0f, 1.0f, 1.0f );
+		glClearColor( 0.10f, 0.10f, 0.10f, 1.0f );
 	} // Init
 
 	void RenderingSystem::Cleanup( ) {
@@ -75,8 +75,8 @@ namespace Engine {
 
 					// Bind Data
 					if ( entity->GetKey( ) & TEXTURE ) {
-						texture->BindTexture( shaderID );
-					};
+						texture->Bind( );
+					}
 
 					GLAssert( );
 
@@ -119,9 +119,13 @@ namespace Engine {
 					//}; // if (aabb != nullptr)
 					//#endif // DRAW_AABB
 
-				}; // for (std::shared_ptr<Entity> entity : entities)
+				if ( entity->GetKey( ) & TEXTURE ) {
+					texture->Unbind( );
+				}
 
-			} // if ( entity->GetKey( ) & RENDER == RENDER )
+				} // if ( entity->GetKey( ) & RENDER == RENDER )
+
+			} // for (std::shared_ptr<Entity> entity : entities)
 
 			SwapBuffers( _window->GetHDC( ) );
 			glUseProgram( 0 );

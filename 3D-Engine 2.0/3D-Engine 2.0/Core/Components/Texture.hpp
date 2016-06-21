@@ -15,7 +15,8 @@ namespace Engine {
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
 
-		void BindTexture( GLint id );
+		void Bind( );
+		void Unbind( );
 	private:
 		Resource* tex;
 		GLuint texid;

@@ -9,7 +9,7 @@ namespace Engine {
 		std::vector<GLfloat> normalVector;
 		std::vector<size_t> indiceVector;
 
-		for ( int i = 0; i < _shapes.size( ); i++ ) {
+		for ( size_t i = 0; i < _shapes.size( ); i++ ) {
 			for ( size_t ind : _shapes[ i ].mesh.indices ) { ind += vertexVector.size( ); }
 			vertexVector.insert( vertexVector.end( ), _shapes[ i ].mesh.positions.begin( ), _shapes[ i ].mesh.positions.end( ) );
 			uvVector.insert( uvVector.end( ), _shapes[ i ].mesh.texcoords.begin( ), _shapes[ i ].mesh.texcoords.end( ) );
@@ -34,17 +34,17 @@ namespace Engine {
 
 		if ( PositionLocation != -1 ) {
 			glEnableVertexAttribArray( PositionLocation );
-			glVertexAttribPointer( PositionLocation, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), ( void* )( 0 * sizeof( GLfloat ) ) );
+			glVertexAttribPointer( PositionLocation, 3, GL_FLOAT, GL_FALSE, 0, ( void* )( 0 * sizeof( GLfloat ) ) );
 		}; //if (PositionLocation != -1)
 
 		if ( TexCoordinateLocation != -1 ) {
 			glEnableVertexAttribArray( TexCoordinateLocation );
-			glVertexAttribPointer( TexCoordinateLocation, 2, GL_FLOAT, GL_FALSE, 3 * sizeof( GLfloat ), ( void* )( _vertices * sizeof( GLfloat ) ) );
+			glVertexAttribPointer( TexCoordinateLocation, 2, GL_FLOAT, GL_FALSE, 0, ( void* )( _vertices * sizeof( GLfloat ) ) );
 		}; //if (TexCoordinateLocation != -1)
 
 		if ( NormalLocation != -1 ) {
 			glEnableVertexAttribArray( NormalLocation );
-			glVertexAttribPointer( NormalLocation, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( GLfloat ), ( void* )( (_vertices + _uvs) * sizeof( GLfloat ) ) );
+			glVertexAttribPointer( NormalLocation, 3, GL_FLOAT, GL_FALSE, 0, ( void* )( (_vertices + _uvs) * sizeof( GLfloat ) ) );
 		}; //if (NormalLocation != -1)
 	}
 
