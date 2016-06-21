@@ -63,7 +63,7 @@ namespace Engine {
 
 					glm::mat4 Model = translate * Rotate * Scale;
 
-					glm::mat4 View = glm::lookAt( glm::vec3(0.0f, 0.0f, 0.0f ), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3( 0.0f, 1.0f, 0.0f ) );
+					glm::mat4 View = glm::lookAt( glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.0f, 0.0f, 1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ) );
 
 					//glm::mat4 View = _cam->GetViewMatrix( );
 
@@ -99,7 +99,7 @@ namespace Engine {
 					GLAssert( );
 
 					// Draw object
-					glDrawElements( GL_TRIANGLES, render->GetIndices(), GL_UNSIGNED_INT, ( void* )0 );
+					glDrawElements( GL_TRIANGLES, render->GetIndices( ), GL_UNSIGNED_INT, ( void* )0 );
 					//#ifdef  DRAW_AABB
 					//if ( aabb != nullptr ) {
 					//	_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ), &aabb->GetVertexData( )[ 0 ].x );
@@ -119,11 +119,11 @@ namespace Engine {
 					//}; // if (aabb != nullptr)
 					//#endif // DRAW_AABB
 
-				if ( entity->GetKey( ) & TEXTURE ) {
-					texture->Unbind( );
-				}
+					if ( entity->GetKey( ) & TEXTURE ) {
+						texture->Unbind( );
+					}
 
-				} // if ( entity->GetKey( ) & RENDER == RENDER )
+				} // if ( entity->GetKey( ) & RENDER )
 
 			} // for (std::shared_ptr<Entity> entity : entities)
 

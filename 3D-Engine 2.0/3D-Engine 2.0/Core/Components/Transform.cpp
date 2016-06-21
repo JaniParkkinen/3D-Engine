@@ -50,50 +50,50 @@ namespace Engine {
 	///-----------------------------------------------------
 
 	void Transform::SetRotation( glm::vec3 rotation ) {
-		_rotationQuat = glm::quat( glm::radians( rotation ) );
+		_rotationQuat = _rotationQuat * ( glm::inverse( _rotationQuat ) * glm::quat( glm::radians( rotation ) ) ) * _rotationQuat;
 		_rotation = glm::radians( rotation );
 		this->SetRotationChildren( rotation );
 	};
 
 	void Transform::SetRotation( GLfloat x, GLfloat y, GLfloat z ) {
 		glm::vec3 rotation = glm::vec3( x, y, z );
-		_rotationQuat = glm::quat( glm::radians( rotation ) );
+		_rotationQuat = _rotationQuat * ( glm::inverse( _rotationQuat ) * glm::quat( glm::radians( rotation ) ) ) * _rotationQuat;
 		_rotation = glm::radians( rotation );
 		this->SetRotationChildren( rotation );
 	};
 
 	void Transform::Rotate( glm::vec3 rotate ) {
-		_rotationQuat *= glm::quat( glm::radians( rotate ) );
+		_rotationQuat = _rotationQuat * ( glm::inverse( _rotationQuat ) * glm::quat( glm::radians( rotate ) ) ) * _rotationQuat;
 		_rotation += glm::radians( rotate );
 		this->RotateChildren( rotate );
 	};
 
 	void Transform::Rotate( GLfloat x, GLfloat y, GLfloat z ) {
 		glm::vec3 rotate = glm::vec3( x, y, z );
-		_rotationQuat *= glm::quat( glm::radians( rotate ) );
+		_rotationQuat = _rotationQuat * ( glm::inverse( _rotationQuat ) * glm::quat( glm::radians( rotate ) ) ) * _rotationQuat;
 		_rotation += glm::radians( rotate );
 		this->RotateChildren( rotate );
 	};
 
 	void Transform::SetRotationWithoutChildren( glm::vec3 rotation ) {
-		_rotationQuat = glm::quat( glm::radians( rotation ) );
+		_rotationQuat = _rotationQuat * ( glm::inverse( _rotationQuat ) * glm::quat( glm::radians( rotation ) ) ) * _rotationQuat;
 		_rotation = glm::radians( rotation );
 	};
 
 	void Transform::SetRotationWithoutChildren( GLfloat x, GLfloat y, GLfloat z ) {
 		glm::vec3 rotation = glm::vec3( x, y, z );
-		_rotationQuat = glm::quat( glm::radians( rotation ) );
+		_rotationQuat = _rotationQuat * ( glm::inverse( _rotationQuat ) * glm::quat( glm::radians( rotation ) ) ) * _rotationQuat;
 		_rotation = glm::radians( rotation );
 	};
 
 	void Transform::RotateWithoutChildren( glm::vec3 rotate ) {
-		_rotationQuat *= glm::quat( glm::radians( rotate ) );
+		_rotationQuat = _rotationQuat * ( glm::inverse( _rotationQuat ) * glm::quat( glm::radians( rotate ) ) ) * _rotationQuat;
 		_rotation += glm::radians( rotate );
 	};
 
 	void Transform::RotateWithoutChildren( GLfloat x, GLfloat y, GLfloat z ) {
 		glm::vec3 rotate = glm::vec3( x, y, z );
-		_rotationQuat *= glm::quat( glm::radians( rotate ) );
+		_rotationQuat = _rotationQuat * ( glm::inverse( _rotationQuat ) * glm::quat( glm::radians( rotate ) ) ) * _rotationQuat;
 		_rotation += glm::radians( rotate );
 	};
 
@@ -161,7 +161,6 @@ namespace Engine {
 			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( TRANSFORM );
 			if ( childTransform != nullptr ) {
 
-				//KORJATAAN!!!
 				glm::quat rot = glm::quat( this->GetRotationRad( ) - childTransform->GetRotationRad( ) );
 
 				childTransform->SetPosition( this->GetPosition( ) + ( rot * ( childTransform->GetPosition( ) - this->GetPosition( ) ) ) );
@@ -177,7 +176,6 @@ namespace Engine {
 			std::shared_ptr<Transform> childTransform = child->GetComponent<Transform>( TRANSFORM );
 			if ( childTransform != nullptr ) {
 
-				//KORJATAAN!!!
 				glm::quat rot = glm::quat( this->GetRotationRad( ) - childTransform->GetRotationRad( ) );
 
 				childTransform->SetPosition( this->GetPosition( ) + ( rot * ( childTransform->GetPosition( ) - this->GetPosition( ) ) ) );

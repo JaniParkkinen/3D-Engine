@@ -37,6 +37,7 @@ namespace Engine {
 		bool mouseWheelUp( );
 		bool mouseWheelDown( );
 
+		glm::vec2 getPosition( );
 		void mouseWheelIn( int wheel );
 		void mouseEvent( int keycode, glm::vec2 mousePos );
 		//void mouseDown(int keycode, glm::vec2 mousePos);

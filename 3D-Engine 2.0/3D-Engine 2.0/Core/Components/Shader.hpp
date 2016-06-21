@@ -19,7 +19,8 @@ namespace Engine {
 		UNIFORM_VEC2,
 		UNIFORM_VEC3,
 		UNIFORM_VEC4,
-		UNIFORM_FLOAT
+		UNIFORM_FLOAT,
+		UNIFORM_DOUBLE
 	};
 
 	struct Binding {

@@ -2,6 +2,10 @@
 
 namespace Engine {
 	// COMPONENT
+	void Component::SetOwner( std::shared_ptr<Entity> owner ) {
+		_owner = owner;
+	}
+
 	size_t Component::GetType( ) {
 		return _type;
 	} // GetType
@@ -32,6 +36,10 @@ namespace Engine {
 	void Entity::RemoveComponents( ) {
 		_components.clear( );
 	} // RemoveComponents
+
+	void Entity::SetChild( std::string name ) {
+		_children.push_back( EntityManager::GetInstance( )->GetEntity<Entity>( name ) );
+	}
 
 	// ENTITY MANAGER
 	std::vector<std::shared_ptr<Entity>> EntityManager::GetEntities( ) {

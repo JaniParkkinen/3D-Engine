@@ -58,6 +58,10 @@ namespace Engine {
 		return mouseWheel < 0;
 	}
 
+	glm::vec2 Mouse::getPosition( ) {
+		return mousePos;
+	}
+
 	void Mouse::mouseWheelIn( int wheel ) {
 		mouseWheel = wheel;
 	}

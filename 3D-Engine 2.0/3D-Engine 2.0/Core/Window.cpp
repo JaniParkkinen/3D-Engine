@@ -155,15 +155,10 @@ namespace Engine {
 	};
 
 	int Window::getMessage( ) {
-		int i = PeekMessage( &_message, NULL, 0, 0, PM_REMOVE );
-		if ( i == -1 ) {
-			MessageBox( NULL, L"Message Error!", L"ERROR!", MB_ICONERROR | MB_OK );
-			return -1;
-		} else if ( i != 0 ) {
+		if ( PeekMessage( &_message, NULL, 0, 0, PM_REMOVE ) > 0 ) {
 			TranslateMessage( &_message );
 			DispatchMessage( &_message );
 		}
-
 		return _message.wParam;
 	};
 

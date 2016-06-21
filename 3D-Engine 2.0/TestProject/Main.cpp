@@ -73,7 +73,7 @@ struct Player : Engine::Entity {
 
 int main( ) {
 	try {
-		window.createWindow( "3D-Engine", glm::vec2( 800.0f, 600.0f ), glm::vec2( 0.0f, 0.0f ), "", "", ENGINE_WINDOWED, WndProc );
+		window.createWindow( "3D-Engine", glm::vec2( 800.0f, 600.0f ), glm::vec2( 0.0f, 0.0f ), "", "", ENGINE_BORDERLESS, WndProc );
 		window.InitOpenGL( );
 
 		Engine::SystemManager::GetInstance( )->AddSystem<Engine::RenderingSystem>( std::make_shared<Engine::RenderingSystem>( &window ) );
@@ -81,23 +81,41 @@ int main( ) {
 		Engine::Time deltaTime;
 
 		Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Player" ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Player", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Test.obj" )->getShapes( ) ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Player", std::make_shared<Engine::Transform>( glm::vec3( 0.0f, 0.0f, 5.0f ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Player", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getShapes( ) ) )->ScaleTexture( 0.1f );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Player", std::make_shared<Engine::Transform>( glm::vec3( 2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.5f, 0.5f, 0.5f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Player", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Player", std::make_shared<Engine::Texture>( "Assets/Test.png" ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Player", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
+
+		Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Child" ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Child", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getShapes( ) ) )->ScaleTexture( 0.1f );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Child", std::make_shared<Engine::Transform>( glm::vec3( -2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.25f, 0.25f, 0.25f ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Child", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Child", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
+
+		Engine::EntityManager::GetInstance( )->GetEntity<Player>( "Player" )->SetChild( "Child" );
+
+		glm::vec2 asd;
 
 		while ( window.IsOpen( ) ) {
 			deltaTime.Update( );
 
+			if ( mouse.getMouseDown( MK_LBUTTON ) ) {
+				asd = mouse.getPosition( );
+			} else if ( mouse.getMouse( MK_LBUTTON ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->RotateWithoutChildren( glm::vec3( ( mouse.getPosition( ) - asd ).x, ( mouse.getPosition( ) - asd ).y, 0.0f ) );
+				asd = mouse.getPosition( );
+			}
+
 			if ( keyboard.getKey( '1' ) ) {
-				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->RotateWithoutChildren( glm::vec3( 1.0f, 0.0f, 0.0f ) );
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->Rotate( glm::vec3( 1.0f, 0.0f, 0.0f ) );
 			}
 			if ( keyboard.getKey( '2' ) ) {
-				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->RotateWithoutChildren( glm::vec3( 0.0f, 1.0f, 0.0f ) );
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->Rotate( glm::vec3( 0.0f, 1.0f, 0.0f ) );
 			}
 			if ( keyboard.getKey( '3' ) ) {
-				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->RotateWithoutChildren( glm::vec3( 0.0f, 0.0f, 1.0f ) );
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->Rotate( glm::vec3( 0.0f, 0.0f, 1.0f ) );
 			}
+
 			if ( keyboard.getKey( VK_ESCAPE ) ) {
 				exit( 0 );
 			}

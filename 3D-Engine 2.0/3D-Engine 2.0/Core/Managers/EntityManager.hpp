@@ -27,10 +27,11 @@ namespace Engine {
 		virtual void Init( ) = 0;
 		virtual void Cleanup( ) = 0;
 
+		void SetOwner( std::shared_ptr<struct Entity> owner );
 		size_t GetType( );
 	protected:
 		size_t _type;
-		std::shared_ptr<struct Entity> _owner;
+		std::shared_ptr<Entity> _owner;
 	};
 
 	// ENTITY
@@ -55,7 +56,7 @@ namespace Engine {
 		std::string GetName( );
 		std::vector<std::shared_ptr<Entity>> GetChildren( );
 		size_t const & GetKey( );
-
+		void SetChild( std::string name );
 	protected:
 		std::string _name;
 
