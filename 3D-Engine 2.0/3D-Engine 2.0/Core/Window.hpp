@@ -12,6 +12,7 @@ namespace Engine {
 	#define ENGINE_BORDERLESS	0x00000010
 	#define ENGINE_FULLSCREEN	0x00000100
 
+	//Creates window and OpenGL context
 	class Window {
 	public:
 		Window( );

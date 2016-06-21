@@ -73,12 +73,12 @@ namespace Engine {
 			return -1;
 		}
 
-		_windowHandle = CreateWindowEx( NULL,							/*The extended window style of the window being created.*/
+		_windowHandle = CreateWindowEx( NULL,														/*The extended window style of the window being created.*/
 										tempWindowClassName,										/*A null-terminated string or a class atom created by a previous call to the RegisterClass or RegisterClassEx function.*/
 										tempWindowName,												/*The window name. If the window style specifies a title bar, the window title pointed to by lpWindowName is displayed in the title bar.*/
 										windowStyle,												/*The style of the window being created.*/
-										( int )position.x, ( int )position.y,							/*Window position.*/
-										( int )size.x, ( int )size.y,									/*Window size.*/
+										( int )position.x, ( int )position.y,						/*Window position.*/
+										( int )size.x, ( int )size.y,								/*Window size.*/
 										NULL,														/*A handle to the parent or owner window of the window being created.*/
 										NULL,														/*A handle to a menu, or specifies a child - window identifier, depending on the window style.*/
 										_instanceHandle,											/*A handle to the instance of the module to be associated with the window.*/

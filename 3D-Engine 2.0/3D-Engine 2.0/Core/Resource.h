@@ -50,7 +50,7 @@ namespace Engine {
 		void setMaterials(std::vector<tinyobj::material_t> materials) { _materials.insert(_materials.begin(), materials.begin(), materials.end()); }
 		bool setID(unsigned id) { resourceID = id; return true; }
 		
-		std::vector<unsigned char> getImageData() { return _image.imageData; }
+		Image getImageData() { return _image; }
 		std::vector<tinyobj::shape_t> getShapes() { return _shapes; }
 		std::vector<tinyobj::material_t> getMaterial() { return _materials; }
 

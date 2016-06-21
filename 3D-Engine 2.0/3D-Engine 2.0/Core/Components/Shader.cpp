@@ -1,15 +1,13 @@
 #include <Core/Components/Shader.hpp>
 
 namespace Engine {
-	Shader::Shader( const char* vertexSource, const char* fragmentSource ) {
+	Shader::Shader( const char* vertexSource, const char* fragmentSource ) :  Component( SHADER ) {
 		_programID = glCreateProgram( );
 
 		CompileShader( vertexSource, GL_VERTEX_SHADER );
 		CompileShader( fragmentSource, GL_FRAGMENT_SHADER );
-	};
 
-	Shader::Shader( ) {
-		_programID = glCreateProgram( );
+		GLAssert( );
 	};
 
 	Shader::~Shader( ) { };
@@ -21,19 +19,19 @@ namespace Engine {
 	};
 
 	void Shader::CompileShader( const char* source, GLenum shaderType ) {
-		//Resource* asd = ResourceManager::GetInstance()->LoadResource(source);
+		std::shared_ptr<Resource> shader = ResourceManager::GetInstance()->LoadResource(source);
 
-		//std::string temp = asd->getTextData();
-		//const char* fuck = temp.c_str();
+		std::string temp = shader->getTextData();
+		const char* fuck = temp.c_str();
 
-		//GLuint shaderID = glCreateShader(shaderType);
-		//glShaderSource(shaderID, 1, &fuck, 0);
+		GLuint shaderID = glCreateShader(shaderType);
+		glShaderSource(shaderID, 1, &fuck, 0);
 
-		//glCompileShader(shaderID);
+		glCompileShader(shaderID);
 
-		//glAttachShader(_programID, shaderID);
+		glAttachShader(_programID, shaderID);
 
-		//glLinkProgram(_programID);
+		glLinkProgram(_programID);
 	};
 
 	void Shader::SetBinding( std::string name, void* value, eValue type ) {

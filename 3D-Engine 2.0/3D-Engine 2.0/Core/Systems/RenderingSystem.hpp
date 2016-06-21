@@ -7,6 +7,7 @@
 #include <GLM/gtc/matrix_transform.hpp>
 #include <GLM/gtc/type_ptr.hpp>
 
+#include <Core/Message.hpp>
 #include <Core/Window.hpp>
 #include <Core/Buffer.hpp>
 
@@ -24,7 +25,7 @@ namespace Engine {
 	class RenderingSystem : public System {
 	public:
 		RenderingSystem( Window* window, const char* vertexShaderPath = "Resources/Vert.txt", const char* fragmentShaderPath = "Resources/Frag.txt" )
-			: _window( window ), System( RENDER ) { };
+			: _window( window ), _vertexShaderPath( vertexShaderPath ), _fragmentShaderPath( fragmentShaderPath ), System( RENDER ) { };
 
 		virtual ~RenderingSystem( ) { };
 
@@ -36,16 +37,19 @@ namespace Engine {
 
 		virtual void Update( DeltaTime deltaTime ) override;
 
-		void SetCamera( std::shared_ptr<Camera> cam ) { _cam = cam; };
+		void SetActiveCamera( std::shared_ptr<Camera> cam ) { _cam = cam; };
 
 	private:
 		EntityManager* _entityManager;
 		Window* _window;
 
 		Buffer _vertexBuffer;
-		Buffer _indiceBuffer;
+		Buffer _indexBuffer;
 
 		std::shared_ptr<Camera> _cam;
+
+		std::string _vertexShaderPath;
+		std::string _fragmentShaderPath;
 	};
 };
 

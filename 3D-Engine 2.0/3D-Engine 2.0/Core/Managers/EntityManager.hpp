@@ -36,7 +36,7 @@ namespace Engine {
 	// ENTITY
 	struct Entity : std::enable_shared_from_this<Entity> {
 	public:
-		Entity( std::string name ) : _name( name ) { }
+		Entity( std::string name ) : _name( name ), key(NONE) { }
 		virtual ~Entity( ) { }
 
 		virtual void Init( ) = 0;
@@ -54,6 +54,8 @@ namespace Engine {
 		void SetName( std::string name );
 		std::string GetName( );
 		std::vector<std::shared_ptr<Entity>> GetChildren( );
+		size_t const & GetKey( );
+
 	protected:
 		std::string _name;
 

@@ -15,9 +15,13 @@ namespace Engine {
 		return _name;
 	} // GetName
 
+	size_t const & Entity::GetKey( ) {
+		return key;
+	} // GetKey
+
 	std::vector < std::shared_ptr<Entity>> Entity::GetChildren( ) {
 		return _children;
-	}
+	} // GetChildren
 
 	void Entity::RemoveComponent( size_t flag ) {
 		if ( _components.find( flag ) != _components.end( ) ) {
