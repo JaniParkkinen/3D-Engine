@@ -16,6 +16,9 @@ namespace Engine {
 		Material( std::vector<tinyobj::material_t> materials) : _materials(materials) { };
 		virtual ~Material( ) { };
 
+		void bind();
+		void unbind();
+
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
 

@@ -20,8 +20,6 @@ namespace Engine {
 		virtual ~Render( ) { };
 
 		void bind(Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID);
-		void unbind();
-
 
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;

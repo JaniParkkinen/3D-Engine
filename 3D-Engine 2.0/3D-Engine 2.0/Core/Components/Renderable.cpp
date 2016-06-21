@@ -45,8 +45,6 @@ namespace Engine {
 			glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(GLfloat)));
 		}; //if (NormalLocation != -1)
 	}
-	
-	void Render::unbind() { }
 
 	void Render::Init( ) { }
 
