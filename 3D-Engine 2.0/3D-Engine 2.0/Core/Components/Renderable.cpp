@@ -54,6 +54,16 @@ namespace Engine {
 
 	void Render::Cleanup( ) { }
 
+	std::vector<glm::vec3> Render::getVertexData( ) {
+		std::vector<glm::vec3> vertices;
+		for ( size_t i = 0; i < _shapes.size( ); i++ ) {
+			for ( size_t k = 0; k < ( _shapes[ i ].mesh.positions.size( ) / 3 ); k++ ) {
+				vertices.push_back( glm::vec3( _shapes[ i ].mesh.positions[ 3 * k + 0 ], _shapes[ i ].mesh.positions[ 3 * k + 1 ], _shapes[ i ].mesh.positions[ 3 * k + 2 ] ) );
+			}
+		}
+		return vertices;
+	}
+
 	void Render::ScaleTexture( float scale ) {
 		scale = 1.0f / scale;
 		for ( size_t i = 0; i < _shapes.size( ); i++ ) {
