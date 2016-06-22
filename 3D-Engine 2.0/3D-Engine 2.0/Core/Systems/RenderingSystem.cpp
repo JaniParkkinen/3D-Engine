@@ -35,7 +35,7 @@ namespace Engine {
 			std::vector<std::shared_ptr<Entity>> entities = _entityManager->GetEntities( );
 			for ( std::shared_ptr<Entity> entity : entities ) {
 				//Check if entity has rendering flags
-				if ( entity->GetKey( ) & RENDER == RENDER) {
+				if ( (entity->GetKey( ) & RENDER) == RENDER ) {
 
 					GLAssert( );
 
@@ -74,12 +74,12 @@ namespace Engine {
 					GLAssert( );
 
 					// Bind Data
-					if ( entity->GetKey( ) & TEXTURE == TEXTURE ) {
+					if ( (entity->GetKey( ) & TEXTURE)==TEXTURE ) {
 						texture->Bind( );
 					}
 
-					if (entity->GetKey() & MATERIAL == MATERIAL) {
-						material->bind(shaderID);
+					if ( (entity->GetKey( ) & MATERIAL)==MATERIAL ) {
+						material->bind( shaderID );
 					}
 
 					GLAssert( );
@@ -105,12 +105,12 @@ namespace Engine {
 					// Draw object
 					glDrawElements( GL_TRIANGLES, render->GetIndices( ), GL_UNSIGNED_INT, ( void* )0 );
 
-					if ( entity->GetKey( ) & TEXTURE == TEXTURE ) {
+					if ( entity->GetKey( ) & TEXTURE ) {
 						texture->Unbind( );
 					}
 					#define DRAW_AABB
 					#ifdef  DRAW_AABB
-					if ( entity->GetKey() & AABB == AABB ) {
+					if ( (entity->GetKey( ) & AABB)==AABB ) {
 						_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ), &aabb->GetVertexData( )[ 0 ].x );
 						_indexBuffer.BindBufferData( aabb->GetIndiceData( ).size( ), &aabb->GetIndiceData( )[ 0 ].x );
 

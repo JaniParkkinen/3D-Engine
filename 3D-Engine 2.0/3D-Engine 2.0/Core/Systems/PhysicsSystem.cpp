@@ -21,7 +21,7 @@ namespace Engine {
 		std::vector<std::shared_ptr<Entity>> entities = _entityManager->GetEntities( );
 		for ( std::shared_ptr<Entity> entity : entities ) {
 
-			if ( entity->GetKey() & PHYSICS == PHYSICS ) {
+			if ( (entity->GetKey() & PHYSICS) == PHYSICS ) {
 				std::shared_ptr<Transform> transform = entity->GetComponent<Transform>( TRANSFORM );
 				std::shared_ptr<Render> renderable = entity->GetComponent<Render>( RENDERABLE );
 				std::shared_ptr<AxisAlignedBoundingBox> aabb = entity->GetComponent<AxisAlignedBoundingBox>( AABB );
@@ -67,7 +67,7 @@ namespace Engine {
 	};
 
 	bool PhysicsSystem::CheckAABBCollision( std::shared_ptr<Entity> lhsEntity, std::shared_ptr<Entity> rhsEntity ) {
-		if ( lhsEntity->GetKey() & AABB == AABB && rhsEntity->GetKey() & AABB == AABB ) {
+		if ( ((lhsEntity->GetKey() & AABB) == AABB) && ((rhsEntity->GetKey() & AABB) == AABB) ) {
 			std::shared_ptr<AxisAlignedBoundingBox> lhsAABB = lhsEntity->GetComponent<AxisAlignedBoundingBox>( AABB );
 			std::shared_ptr<AxisAlignedBoundingBox> rhsAABB = rhsEntity->GetComponent<AxisAlignedBoundingBox>( AABB );
 
