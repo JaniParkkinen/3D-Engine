@@ -19,6 +19,7 @@ namespace Engine {
 	#define SHADER		BIT(4)
 	#define TEXTURE		BIT(5)
 	#define TRANSFORM	BIT(6)
+	#define PHYS		BIT(7)
 
 	// COMPONENT
 	struct Component {
