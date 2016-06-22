@@ -111,8 +111,8 @@ namespace Engine {
 					#define DRAW_AABB
 					#ifdef  DRAW_AABB
 					if ( ( entity->GetKey( ) & AABB ) == AABB ) {
-						_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ) * sizeof( glm::vec3 ), &aabb->GetVertexData( )[ 0 ].x );
-						_indexBuffer.BindBufferData( aabb->GetIndiceData( ).size( ) * sizeof( glm::uvec3 ), &aabb->GetIndiceData( )[ 0 ].x );
+						_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ) * 3, &aabb->GetVertexData( )[ 0 ].x );
+						_indexBuffer.BindBufferData( aabb->GetIndiceData( ).size( ) * 3, &aabb->GetIndiceData( )[ 0 ].x );
 
 						Model = glm::translate( glm::mat4( 1 ), transform->GetPosition( ) );
 

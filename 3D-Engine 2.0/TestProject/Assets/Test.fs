@@ -37,5 +37,5 @@ void main()
 	vec3 specularasd = specular * spec * lightColor;
 
 	gl_FragColor = texture(tex, ex_TexCoord);
-	gl_FragColor = vec4(((ambientasd + diffuseasd + specularasd) * gl_FragColor.xyz), 1.0f);
+	gl_FragColor = vec4(emission, 1.0) * vec4(((ambientasd + diffuseasd + specularasd) * gl_FragColor.xyz), 1.0f);
 }

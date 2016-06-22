@@ -3,19 +3,19 @@
 namespace Engine {
 	void PhysicsSystem::Init( ) {
 		_entityManager = EntityManager::GetInstance( );
-	}
+	};
 
 	void PhysicsSystem::Cleanup( ) {
 
-	}
+	};
 
 	void PhysicsSystem::Pause( ) {
 
-	}
+	};
 
 	void PhysicsSystem::Resume( ) {
 
-	}
+	};
 
 	void PhysicsSystem::Update( DeltaTime deltaTime ) {
 		std::vector<std::shared_ptr<Entity>> entities = _entityManager->GetEntities( );
@@ -42,8 +42,10 @@ namespace Engine {
 				trans = rotation * scale;
 
 				for ( size_t i = 0; i < vertexData.size( ); i++ ) {
-					transVertDat.push_back( trans * glm::vec4( vertexData[ i ], 1 ) );
-				}
+					if ( i % 3 == 0 ) {
+						transVertDat.push_back( trans * glm::vec4( vertexData[ i ], 1 ) );
+					};
+				};
 
 				glm::vec3 min = glm::vec3( transVertDat[ 0 ].x, transVertDat[ 0 ].y, transVertDat[ 0 ].z );
 				glm::vec3 max = glm::vec3( transVertDat[ 0 ].x, transVertDat[ 0 ].y, transVertDat[ 0 ].z );
@@ -55,12 +57,12 @@ namespace Engine {
 					if ( transVertDat[ i ].x > max.x ) { max.x = transVertDat[ i ].x; }
 					if ( transVertDat[ i ].y > max.y ) { max.y = transVertDat[ i ].y; }
 					if ( transVertDat[ i ].z > max.z ) { max.z = transVertDat[ i ].z; }
-				} //for (size_t i = 0; i < transVertDat.size(); i++)
+				}; //for (size_t i = 0; i < transVertDat.size(); i++)
 
 				aabb->UpdateAABB( min, max );
-			} //if (transformable != nullptr && renderable != nullptr)
-		} //for (auto it = entities.begin(); it != entities.end(); it++)
-	}
+			}; //if (transformable != nullptr && renderable != nullptr)
+		}; //for (auto it = entities.begin(); it != entities.end(); it++)
+	};
 
 	bool PhysicsSystem::CheckAABBCollision( std::shared_ptr<Entity> lhsEntity, std::shared_ptr<Entity> rhsEntity ) {
 		if ( ((lhsEntity->GetKey() & AABB) == AABB) && ((rhsEntity->GetKey() & AABB) == AABB) ) {
@@ -86,7 +88,7 @@ namespace Engine {
 			if ( lhsTransMax.z < rhsTransMin.z ) return false;
 
 			return true;
-		}
+		};
 		return false;
-	}
-}
+	};
+};
