@@ -28,6 +28,6 @@ namespace Engine {
 		glm::vec3 _min;
 		glm::vec3 _max;
 	};
-};
+}
 
 #endif
