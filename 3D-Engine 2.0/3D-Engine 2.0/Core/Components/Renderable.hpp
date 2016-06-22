@@ -42,6 +42,15 @@ namespace Engine {
 		size_t _uvs;
 		size_t _normals;
 		size_t _indices;
+
+		glm::vec3 deltaUV1;
+		glm::vec3 deltaUV2;
+		glm::vec3 tangent;
+		glm::vec3 bitTangent;
+
+		glm::mat3 TBN;
+
+		unsigned int index;
 	};
 };
 #endif

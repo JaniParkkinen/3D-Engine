@@ -50,7 +50,5 @@ namespace Engine {
 		}
 	}
 
-	void Material::unbind() {};
-
 	void Material::Cleanup( ) { };
 };

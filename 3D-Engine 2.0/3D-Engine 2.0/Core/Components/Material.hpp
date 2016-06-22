@@ -24,7 +24,6 @@ namespace Engine {
 		virtual ~Material( ) { };
 
 		void bind(GLuint shaderID);
-		void unbind();
 
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;

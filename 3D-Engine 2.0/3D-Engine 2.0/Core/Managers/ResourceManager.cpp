@@ -20,7 +20,7 @@ namespace Engine {
 			{
 				if (i->getFilePath() == filepath)
 				{
-					Message("Resource already loaded.", Engine::MessageType::Warning);
+					Message("Resource already loaded.", Engine::MessageType::Info);
 					i->pushResourceUsers(1);
 					
 					return i;

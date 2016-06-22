@@ -7,7 +7,13 @@ namespace Engine {
 		std::vector<GLfloat> vertexVector;
 		std::vector<GLfloat> uvVector;
 		std::vector<GLfloat> normalVector;
+		std::vector<GLfloat> tangents;
+		std::vector<GLfloat> bitTangents;
+		glm::vec3 deltaPos1;
+		glm::vec3 deltaPos2;
 		std::vector<size_t> indiceVector;
+		
+		glm::mat3x3 invTBN = glm::inverse(TBN);
 
 		for ( size_t i = 0; i < _shapes.size( ); i++ ) {
 			for ( size_t ind : _shapes[ i ].mesh.indices ) { ind += vertexVector.size( ); }
@@ -21,6 +27,10 @@ namespace Engine {
 		_uvs		= uvVector.size( );
 		_normals	= normalVector.size( );
 		_indices	= indiceVector.size( );
+		
+		deltaPos1 = deltaUV1.x * tangent + deltaUV1.y * bitTangent;
+		deltaPos2 = deltaUV2.x * tangent + deltaUV2.y * bitTangent;
+		
 
 		vertexVector.insert( vertexVector.end( ), uvVector.begin( ), uvVector.end( ) );
 		vertexVector.insert( vertexVector.end( ), normalVector.begin( ), normalVector.end( ) );
@@ -31,6 +41,7 @@ namespace Engine {
 		GLint PositionLocation		= glGetAttribLocation( shaderID, "in_Position" );
 		GLint TexCoordinateLocation	= glGetAttribLocation( shaderID, "in_TexCoord" );
 		GLint NormalLocation		= glGetAttribLocation( shaderID, "in_Normal" );
+
 
 		if ( PositionLocation != -1 ) {
 			glEnableVertexAttribArray( PositionLocation );
