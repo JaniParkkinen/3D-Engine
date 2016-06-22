@@ -6,12 +6,13 @@
 #include <unordered_map>
 
 #include <Core/Time.hpp>
+#include <Core/Managers/EntityManager.hpp>
 
 namespace Engine {
 	///System flags
 	#define NONE		0x00000000u
-	#define RENDER		0x00000058u
-	#define PHYSICS		0x00000049u
+	#define RENDER		( RENDERABLE | SHADER | TRANSFORM )
+	#define PHYSICS		( AABB | RENDERABLE | TRANSFORM )
 
 	struct System {
 		System( size_t flag = NONE ) : _paused( false ), _flag(flag) { };

@@ -61,11 +61,11 @@ namespace Engine {
 
 		long windowStyle = NULL;
 
-		if ( style & ENGINE_WINDOWED ) {
+		if ( (style & ENGINE_WINDOWED) == ENGINE_WINDOWED ) {
 			windowStyle = WS_OVERLAPPEDWINDOW;
-		} else if ( style & ENGINE_BORDERLESS ) {
+		} else if ( (style & ENGINE_BORDERLESS) == ENGINE_BORDERLESS ) {
 			windowStyle = WS_POPUP;
-		} else if ( style & ENGINE_FULLSCREEN ) {
+		} else if ( (style & ENGINE_FULLSCREEN) == ENGINE_FULLSCREEN ) {
 			windowStyle = WS_POPUP;
 			_cmdShow = SW_MAXIMIZE;
 		} else {

@@ -7,10 +7,12 @@
 #include <GLM/glm.hpp>
 
 namespace Engine {
+	#define BIT(n)				(1<<(n))
+
 /*!< Window style flags*/
-	#define ENGINE_WINDOWED		0x00000001
-	#define ENGINE_BORDERLESS	0x00000010
-	#define ENGINE_FULLSCREEN	0x00000100
+	#define ENGINE_WINDOWED		BIT(0)
+	#define ENGINE_BORDERLESS	BIT(1)
+	#define ENGINE_FULLSCREEN	BIT(2)
 
 	//Creates window and OpenGL context
 	class Window {

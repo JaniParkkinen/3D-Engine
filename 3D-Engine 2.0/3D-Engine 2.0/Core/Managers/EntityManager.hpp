@@ -8,15 +8,17 @@
 #include <Core\Time.hpp>																							
 
 namespace Engine {
+
+	#define BIT(n)		(1<<(n))
 	///Component flags
-	#define NONE		0x00000000u
-	#define AABB		0x00000001u
-	#define CAMERA		0x00000002u
-	#define MATERIAL	0x00000004u
-	#define RENDERABLE	0x00000008u
-	#define SHADER		0x00000010u
-	#define TEXTURE		0x00000020u
-	#define TRANSFORM	0x00000040u
+	#define NONE		0
+	#define AABB		BIT(0)
+	#define CAMERA		BIT(1)
+	#define MATERIAL	BIT(2)
+	#define RENDERABLE	BIT(3)
+	#define SHADER		BIT(4)
+	#define TEXTURE		BIT(5)
+	#define TRANSFORM	BIT(6)
 
 	// COMPONENT
 	struct Component {
