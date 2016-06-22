@@ -22,9 +22,9 @@ namespace Engine {
 		for ( std::shared_ptr<Entity> entity : entities ) {
 
 			if ( (entity->GetKey() & PHYSICS) == PHYSICS ) {
-				std::shared_ptr<Transform> transform = entity->GetComponent<Transform>( TRANSFORM );
-				std::shared_ptr<Render> renderable = entity->GetComponent<Render>( RENDERABLE );
-				std::shared_ptr<AxisAlignedBoundingBox> aabb = entity->GetComponent<AxisAlignedBoundingBox>( AABB );
+				std::shared_ptr<Transform> transform			= entity->GetComponent<Transform>( TRANSFORM );
+				std::shared_ptr<Render> renderable				= entity->GetComponent<Render>( RENDERABLE );
+				std::shared_ptr<AxisAlignedBoundingBox> aabb	= entity->GetComponent<AxisAlignedBoundingBox>( AABB );
 
 				glm::mat4 scale = glm::mat4( 1 );
 				glm::mat4 rotation = glm::mat4( 1 );
@@ -35,9 +35,7 @@ namespace Engine {
 
 				scale = glm::scale( scale, transform->GetScale( ) );
 
-				rotation = glm::rotate( rotation, transform->GetRotationRad( ).x, glm::vec3( 1.0f, 0.0f, 0.0f ) );
-				rotation = glm::rotate( rotation, transform->GetRotationRad( ).y, glm::vec3( 0.0f, 1.0f, 0.0f ) );
-				rotation = glm::rotate( rotation, transform->GetRotationRad( ).z, glm::vec3( 0.0f, 0.0f, 1.0f ) );
+				rotation = glm::toMat4( transform->GetRotationQuat( ) );
 
 				glm::mat4 trans;
 

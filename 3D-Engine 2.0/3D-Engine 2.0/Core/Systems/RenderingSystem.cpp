@@ -35,7 +35,7 @@ namespace Engine {
 			std::vector<std::shared_ptr<Entity>> entities = _entityManager->GetEntities( );
 			for ( std::shared_ptr<Entity> entity : entities ) {
 				//Check if entity has rendering flags
-				if ( (entity->GetKey( ) & RENDER) == RENDER ) {
+				if ( ( entity->GetKey( ) & RENDER ) == RENDER ) {
 
 					GLAssert( );
 
@@ -74,11 +74,11 @@ namespace Engine {
 					GLAssert( );
 
 					// Bind Data
-					if ( (entity->GetKey( ) & TEXTURE)==TEXTURE ) {
+					if ( ( entity->GetKey( ) & TEXTURE ) == TEXTURE ) {
 						texture->Bind( );
 					}
 
-					if ( (entity->GetKey( ) & MATERIAL)==MATERIAL ) {
+					if ( ( entity->GetKey( ) & MATERIAL ) == MATERIAL ) {
 						material->bind( shaderID );
 					}
 
@@ -110,18 +110,17 @@ namespace Engine {
 					}
 					#define DRAW_AABB
 					#ifdef  DRAW_AABB
-					if ( (entity->GetKey( ) & AABB)==AABB ) {
-						_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ), &aabb->GetVertexData( )[ 0 ].x );
-						_indexBuffer.BindBufferData( aabb->GetIndiceData( ).size( ), &aabb->GetIndiceData( )[ 0 ].x );
+					if ( ( entity->GetKey( ) & AABB ) == AABB ) {
+						_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ) * 3, &aabb->GetVertexData( )[ 0 ].x );
+						_indexBuffer.BindBufferData( aabb->GetIndiceData( ).size( ) * 3, &aabb->GetIndiceData( )[ 0 ].x );
 
 						Model = glm::translate( glm::mat4( 1 ), transform->GetPosition( ) );
 
 						glUniformMatrix4fv( ModelLocation, 1, GL_FALSE, glm::value_ptr( Model ) );
-						GLint PositionLocation		= glGetAttribLocation( shaderID, "in_Position" );
+						GLint PositionLocation = glGetAttribLocation( shaderID, "in_Position" );
 						if ( PositionLocation != -1 ) {
 							glEnableVertexAttribArray( PositionLocation );
-							glVertexAttribPointer( PositionLocation, 3, GL_FLOAT, GL_FALSE, 0 * sizeof( glm::vec3 ), ( void* )( 0 * sizeof( GLfloat ) ) );
-							GLAssert( );
+							glVertexAttribPointer( PositionLocation, 3, GL_FLOAT, GL_FALSE, 0, ( void* )( 0 * sizeof( GLfloat ) ) );
 						}; // if (PositionLocation != -1)
 
 						glDrawElements( GL_LINE_STRIP, aabb->GetIndiceData( ).size( ) * 3, GL_UNSIGNED_INT, ( void* )0 );

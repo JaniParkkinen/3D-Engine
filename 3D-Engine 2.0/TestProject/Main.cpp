@@ -84,7 +84,7 @@ int main( ) {
 		Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Player" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>("Player", std::make_shared<Engine::Material>(Engine::ResourceManager::GetInstance()->LoadResource("Assets/Box.obj")->getMaterial()));
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Player", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getShapes( ) ) )->ScaleTexture( 0.1f );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Player", std::make_shared<Engine::Transform>( glm::vec3( 2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.5f, 0.5f, 0.5f ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Player", std::make_shared<Engine::Transform>( glm::vec3( 2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Player", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Player", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( "Player", std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
