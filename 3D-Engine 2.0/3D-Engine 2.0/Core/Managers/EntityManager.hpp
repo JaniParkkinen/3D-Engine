@@ -20,6 +20,8 @@ namespace Engine {
 	#define TEXTURE		BIT(5)
 	#define TRANSFORM	BIT(6)
 
+	#define NORMALMAP	BIT(8)
+
 	// COMPONENT
 	struct Component {
 	public:

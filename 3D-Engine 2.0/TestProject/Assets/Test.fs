@@ -5,6 +5,7 @@ precision mediump float;
 in vec2 ex_TexCoord;
 in vec3 ex_Normal;
 in vec3 ex_FragPos;
+in mat3 TBN;
 
 out vec4 gl_FragColor;
 
@@ -18,6 +19,7 @@ uniform vec3 ior;
 uniform vec3 dissolve;
 
 uniform sampler2D tex;
+uniform sampler2D normtex;
 
 void main()
 {
@@ -36,6 +38,9 @@ void main()
 	float spec = pow(max(dot(reflectionDir, viewDir), 0.0), 1);
 	vec3 specularasd = specular * spec * lightColor;
 
-	gl_FragColor = texture(tex, ex_TexCoord);
-	gl_FragColor = vec4(emission, 1.0) * vec4(((ambientasd + diffuseasd + specularasd) * gl_FragColor.xyz), 1.0f);
+	vec3 TextureNormal_tangentspace = texture(tex, ex_TexCoord).rgb;
+	TextureNormal_tangentspace = normalize(TextureNormal_tangentspace * 2.0 -1.0);
+	
+	gl_FragColor = texture(normtex, ex_TexCoord);
+	gl_FragColor = vec4(((ambientasd + diffuseasd + specularasd) * gl_FragColor.xyz), 1.0f);
 }

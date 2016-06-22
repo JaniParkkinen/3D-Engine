@@ -58,6 +58,9 @@
 #include <Core/Components/Material.hpp>
 #include <Core/Components/Material.cpp>
 
+#include <Core/Components/NormalMap.hpp>
+#include <Core/Components/NormalMap.cpp>
+
 #include <Core/Components/Renderable.hpp>
 #include <Core/Components/Renderable.cpp>
 
