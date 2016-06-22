@@ -1,7 +1,17 @@
 #include <Core/Components/Physics.hpp>
 
 namespace Engine {
-	Physics::Physics( float mass, float restitution ) : _mass(mass), _restitution(restitution), Component( PHYS ) {
+	Physics::Physics( float mass, bool isStatic, float restitution )
+		: _mass( mass )
+		, _static( isStatic )
+		, _density( 0.0f )
+		, _restitution( restitution )
+		, _momentum( 0.0f )
+		, _acceleration( glm::vec3( 0.0f ) )
+		, _velocity( glm::vec3( 0.0f ) )
+		, _angularAcceleration( glm::vec3( 0.0f ) )
+		, _angularVelocity( glm::vec3( 0.0f ) )
+		, Component( PHYS ) {
 
 	}
 
@@ -18,12 +28,19 @@ namespace Engine {
 	}
 
 	void Physics::Update( DeltaTime deltaTime ) {
-		glm::vec3 newVelocity = _velocity + ( deltaTime * _acceleration );
-		glm::vec3 newPosition = _position + ( deltaTime * newVelocity );
-		float newAngularVelocity = _angularVelocity + ( deltaTime*_angularAcceleration );
-		float newAngle = _angle + ( deltaTime * newAngularVelocity );
+		if ( ( _owner->GetKey( ) & TRANSFORM ) == TRANSFORM ) {
+			std::shared_ptr<Engine::Transform> transform = _owner->GetComponent<Engine::Transform>( TRANSFORM );
 
-		setPosition( newPosition );
-		setRotation( newRotation );
+			glm::vec3 newVelocity = _velocity + ( ( float )deltaTime * _acceleration );
+			glm::vec3 newPosition = transform->GetPosition( ) + ( ( float )deltaTime * newVelocity );
+			glm::vec3 newAngularVelocity = _angularVelocity + ( ( float )deltaTime*_angularAcceleration );
+			glm::vec3 newRotation = transform->GetRotationDeg( ) + ( ( float )deltaTime * newAngularVelocity );
+
+			transform->SetPosition( newPosition );
+			transform->SetRotation( newRotation );
+
+			_velocity = newVelocity;
+			_angularVelocity = newAngularVelocity;
+		}
 	}
 }

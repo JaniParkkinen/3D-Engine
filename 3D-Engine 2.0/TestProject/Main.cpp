@@ -88,6 +88,7 @@ int main( ) {
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Player", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Player", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( "Player", std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Physics>( "Player", std::make_shared<Engine::Physics>( ) );
 
 		Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Child" ) );
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::Material>("Child", std::make_shared<Engine::Material>(Engine::ResourceManager::GetInstance()->LoadResource("Assets/Box.obj")->getMaterial()));
