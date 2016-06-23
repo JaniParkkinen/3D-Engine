@@ -8,7 +8,7 @@ namespace Engine {
 	///-----------------------------------------------------
 
 	void Transform::SetPosition( glm::vec3 position ) {
-		glm::vec3 offset = _position - position;
+		glm::vec3 offset = position - _position;
 		_position = position;
 		this->MoveChildren( offset );
 	};

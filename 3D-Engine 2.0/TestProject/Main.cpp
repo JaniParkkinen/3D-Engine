@@ -76,21 +76,22 @@ int main( ) {
 		window.createWindow( "3D-Engine", glm::vec2( 800.0f, 600.0f ), glm::vec2( 0.0f, 0.0f ), "", "", ENGINE_BORDERLESS, WndProc );
 		window.InitOpenGL( );
 
-		Engine::SystemManager::GetInstance( )->AddSystem<Engine::RenderingSystem>( std::make_shared<Engine::RenderingSystem>( &window ) );
 		Engine::SystemManager::GetInstance( )->AddSystem<Engine::PhysicsSystem>( std::make_shared<Engine::PhysicsSystem>( ) );
+		Engine::SystemManager::GetInstance( )->AddSystem<Engine::RenderingSystem>( std::make_shared<Engine::RenderingSystem>( &window ) );
 
 		Engine::Time deltaTime;
 
 		Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Player" ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>("Player", std::make_shared<Engine::Material>(Engine::ResourceManager::GetInstance()->LoadResource("Assets/Box.obj")->getMaterial()));
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>( "Player", std::make_shared<Engine::Material>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getMaterial( ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Player", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getShapes( ) ) )->ScaleTexture( 0.1f );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Player", std::make_shared<Engine::Transform>( glm::vec3( 2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Player", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Player", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( "Player", std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Physics>( "Player", std::make_shared<Engine::Physics>( ) );
 
 		Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Child" ) );
-		Engine::EntityManager::GetInstance()->AddComponent<Engine::Material>("Child", std::make_shared<Engine::Material>(Engine::ResourceManager::GetInstance()->LoadResource("Assets/Box.obj")->getMaterial()));
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>( "Child", std::make_shared<Engine::Material>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getMaterial( ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Child", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getShapes( ) ) )->ScaleTexture( 0.1f );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Child", std::make_shared<Engine::Transform>( glm::vec3( -2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Child", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
@@ -99,26 +100,35 @@ int main( ) {
 
 		Engine::EntityManager::GetInstance( )->GetEntity<Player>( "Player" )->SetChild( "Child" );
 
-		glm::vec2 asd;
-
 		while ( window.IsOpen( ) ) {
 			deltaTime.Update( );
 
-			if ( mouse.getMouseDown( MK_LBUTTON ) ) {
-				asd = mouse.getPosition( );
-			} else if ( mouse.getMouse( MK_LBUTTON ) ) {
-				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->Rotate( glm::vec3( -( mouse.getPosition( ) - asd ).y, ( mouse.getPosition( ) - asd ).x, 0.0f ) );
-				asd = mouse.getPosition( );
-			}
-
 			if ( keyboard.getKey( '1' ) ) {
-				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->Rotate( glm::vec3( 1.0f, 0.0f, 0.0f ) );
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddAngularVelocity( glm::vec3( 0.1f, 0.0f, 0.0f ) * ( float )deltaTime.GetDeltaTime( ) );
 			}
 			if ( keyboard.getKey( '2' ) ) {
-				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->Rotate( glm::vec3( 0.0f, 1.0f, 0.0f ) );
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddAngularVelocity( glm::vec3( 0.0f, 0.1f, 0.0f ) * ( float )deltaTime.GetDeltaTime( ) );
 			}
 			if ( keyboard.getKey( '3' ) ) {
-				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( "Player", TRANSFORM )->Rotate( glm::vec3( 0.0f, 0.0f, 1.0f ) );
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddAngularVelocity( glm::vec3( 0.0f, 0.0f, 0.1f ) * ( float )deltaTime.GetDeltaTime( ) );
+			}
+			if ( keyboard.getKey( 'W' ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( glm::vec3( 0.1f, 0.0f, 0.0f ) );
+			}
+			if ( keyboard.getKey( 'S' ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( glm::vec3( -0.1f, 0.0f, 0.0f ) );
+			}
+			if ( keyboard.getKey( 'A' ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( glm::vec3( 0.0f, 0.0f, 0.1f ) );
+			}
+			if ( keyboard.getKey( 'D' ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( glm::vec3( 0.0f, 0.0f, -0.1f ) );
+			}
+			if ( keyboard.getKey( 'E' ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( glm::vec3( 0.0f, 0.1f, 0.0f ) );
+			}
+			if ( keyboard.getKey( 'Q' ) ) {
+				Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( glm::vec3( 0.0f, -0.1f, 0.0f ) );
 			}
 
 			if ( keyboard.getKey( VK_ESCAPE ) ) {
