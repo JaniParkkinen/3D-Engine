@@ -19,6 +19,16 @@ namespace Engine {
 		virtual void Cleanup( ) override;
 
 		void Update( DeltaTime deltaTime );
+
+		void SetAngularAcceleration( glm::vec3 acceleration );
+		void AddAngularAcceleration( glm::vec3 acceleration );
+		void SetAcceleration( glm::vec3 acceleration );
+		void AddAcceleration( glm::vec3 acceleration );
+
+		void SetAngularVelocity( glm::vec3 velocity );
+		void AddAngularVelocity( glm::vec3 velocity );
+		void SetVelocity( glm::vec3 velocity );
+		void AddVelocity( glm::vec3 velocity );
 	private:
 		glm::vec3 _acceleration;
 		glm::vec3 _velocity;
