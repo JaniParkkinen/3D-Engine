@@ -1,5 +1,27 @@
 #include <Core/Components/Renderable.hpp>
 
+struct Vertex
+{
+	glm::vec3 m_pos;
+	glm::vec2 m_tex;
+	glm::vec3 m_normal;
+	glm::vec3 m_tangent;
+
+	Vertex() {};
+
+	Vertex(const glm::vec3& pos,
+		const glm::vec2& tex,
+		const glm::vec3& normal,
+		const glm::vec3& tangent)
+	{
+		m_pos = pos;
+		m_tex = tex;
+		m_normal = normal;
+		m_tangent = tangent;
+	}
+};
+
+
 namespace Engine {
 
 	void Render::bind( Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID ) {
@@ -22,21 +44,55 @@ namespace Engine {
 		size_t normals		= normalVector.size( );
 		_indices			= indiceVector.size( );		
 
-		size_t tangents		= _tangents.size();
-		size_t bitangents	= _bitangents.size();
+		//size_t tangents		= _tangents.size();
+		//size_t bitangents	= _bitangents.size();
 
 		vertexVector.insert( vertexVector.end( ), uvVector.begin( ), uvVector.end( ) );
 		vertexVector.insert( vertexVector.end( ), normalVector.begin( ), normalVector.end( ) );
 
-		for (size_t i = 0; i < _tangents.size(); i++) {
-			vertexVector.push_back(_tangents[i].x);
-			vertexVector.push_back(_tangents[i].y);
-			vertexVector.push_back(_tangents[i].z);
-		} for (size_t i = 0; i < _bitangents.size(); i++) {
-			vertexVector.push_back(_bitangents[i].x);
-			vertexVector.push_back(_bitangents[i].y);
-			vertexVector.push_back(_bitangents[i].z);
+		for (unsigned i = 0; i < indiceVector.size(); i += 3)
+		{
+			Vertex& v0 = vertices[_indices[i]];
+			Vertex& v1 = vertices[indiceVector[i + 1]];
+			Vertex& v2 = vertices[indiceVector[i + 2]];
+
+			glm::vec3 edge1 = v1.m_pos - v0.m_pos;
+			glm::vec3 edge2 = v2.m_pos - v0.m_pos;
+
+			float deltaU1 = v1.m_tex.x - v0.m_pos.x;
+			float deltaV1 = v1.m_tex.y - v0.m_pos.y;
+			float deltaU2 = v2.m_tex.x - v0.m_pos.x;
+			float deltaV2 = v2.m_tex.y - v0.m_pos.y;
+
+			float f = 1.0f / (deltaU1 * deltaV2 - deltaU2 * deltaV1);
+
+			tangent.x = f * (deltaV2 * edge1.x - deltaV1 * edge2.x);
+			tangent.y = f * (deltaV2 * edge1.y - deltaV1 * edge2.y);
+			tangent.z = f * (deltaV2 * edge1.z - deltaV1 * edge2.z);
+
+			bitangent.x = f * (-deltaU2 * edge1.x - deltaU1 * edge2.x);
+			bitangent.y = f * (-deltaU2 * edge1.y - deltaU1 * edge2.y);
+			bitangent.z = f * (-deltaU2 * edge1.z - deltaU1 * edge2.z);
+
+			v0.m_tangent += tangent;
+			v1.m_tangent += tangent;
+			v2.m_tangent += tangent;			
 		}
+
+		for (unsigned i = 0; i < vertexVector.size(); i++)
+		{
+			vertices[i].m_tangent.normalize();
+		}
+
+		//for (size_t i = 0; i < _tangents.size(); i++) {
+		//	vertexVector.push_back(_tangents[i].x);
+		//	vertexVector.push_back(_tangents[i].y);
+		//	vertexVector.push_back(_tangents[i].z);
+		//} for (size_t i = 0; i < _bitangents.size(); i++) {
+		//	vertexVector.push_back(_bitangents[i].x);
+		//	vertexVector.push_back(_bitangents[i].y);
+		//	vertexVector.push_back(_bitangents[i].z);
+		//}
 
 		vertexBuffer.BindBufferData( vertexVector.size( ), vertexVector.data( ) );
 		indexBuffer.BindBufferData( indiceVector.size( ), indiceVector.data( ) );
@@ -68,7 +124,7 @@ namespace Engine {
 		} //if (TangentLocation != -1)
 		if ( BitangentLocation != -1) {
 			glEnableVertexAttribArray(BitangentLocation);
-			glVertexAttribPointer(BitangentLocation, 3, GL_FLOAT, GL_FALSE, 0, (void*)((vertices + uvs + normals + tangents) * sizeof(GLfloat)));
+			glVertexAttribPointer(BitangentLocation, 3, GL_FLOAT, GL_FALSE, 0, (void*)((vertices + uvs + normals + tangent) * sizeof(GLfloat)));
 		} //if (BitangentLocation != -1)
 	}
 

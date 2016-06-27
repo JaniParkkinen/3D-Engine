@@ -86,7 +86,7 @@ int main( ) {
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Player", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getShapes( ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Player", std::make_shared<Engine::Transform>( glm::vec3( 2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Player", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Player", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Player", std::make_shared<Engine::Texture>( "Assets/Normal.png" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( "Player", std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::NormalMap>("Player", std::make_shared<Engine::NormalMap>("Assets/Normal.png"));
 
