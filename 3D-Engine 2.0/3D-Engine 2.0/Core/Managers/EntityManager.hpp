@@ -9,17 +9,18 @@
 
 namespace Engine {
 
-	#define BIT(n)		(1<<(n))
+	#define BIT(n)			(1<<(n))
 	///Component flags
-	#define NONE		0
-	#define AABB		BIT(0)
-	#define CAMERA		BIT(1)
-	#define MATERIAL	BIT(2)
-	#define RENDERABLE	BIT(3)
-	#define SHADER		BIT(4)
-	#define TEXTURE		BIT(5)
-	#define TRANSFORM	BIT(6)
-	#define PHYS		BIT(7)
+	#define NONE			NULL
+	#define AABB			BIT(0)
+	#define CAMERA			BIT(1)
+	#define MATERIAL		BIT(2)
+	#define RENDERABLE		BIT(3)
+	#define SHADER			BIT(4)
+	#define TEXTURE			BIT(5)
+	#define TRANSFORM		BIT(6)
+	#define PHYS			BIT(7)
+	#define LIGHTSOURCE		BIT(8)
 
 	// COMPONENT
 	struct Component {
@@ -83,6 +84,7 @@ namespace Engine {
 		template <typename T> std::shared_ptr<T> GetEntity( std::string name );
 		template <typename T> std::shared_ptr<T> GetComponent( std::string name, size_t flag );
 
+		std::vector<std::shared_ptr<Entity>> GetEntities( size_t flag );
 		std::vector<std::shared_ptr<Entity>> GetEntities( );
 
 		void RemoveEntities( );

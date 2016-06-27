@@ -42,6 +42,16 @@ namespace Engine {
 	}
 
 	// ENTITY MANAGER
+	std::vector<std::shared_ptr<Entity>> EntityManager::GetEntities( size_t flag ) {
+		std::vector<std::shared_ptr<Entity>> entities;
+		for ( std::pair<std::string, std::shared_ptr<Entity>> entity : _entities ) {
+			if ( ( entity.second->GetKey( ) & flag ) == flag ) {
+				entities.push_back( entity.second );
+			}
+		}
+		return entities;
+	} // GetEntities
+
 	std::vector<std::shared_ptr<Entity>> EntityManager::GetEntities( ) {
 		std::vector<std::shared_ptr<Entity>> entities;
 		for ( std::pair<std::string, std::shared_ptr<Entity>> entity : _entities ) {

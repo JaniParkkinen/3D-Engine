@@ -15,6 +15,7 @@
 
 #include <Core/Components/AABB.hpp>
 #include <Core/Components/Camera.hpp>
+#include <Core/Components/LightSource.hpp>
 #include <Core/Components/Material.hpp>
 #include <Core/Components/Renderable.hpp>
 #include <Core/Components/Shader.hpp>

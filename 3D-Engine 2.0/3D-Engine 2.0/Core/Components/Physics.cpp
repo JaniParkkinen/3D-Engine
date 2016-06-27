@@ -32,12 +32,12 @@ namespace Engine {
 			std::shared_ptr<Engine::Transform> transform = _owner->GetComponent<Engine::Transform>( TRANSFORM );
 
 			glm::vec3 newVelocity = _velocity + ( ( float )deltaTime * _acceleration );
-			glm::vec3 newPosition = transform->GetPosition( ) + ( ( float )deltaTime * newVelocity );
+			glm::vec3 newPosition = /*transform->GetPosition( ) +*/ ( ( float )deltaTime * newVelocity );
 			glm::vec3 newAngularVelocity = _angularVelocity + ( ( float )deltaTime*_angularAcceleration );
-			glm::vec3 newRotation = transform->GetRotationRad( ) + ( ( float )deltaTime * newAngularVelocity );
+			glm::vec3 newRotation = /*transform->GetRotationDeg( ) +*/ ( ( float )deltaTime * newAngularVelocity );
 
-			transform->SetPosition( newPosition );
-			transform->SetRotation( newRotation );
+			transform->Move( newPosition );
+			transform->Rotate( newRotation );
 
 			_velocity = newVelocity;
 			_angularVelocity = newAngularVelocity;
