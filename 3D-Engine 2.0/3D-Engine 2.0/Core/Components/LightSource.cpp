@@ -1,36 +1,114 @@
 #include <Core/Components/LightSource.hpp>
+#include <cstdio>
 
 namespace Engine {
-	LightSource::LightSource( glm::vec4 color, float intensity )
-	: _color(color), _intensity(intensity), Component(LIGHTSOURCE) {
+	DirectionalLight::DirectionalLight( glm::vec3 direction, glm::vec3 color, float ambientIntensity, float diffuseIntensity )
+		: _direction( direction ), BaseLight( color, ambientIntensity, diffuseIntensity, DIRECTIONAL_LIGHT ) {
 
 	}
 
-	LightSource::~LightSource( ) {
+	DirectionalLight::~DirectionalLight( ) {
 
 	}
 
-	void LightSource::Init( ) {
+	void DirectionalLight::Bind( GLuint shaderID ) {
+		GLint position;
 
-	}
+		position = glGetUniformLocation( shaderID, "gDirectionalLight.Base.Color" );
 
-	void LightSource::Cleanup( ) {
-
-	}
-
-	void LightSource::Bind( GLuint shaderID ) {
-		GLint LightPosition		= glGetUniformLocation( shaderID, "LightPosition" );
-		GLint LightColor		= glGetUniformLocation( shaderID, "LightColor" );
-		GLint LightIntensity	= glGetUniformLocation( shaderID, "LightIntensity" );
-
-		if ( LightPosition != -1 ) {
-			glUniform3fv( LightPosition, 1, glm::value_ptr( _owner->GetComponent<Transform>( TRANSFORM )->GetPosition( ) ) );
+		if ( position != -1 ) {
+			glUniform3fv( position, 1, glm::value_ptr( _color ) );
 		}
-		if ( LightColor != -1 ) {
-			glUniform4fv( LightColor, 1, glm::value_ptr( _color ) );
+
+		position = glGetUniformLocation( shaderID, "gDirectionalLight.Base.AmbientIntensity" );
+
+		if ( position != -1 ) {
+			glUniform1f( position, _ambientIntensity );
 		}
-		if ( LightIntensity != -1 ) {
-			glUniform1f( LightIntensity, _intensity );
+
+		position = glGetUniformLocation( shaderID, "gDirectionalLight.Base.DiffuseIntensity" );
+
+		if ( position != -1 ) {
+			glUniform1f( position, _diffuseIntensity );
+		}
+
+		position = glGetUniformLocation( shaderID, "gDirectionalLight.Direction" );
+
+		if ( position != -1 ) {
+			glUniform3fv( position, 1, glm::value_ptr( _direction ) );
+		}
+	}
+
+	PointLight::PointLight( Attenuation attenuation, int id, glm::vec3 color, float ambientIntensity, float diffuseIntensity )
+		: _attenuation( attenuation ), _id( id ), BaseLight( color, ambientIntensity, diffuseIntensity, POINT_LIGHT ) {
+
+	}
+
+	PointLight::~PointLight( ) {
+
+	}
+
+	void PointLight::Bind( GLuint shaderID ) {
+		if ( ( _owner->GetKey( ) & TRANSFORM ) == TRANSFORM ) {
+			GLint position;
+
+			char name[ 128 ];
+			memset( name, 0, sizeof( name ) );
+			snprintf( name, sizeof( name ), "gPointLights[%d].Base.Color", _id );
+
+			position = glGetUniformLocation( shaderID, name );
+
+			if ( position != -1 ) {
+				glUniform3fv( position, 1, glm::value_ptr( _color ) );
+			}
+
+			snprintf( name, sizeof( name ), "gPointLights[%d].Base.AmbientIntensity", _id );
+
+			position = glGetUniformLocation( shaderID, name );
+
+			if ( position != -1 ) {
+				glUniform1f( position, _ambientIntensity );
+			}
+
+			snprintf( name, sizeof( name ), "gPointLights[%d].Base.DiffuseIntensity", _id );
+
+			position = glGetUniformLocation( shaderID, name );
+
+			if ( position != -1 ) {
+				glUniform1f( position, _diffuseIntensity );
+			}
+
+			snprintf( name, sizeof( name ), "gPointLights[%d].Position", _id );
+
+			position = glGetUniformLocation( shaderID, name );
+
+			if ( position != -1 ) {
+				glUniform3fv( position, 1, glm::value_ptr( _owner->GetComponent<Transform>( TRANSFORM )->GetPosition( ) ) );
+			}
+
+			snprintf( name, sizeof( name ), "gPointLights[%d].Atten.Constant", _id );
+
+			position = glGetUniformLocation( shaderID, name );
+
+			if ( position != -1 ) {
+				glUniform1f( position, _attenuation.Constant );
+			}
+
+			snprintf( name, sizeof( name ), "gPointLights[%d].Atten.Linear", _id );
+
+			position = glGetUniformLocation( shaderID, name );
+
+			if ( position != -1 ) {
+				glUniform1f( position, _attenuation.Linear );
+			}
+
+			snprintf( name, sizeof( name ), "gPointLights[%d].Atten.Exp", _id );
+
+			position = glGetUniformLocation( shaderID, name );
+
+			if ( position != -1 ) {
+				glUniform1f( position, _attenuation.Exp );
+			}
 		}
 	}
 }

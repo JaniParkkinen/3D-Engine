@@ -8,7 +8,7 @@ namespace Engine {
 		CompileShader( fragmentSource, GL_FRAGMENT_SHADER );
 
 		GLAssert( );
-	};
+	}
 
 	Shader::~Shader( ) { };
 
@@ -16,7 +16,7 @@ namespace Engine {
 
 	void Shader::Cleanup( ) {
 		glDeleteShader( _programID );
-	};
+	}
 
 	void Shader::CompileShader( const char* source, GLenum shaderType ) {
 		std::shared_ptr<Resource> shader = ResourceManager::GetInstance()->LoadResource(source);
@@ -32,11 +32,11 @@ namespace Engine {
 		glAttachShader(_programID, shaderID);
 
 		glLinkProgram(_programID);
-	};
+	}
 
 	void Shader::SetBinding( std::string name, void* value, eValue type ) {
 		_bindings.push_back( new Binding( name, value, type ) );
-	};
+	}
 
 	void Shader::BindShader( ) {
 		for ( Binding* binding : _bindings ) {
@@ -94,7 +94,7 @@ namespace Engine {
 				{
 					break;
 				}
-			};
-		};
-	};
-};
+			}
+		}
+	}
+}

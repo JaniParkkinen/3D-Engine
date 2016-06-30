@@ -35,17 +35,17 @@ namespace Engine {
 			location = glGetUniformLocation(shaderID, "shininess");
 			if (location != -1)
 			{
-				glUniform3fv(location, 1, &_materials[i].shininess);
+				glUniform1f(location, _materials[i].shininess);
 			}
 			location = glGetUniformLocation(shaderID, "ior");
 			if (location != -1)
 			{
-				glUniform3fv(location, 1, &_materials[i].ior);
+				glUniform1f(location, _materials[i].ior);
 			}
 			location = glGetUniformLocation(shaderID, "dissolve");
 			if (location != -1)
 			{
-				glUniform3fv(location, 1, &_materials[i].dissolve);
+				glUniform1f(location, _materials[i].dissolve);
 			}
 		}
 	}

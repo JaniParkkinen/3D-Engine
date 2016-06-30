@@ -11,19 +11,52 @@
 #include <Core/Components/Transform.hpp>
 
 namespace Engine {
+	struct BaseLight : public Component {
+		glm::vec3 _color;
 
-	class LightSource : public Component {
-	public:
-		LightSource( glm::vec4 color = glm::vec4( 1.0f ), float intensity = 1.0f );
-		virtual ~LightSource( );
+		float _ambientIntensity;
+		float _diffuseIntensity;
 
-		virtual void Init( ) override;
-		virtual void Cleanup( ) override;
+		BaseLight( glm::vec3 color, float ambient, float diffuse, size_t flag ) : _color( color ), _ambientIntensity( ambient ), _diffuseIntensity( diffuse ), Component( flag ) { }
+		virtual ~BaseLight( ) { }
 
-		void Bind( GLuint shaderID );
-	private:
-		glm::vec4 _color;
-		float _intensity;
+		virtual void Bind( GLuint shaderID ) = 0;
+
+		virtual void Init( ) override { }
+		virtual void Cleanup( ) override { }
 	};
+
+	struct DirectionalLight : public BaseLight {
+		glm::vec3 _direction;
+
+		DirectionalLight( glm::vec3 direction = glm::vec3( 0.0f ), glm::vec3 color = glm::vec3( 1.0f ), float ambientIntensity = 0.5f, float diffuseIntensity = 0.5f );
+		virtual ~DirectionalLight( );
+
+		virtual void Bind( GLuint shaderID ) override;
+	};
+
+	struct PointLight : public BaseLight {
+		struct Attenuation {
+			float Constant;
+			float Linear;
+			float Exp;
+
+			Attenuation( glm::vec3 atten ) : Constant( atten.x ), Linear( atten.y ), Exp( atten.z ) { }
+		} _attenuation;
+
+		int _id;
+
+		PointLight( Attenuation attenuation, int id, glm::vec3 color = glm::vec3( 1.0f ), float ambientIntensity = 0.5f, float diffuseIntensity = 0.5f );
+		virtual ~PointLight( );
+
+		virtual void Bind( GLuint shaderID ) override;
+	};
+
+	//class SpotLight : public BaseLight {
+	//public:
+
+	//private:
+
+	//};
 };
 #endif

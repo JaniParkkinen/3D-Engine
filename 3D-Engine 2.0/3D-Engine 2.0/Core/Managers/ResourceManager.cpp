@@ -11,6 +11,8 @@
 #include <Core/Components/Material.hpp>
 #include <Core/Managers/ResourceManager.hpp>
 
+// collada/fbx
+
 namespace Engine {
 
 	std::shared_ptr<Resource> ResourceManager::LoadResource(std::string filepath)
