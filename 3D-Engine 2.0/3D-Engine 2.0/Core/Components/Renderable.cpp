@@ -1,25 +1,6 @@
 #include <Core/Components/Renderable.hpp>
+#include <Core/Components/Mesh.h>
 
-struct Vertex
-{
-	glm::vec3 m_pos;
-	glm::vec2 m_tex;
-	glm::vec3 m_normal;
-	glm::vec3 m_tangent;
-
-	Vertex() {};
-
-	Vertex(const glm::vec3& pos,
-		const glm::vec2& tex,
-		const glm::vec3& normal,
-		const glm::vec3& tangent)
-	{
-		m_pos = pos;
-		m_tex = tex;
-		m_normal = normal;
-		m_tangent = tangent;
-	}
-};
 
 
 namespace Engine {
@@ -30,6 +11,8 @@ namespace Engine {
 		std::vector<GLfloat> uvVector;
 		std::vector<GLfloat> normalVector;
 		std::vector<size_t> indiceVector;
+		glm::vec3 tangent, bitangent;
+		std::vector<Vertex> verticeVec;
 
 		for ( size_t i = 0; i < _shapes.size( ); i++ ) {
 			for ( size_t ind : _shapes[ i ].mesh.indices ) { ind += vertexVector.size( ); }
@@ -39,22 +22,34 @@ namespace Engine {
 			indiceVector.insert( indiceVector.end( ), _shapes[ i ].mesh.indices.begin( ), _shapes[ i ].mesh.indices.end( ) );
 		}
 
+		for (size_t i = 0; i < vertexVector.size() / 3; i++) {
+			verticeVec.push_back(Vertex(glm::vec3(vertexVector[3 * i + 0], vertexVector[3 * i + 1], vertexVector[3 * i + 2]), glm::vec2(uvVector[2 * i + 0], uvVector[2 * i + 1]), glm::vec3(normalVector[3 * i + 0], normalVector[3 * i + 1], normalVector[3 * i + 2]), glm::vec3(0.0f)));
+		}
+
 		size_t vertices		= vertexVector.size( );
 		size_t uvs			= uvVector.size( );
 		size_t normals		= normalVector.size( );
-		_indices			= indiceVector.size( );		
+		_indices			= indiceVector.size( );
+		size_t sTangent		= 3;
+
 
 		//size_t tangents		= _tangents.size();
 		//size_t bitangents	= _bitangents.size();
 
-		vertexVector.insert( vertexVector.end( ), uvVector.begin( ), uvVector.end( ) );
-		vertexVector.insert( vertexVector.end( ), normalVector.begin( ), normalVector.end( ) );
+		//vertexVector.insert( vertexVector.end( ), uvVector.begin( ), uvVector.end( ) );
+		//vertexVector.insert( vertexVector.end( ), normalVector.begin( ), normalVector.end( ) );
 
-		for (unsigned i = 0; i < indiceVector.size(); i += 3)
+		for (unsigned i = 0; i <  _indices; i += 3)
 		{
-			Vertex& v0 = vertices[_indices[i]];
-			Vertex& v1 = vertices[indiceVector[i + 1]];
-			Vertex& v2 = vertices[indiceVector[i + 2]];
+			//Vertex& v0 = Vertex(glm::vec3(vertexVector[indiceVector[3*i+0]], vertexVector[indiceVector[3*i+1]], vertexVector[indiceVector[3*i+2]]), glm::vec2(uvVector[2*i+0], uvVector[2*i+1]), glm::vec3(normalVector[]), glm::vec3());
+			
+			//Vertex& v0 = Vertex(glm::vec3(vertexVector[indiceVector[i]], vertexVector[indiceVector[i]], vertexVector[indiceVector[i]]), glm::vec2(uvVector[i], uvVector[i]), glm::vec3(normalVector[i]), glm::vec3());
+			//Vertex& v1 = Vertex(glm::vec3(vertexVector[indiceVector[i + 1]], vertexVector[indiceVector[i + 1]], vertexVector[indiceVector[i + 1]]), glm::vec2(uvVector[i + 1], uvVector[i + 1]), glm::vec3(normalVector[i + 1]), glm::vec3());
+			//Vertex& v2 = Vertex(glm::vec3(vertexVector[indiceVector[i + 2]], vertexVector[indiceVector[i + 2]], vertexVector[indiceVector[i + 2]]), glm::vec2(uvVector[i + 2], uvVector[i + 2]), glm::vec3(normalVector[i + 2]), glm::vec3());
+			
+			Vertex& v0 = verticeVec[indiceVector[i]];
+			Vertex& v1 = verticeVec[indiceVector[i + 1]];
+			Vertex& v2 = verticeVec[indiceVector[i + 2]];
 
 			glm::vec3 edge1 = v1.m_pos - v0.m_pos;
 			glm::vec3 edge2 = v2.m_pos - v0.m_pos;
@@ -73,15 +68,15 @@ namespace Engine {
 			bitangent.x = f * (-deltaU2 * edge1.x - deltaU1 * edge2.x);
 			bitangent.y = f * (-deltaU2 * edge1.y - deltaU1 * edge2.y);
 			bitangent.z = f * (-deltaU2 * edge1.z - deltaU1 * edge2.z);
-
+			
 			v0.m_tangent += tangent;
 			v1.m_tangent += tangent;
 			v2.m_tangent += tangent;			
 		}
 
-		for (unsigned i = 0; i < vertexVector.size(); i++)
+		for (unsigned i = 0; i < verticeVec.size(); i++)
 		{
-			vertices[i].m_tangent.normalize();
+			verticeVec[i].m_tangent = glm::normalize(verticeVec[i].m_tangent);
 		}
 
 		//for (size_t i = 0; i < _tangents.size(); i++) {
@@ -94,14 +89,15 @@ namespace Engine {
 		//	vertexVector.push_back(_bitangents[i].z);
 		//}
 
-		vertexBuffer.BindBufferData( vertexVector.size( ), vertexVector.data( ) );
+		vertexBuffer.BindBufferData( verticeVec.size( ), &verticeVec.data( )->m_pos.x );
 		indexBuffer.BindBufferData( indiceVector.size( ), indiceVector.data( ) );
 
 		GLint PositionLocation		= glGetAttribLocation( shaderID, "in_Position" );
 		GLint TexCoordinateLocation	= glGetAttribLocation( shaderID, "in_TexCoord" );
 		GLint NormalLocation		= glGetAttribLocation( shaderID, "in_Normal" );
 		GLint TangentLocation		= glGetAttribLocation( shaderID, "in_Tangent" );
-		GLint BitangentLocation		= glGetAttribLocation( shaderID, "in_Bitangent" );
+		//GLint BitangentLocation		= glGetAttribLocation( shaderID, "in_Bitangent" );
+		GLint FbxLocation			= glGetAttribLocation( shaderID, "in_Fbx" );
 
 		if ( PositionLocation != -1 ) {
 			glEnableVertexAttribArray( PositionLocation );
@@ -122,10 +118,19 @@ namespace Engine {
 			glEnableVertexAttribArray( TangentLocation );
 			glVertexAttribPointer( TangentLocation, 3, GL_FLOAT, GL_FALSE, 0, (void* )( (vertices + uvs + normals ) * sizeof(GLfloat ) ) );
 		} //if (TangentLocation != -1)
-		if ( BitangentLocation != -1) {
-			glEnableVertexAttribArray(BitangentLocation);
-			glVertexAttribPointer(BitangentLocation, 3, GL_FLOAT, GL_FALSE, 0, (void*)((vertices + uvs + normals + tangent) * sizeof(GLfloat)));
-		} //if (BitangentLocation != -1)
+		if (FbxLocation != -1)
+		{
+			glEnableVertexAttribArray(0);
+			glEnableVertexAttribArray(1);
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)12);
+			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)20);
+		} //if(FbxLocation != -1)
+		//if ( BitangentLocation != -1) {
+		//	glEnableVertexAttribArray(BitangentLocation);
+		//	glVertexAttribPointer(BitangentLocation, 3, GL_FLOAT, GL_FALSE, 0, (void*)((vertices + uvs + normals + sTangent) * sizeof(GLfloat)));
+		//} //if (BitangentLocation != -1)
 	}
 
 	void Render::unbind( ) { }

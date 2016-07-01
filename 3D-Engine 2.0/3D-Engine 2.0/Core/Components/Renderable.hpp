@@ -35,15 +35,15 @@ namespace Engine {
 		void ScaleTexture(float scale);
 		void ScaleTexture(glm::vec2 scale);
 		void ScaleTexture(float x, float y);
-
-		size_t tangent, bitangent;
-
+		
 	private:
 		std::vector<tinyobj::shape_t> _shapes;
 		std::vector<glm::vec3> _tangents;
 		std::vector<glm::vec3> _bitangents;
 
 		size_t _indices;
+		
+
 
 		unsigned int index;
 	};
