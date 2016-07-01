@@ -21,6 +21,7 @@ namespace Engine {
 		Resource_Audio = 3,
 		Resource_Text = 4,
 		Resource_Obj = 5,
+		Resource_Fbx = 6,
 	}Resource_Type;
 
 	struct Image {

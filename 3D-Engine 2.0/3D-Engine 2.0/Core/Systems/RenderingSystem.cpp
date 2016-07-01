@@ -94,6 +94,10 @@ namespace Engine {
 						texture->Bind( );
 					}
 
+					if ((entity->GetKey() & NORMALMAP) == NORMALMAP) {
+						entity->GetComponent<NormalMap>(NORMALMAP)->Bind();
+					}
+
 					if ( ( entity->GetKey( ) & MATERIAL ) == MATERIAL ) {
 						material->bind( shaderID );
 					}
@@ -121,7 +125,7 @@ namespace Engine {
 					// Draw object
 					glDrawElements( GL_TRIANGLES, render->GetIndices( ), GL_UNSIGNED_INT, ( void* )0 );
 
-					if ( entity->GetKey( ) & TEXTURE ) {
+					if ( (entity->GetKey( ) & TEXTURE) == TEXTURE ) {
 						texture->Unbind( );
 					}
 
