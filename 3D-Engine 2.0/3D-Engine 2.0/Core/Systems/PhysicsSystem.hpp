@@ -11,9 +11,11 @@
 
 #include <Core/Managers/SystemManager.hpp>
 
-#include <Core/Components/Transform.hpp>
-#include <Core/Components/Renderable.hpp>
 #include <Core/Components/AABB.hpp>
+#include <Core/Components/Physics.hpp>
+#include <Core/Components/Renderable.hpp>
+#include <Core/Components/Transform.hpp>
+
 
 namespace Engine {
 	class PhysicsSystem : public System {

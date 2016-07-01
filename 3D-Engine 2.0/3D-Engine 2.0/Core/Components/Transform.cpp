@@ -8,7 +8,7 @@ namespace Engine {
 	///-----------------------------------------------------
 
 	void Transform::SetPosition( glm::vec3 position ) {
-		glm::vec3 offset = _position - position;
+		glm::vec3 offset = position - _position;
 		_position = position;
 		this->MoveChildren( offset );
 	};
@@ -59,7 +59,7 @@ namespace Engine {
 		glm::vec3 rotation = glm::vec3( x, y, z );
 		_rotationQuat = _rotationQuat * ( glm::inverse( _rotationQuat ) * glm::quat( glm::radians( rotation ) ) ) * _rotationQuat;
 		_rotation = glm::radians( rotation );
-		this->SetRotationChildren( rotation );
+		this->RotateChildren( rotation );
 	};
 
 	void Transform::Rotate( glm::vec3 rotate ) {

@@ -157,7 +157,9 @@
     <ClInclude Include="Core\Buffer.hpp" />
     <ClInclude Include="Core\Components\AABB.hpp" />
     <ClInclude Include="Core\Components\Camera.hpp" />
+    <ClInclude Include="Core\Components\LightSource.hpp" />
     <ClInclude Include="Core\Components\Material.hpp" />
+    <ClInclude Include="Core\Components\Physics.hpp" />
     <ClInclude Include="Core\Components\Renderable.hpp" />
     <ClInclude Include="Core\Components\Shader.hpp" />
     <ClInclude Include="Core\Components\Texture.hpp" />
@@ -177,7 +179,9 @@
     <ClCompile Include="Core\Buffer.cpp" />
     <ClCompile Include="Core\Components\AABB.cpp" />
     <ClCompile Include="Core\Components\Camera.cpp" />
+    <ClCompile Include="Core\Components\LightSource.cpp" />
     <ClCompile Include="Core\Components\Material.cpp" />
+    <ClCompile Include="Core\Components\Physics.cpp" />
     <ClCompile Include="Core\Components\Renderable.cpp" />
     <ClCompile Include="Core\Components\Shader.cpp" />
     <ClCompile Include="Core\Components\Texture.cpp" />

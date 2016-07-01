@@ -16,8 +16,8 @@ namespace Engine {
 
 	class Render : public Component {
 	public:
-		Render( std::vector<tinyobj::shape_t> shapes ) : _shapes( shapes ), _indices( 0 ), Component( RENDERABLE ) { };
-		virtual ~Render( ) { };
+		Render( std::vector<tinyobj::shape_t> shapes ) : _shapes( shapes ), _indices( 0 ), Component( RENDERABLE ) { }
+		virtual ~Render( ) { }
 
 		void bind(Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID);
 
@@ -29,7 +29,7 @@ namespace Engine {
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
 
-		std::vector<tinyobj::shape_t> getShapes( ) { return _shapes; };
+		std::vector<tinyobj::shape_t> getShapes( ) { return _shapes; }
 		std::vector<glm::vec3> getVertexData( );
 
 		void ScaleTexture( float scale );
@@ -52,5 +52,5 @@ namespace Engine {
 
 		unsigned int index;
 	};
-};
+}
 #endif

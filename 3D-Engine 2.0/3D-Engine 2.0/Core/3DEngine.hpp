@@ -55,8 +55,14 @@
 #include <Core/Components/Camera.hpp>
 #include <Core/Components/Camera.cpp>
 
+#include <Core/Components/LightSource.hpp>
+#include <Core/Components/LightSource.cpp>
+
 #include <Core/Components/Material.hpp>
 #include <Core/Components/Material.cpp>
+
+#include <Core/Components/Physics.hpp>
+#include <Core/Components/Physics.cpp>
 
 #include <Core/Components/Renderable.hpp>
 #include <Core/Components/Renderable.cpp>
