@@ -3,6 +3,7 @@
 in vec3 in_Position;
 in vec2 in_TexCoord;
 in vec3 in_Normal;
+in vec3 in_Tangent;
 
 out vec2 ex_TexCoord;
 out vec3 ex_Normal;
@@ -14,11 +15,8 @@ uniform mat4 Projection;
 
 void main() {
 	ex_TexCoord = in_TexCoord;
-	ex_Normal = transpose(mat3(View)*inverse(mat3(Model))) * in_Normal;
-	ex_FragPos = mat3(Model) * in_Position;
-
+	ex_Normal = vec3(transpose(inverse(Model)) * vec4(in_Normal, 0.0f));
+	ex_FragPos = vec3(Model * vec4(in_Position, 1.0f));
+	
 	gl_Position = (Projection * View * Model) * vec4(in_Position, 1.0f);
 }
-
-	//ex_Normal = transpose(inverse(mat3(Model))) * in_Normal;
-	//ex_FragPos = mat3(Model) * in_Position;

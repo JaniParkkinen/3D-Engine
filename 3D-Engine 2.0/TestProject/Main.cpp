@@ -103,20 +103,19 @@ int main( ) {
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Child1", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Child1", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( "Child1", std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::PointLight>( "Child1", std::make_shared<Engine::PointLight>( glm::vec3( 1.0f, 0.025f, 0.025f ), 0, glm::vec3( 0.0f, 1.0f, 0.0f ), 1.0f, 1.0f ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::PointLight>( "Child1", std::make_shared<Engine::PointLight>( glm::vec3( 1.0f, 0.5f, 0.25f ), 0, glm::vec3( 0.0f, 1.0f, 0.0f ), 1.0f, 1.0f ) );
 
-		//Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Child2" ) );
-		//Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>( "Child2", std::make_shared<Engine::Material>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getMaterial( ) ) );
-		//Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Child2", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Sphere.obj" )->getShapes( ) ) );
-		//Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Child2", std::make_shared<Engine::Transform>( glm::vec3( 2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.25f, 0.25f, 0.25f ) ) );
-		//Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Child2", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
-		//Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Child2", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
-		//Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( "Child2", std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
-		//Engine::EntityManager::GetInstance( )->AddComponent<Engine::PointLight>( "Child2", std::make_shared<Engine::PointLight>( glm::vec3(1.0f, 0.0f, 0.0f), 1, glm::vec3( 0.0f, 1.0f, 0.0f ), 0.1f, 1.0f ) );
-
+		Engine::EntityManager::GetInstance( )->AddEntity<Player>( std::make_shared<Player>( "Child2" ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>( "Child2", std::make_shared<Engine::Material>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getMaterial( ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( "Child2", std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Sphere.obj" )->getShapes( ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( "Child2", std::make_shared<Engine::Transform>( glm::vec3( 2.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.25f, 0.25f, 0.25f ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( "Child2", std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( "Child2", std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( "Child2", std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::SpotLight>( "Child2", std::make_shared<Engine::SpotLight>( glm::vec3( 0.0f, 0.0f, 1.0f ), 0.99f, 0, glm::vec3( 1.0f, 0.025f, 0.025f ), glm::vec3( 0.0f, 1.0f, 0.0f ), 1.0f, 1.0f, SPOT_LIGHT ) );
 
 		Engine::EntityManager::GetInstance( )->GetEntity<Player>( "Parent" )->SetChild( "Child1" );
-		//Engine::EntityManager::GetInstance( )->GetEntity<Player>( "Parent" )->SetChild( "Child2" );
+		Engine::EntityManager::GetInstance( )->GetEntity<Player>( "Parent" )->SetChild( "Child2" );
 
 		while ( window.IsOpen( ) ) {
 			deltaTime.Update( );
@@ -177,5 +176,5 @@ int main( ) {
 		return i;
 	} catch ( ... ) {
 		return -1;
-	};
+	}
 };

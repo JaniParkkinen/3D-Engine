@@ -2,7 +2,9 @@
 
 precision mediump float;
 
+const int MAX_DIRECTIONAL_LIGHTS = 2;
 const int MAX_POINT_LIGHTS = 2;
+const int MAX_SPOT_LIGHTS = 2;
 
 in vec2 ex_TexCoord;
 in vec3 ex_Normal;
@@ -36,6 +38,13 @@ struct PointLight
 	Attenuation Atten;
 };
 
+struct SpotLight
+{
+	struct PointLight Base;
+	vec3 Direction;
+	float Cutoff;
+};
+
 //Material
 uniform vec3 ambient;
 uniform vec3 diffuse;
@@ -47,10 +56,12 @@ uniform float ior;
 uniform float dissolve;
 
 //Light
-uniform int numDirLight;
-uniform DirectionalLight gDirectionalLight;
+uniform int gNumDirectionalLight;
+uniform DirectionalLight gDirectionalLights[MAX_DIRECTIONAL_LIGHTS];
 uniform int gNumPointLights;
 uniform PointLight gPointLights[MAX_POINT_LIGHTS];
+uniform int gNumSpotLights;
+uniform SpotLight gSpotLights[MAX_SPOT_LIGHTS];
 
 //Camera
 uniform vec3 CameraPosition;
@@ -79,35 +90,54 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, vec3 Normal)
 	return (AmbientColor + DiffuseColor + SpecularColor);
 }
 
-vec4 CalcDirectionalLight(vec3 Normal)
+vec4 CalcDirectionalLight(struct DirectionalLight l, vec3 Normal)
 {
-	return CalcLightInternal(gDirectionalLight.Base, gDirectionalLight.Direction, Normal);
+	return CalcLightInternal(l.Base, l.Direction, Normal);
 }
 
-vec4 CalcPointLight(int Index, vec3 Normal)
+vec4 CalcPointLight(struct PointLight l, vec3 Normal)
 {
-	vec3 LightDirection = ex_FragPos - gPointLights[Index].Position;
+	vec3 LightDirection = ex_FragPos - l.Position;
 	float Distance = length(LightDirection);
 	LightDirection = normalize(LightDirection);
 
-	vec4 Color = CalcLightInternal(gPointLights[Index].Base, LightDirection, Normal);
-	float Attenuation = gPointLights[Index].Atten.Constant +
-						gPointLights[Index].Atten.Linear * Distance +
-						gPointLights[Index].Atten.Exp * Distance * Distance;
+	vec4 Color = CalcLightInternal(l.Base, LightDirection, Normal);
+	float Attenuation = l.Atten.Constant +
+		l.Atten.Linear * Distance +
+		l.Atten.Exp * Distance * Distance;
 
 	return Color / Attenuation;
+}
+
+vec4 CalcSpotLight(struct SpotLight l, vec3 Normal)
+{
+	vec3 LightToPixel = normalize(ex_FragPos - l.Base.Position);
+	float SpotFactor = dot(LightToPixel, l.Direction);
+
+	if (SpotFactor > l.Cutoff) {
+		vec4 Color = CalcPointLight(l.Base, Normal);
+		return Color * (1.0 - (1.0 - SpotFactor) * 1.0/(1.0 - l.Cutoff));
+	}
+	else {
+		return vec4(0,0,0,0);
+	}
 }
 
 void main()
 {
 	vec3 Normal = normalize(ex_Normal);
 	vec4 TotalLight = vec4(0.0f, 0.0f, 0.0f, 0.0f);
-	for (int i = 0; i < numDirLight; i++) {
-		TotalLight += CalcDirectionalLight(Normal);
+	
+	for (int i = 0; i < gNumDirectionalLight; i++) {
+		TotalLight += CalcDirectionalLight(gDirectionalLights[i], Normal);
 	}
 
 	for (int i = 0 ; i < gNumPointLights ; i++) {
-		TotalLight += CalcPointLight(i, Normal);
+		TotalLight += CalcPointLight(gPointLights[i], Normal);
+	}
+	
+	for (int i = 0 ; i < gNumSpotLights ; i++) {
+		TotalLight += CalcSpotLight(gSpotLights[i], Normal);
 	}
 
 	gl_FragColor = texture2D(tex, ex_TexCoord) * TotalLight;
