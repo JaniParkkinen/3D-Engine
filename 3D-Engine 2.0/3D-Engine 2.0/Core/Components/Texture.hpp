@@ -1,5 +1,5 @@
-#ifndef Engine_Texture_h
-#define Engine_Texture_h
+#ifndef Engine_Texture_hpp
+#define Engine_Texture_hpp
 
 #include <GL/glew.h>
 

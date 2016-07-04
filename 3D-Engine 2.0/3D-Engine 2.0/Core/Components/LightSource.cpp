@@ -75,7 +75,7 @@ namespace Engine {
 			snprintf( name, sizeof( name ), "gPointLights[%d].Base.AmbientIntensity", _id );
 
 			position = glGetUniformLocation( shaderID, name );
-
+			
 			if ( position != -1 ) {
 				glUniform1f( position, _ambientIntensity );
 			}

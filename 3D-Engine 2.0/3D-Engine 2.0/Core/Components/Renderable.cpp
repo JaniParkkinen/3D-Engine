@@ -89,7 +89,7 @@ namespace Engine {
 		//	vertexVector.push_back(_bitangents[i].z);
 		//}
 
-		vertexBuffer.BindBufferData( verticeVec.size( ), &verticeVec.data( )->m_pos.x );
+		vertexBuffer.BindBufferData( vertexVector.size( ), vertexVector.data( ) );
 		indexBuffer.BindBufferData( indiceVector.size( ), indiceVector.data( ) );
 
 		GLint PositionLocation		= glGetAttribLocation( shaderID, "in_Position" );
@@ -118,15 +118,15 @@ namespace Engine {
 			glEnableVertexAttribArray( TangentLocation );
 			glVertexAttribPointer( TangentLocation, 3, GL_FLOAT, GL_FALSE, 0, (void* )( (vertices + uvs + normals ) * sizeof(GLfloat ) ) );
 		} //if (TangentLocation != -1)
-		if (FbxLocation != -1)
-		{
-			glEnableVertexAttribArray(0);
-			glEnableVertexAttribArray(1);
-			glEnableVertexAttribArray(2);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)12);
-			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)20);
-		} //if(FbxLocation != -1)
+		//if (FbxLocation != -1)
+		//{
+		//	glEnableVertexAttribArray(0);
+		//	glEnableVertexAttribArray(1);
+		//	glEnableVertexAttribArray(2);
+		//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+		//	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)12);
+		//	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)20);
+		//} //if(FbxLocation != -1)
 		//if ( BitangentLocation != -1) {
 		//	glEnableVertexAttribArray(BitangentLocation);
 		//	glVertexAttribPointer(BitangentLocation, 3, GL_FLOAT, GL_FALSE, 0, (void*)((vertices + uvs + normals + sTangent) * sizeof(GLfloat)));
@@ -182,6 +182,7 @@ namespace Engine {
 	}
 
 	void Render::Cleanup( ) { }
+
 
 	std::vector<glm::vec3> Render::getVertexData( ) {
 		std::vector<glm::vec3> vertices;

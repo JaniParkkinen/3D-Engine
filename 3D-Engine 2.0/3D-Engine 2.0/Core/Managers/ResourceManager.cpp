@@ -265,20 +265,23 @@ namespace Engine {
 
 		bool Ret = false;
 		Assimp::Importer Importer;
-		Mesh* Mesh;
+		Mesh* Mesh = nullptr;
+		std::string Filepath = filepath;
 
 		const aiScene* pScene = Importer.ReadFile(filepath.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
 		
 		if (pScene)
 		{
-			Ret = Mesh->InitFromScene(pScene, filepath);
+			GlobalInverseTransform = pScene->mRootNode->mTransformation;
+			GlobalInverseTransform.Inverse();
+			Ret = Mesh->InitFromScene(pScene, Filepath);
 		}
 		else
 		{
 			Message(std::string("Error loading fbx file. "), Engine::MessageType::Error);
 		}
 
-		Mesh->InitFromScene(pScene, filepath);
+		//Mesh->InitFromScene(pScene, filepath);
 
 		return res;
 	}
