@@ -21,6 +21,7 @@
 #include <Core/Components/Shader.hpp>
 #include <Core/Components/Texture.hpp>
 #include <Core/Components/Transform.hpp>
+#include <Core/Components/NormalMap.hpp>
 
 namespace Engine {
 	class RenderingSystem : public System {

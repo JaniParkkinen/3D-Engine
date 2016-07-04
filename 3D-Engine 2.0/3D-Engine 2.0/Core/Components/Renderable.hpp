@@ -16,32 +16,36 @@ namespace Engine {
 
 	class Render : public Component {
 	public:
-		Render( std::vector<tinyobj::shape_t> shapes ) : _shapes( shapes ), _indices( 0 ), Component( RENDERABLE ) { }
-		virtual ~Render( ) { }
+		Render(std::vector<tinyobj::shape_t> shapes) : _shapes(shapes), _indices(0), Component(RENDERABLE) { };
+		virtual ~Render() { };
 
 		void bind(Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID);
 
-		void unbind( );
+		void unbind();
 
-		size_t GetIndices( ) { return _indices; }
+		size_t GetIndices() { return _indices; }
 
 
-		virtual void Init( ) override;
-		virtual void Cleanup( ) override;
+		virtual void Init() override;
+		virtual void Cleanup() override;
 
-		std::vector<tinyobj::shape_t> getShapes( ) { return _shapes; }
-		std::vector<glm::vec3> getVertexData( );
+		std::vector<tinyobj::shape_t> getShapes() { return _shapes; };
+		std::vector<glm::vec3> getVertexData();
 
-		void ScaleTexture( float scale );
-		void ScaleTexture( glm::vec2 scale );
-		void ScaleTexture( float x, float y );
+		void ScaleTexture(float scale);
+		void ScaleTexture(glm::vec2 scale);
+		void ScaleTexture(float x, float y);
+		
 	private:
 		std::vector<tinyobj::shape_t> _shapes;
+		std::vector<glm::vec3> _tangents;
+		std::vector<glm::vec3> _bitangents;
 
-		size_t _vertices;
-		size_t _uvs;
-		size_t _normals;
 		size_t _indices;
+		
+
+
+		unsigned int index;
 	};
 }
 #endif

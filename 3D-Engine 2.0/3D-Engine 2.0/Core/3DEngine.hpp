@@ -64,6 +64,12 @@
 #include <Core/Components/Physics.hpp>
 #include <Core/Components/Physics.cpp>
 
+#include <Core/Components/Mesh.h>
+#include <Core/Components/Mesh.cpp>
+
+#include <Core/Components/NormalMap.hpp>
+#include <Core/Components/NormalMap.cpp>
+
 #include <Core/Components/Renderable.hpp>
 #include <Core/Components/Renderable.cpp>
 

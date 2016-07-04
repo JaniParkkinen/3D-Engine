@@ -10,6 +10,7 @@
 #include <Core/Message.hpp>
 #include <Core/Components/Material.hpp>
 #include <Core/Managers/ResourceManager.hpp>
+#include <Core/Components/Mesh.h>
 
 // collada/fbx
 
@@ -22,7 +23,7 @@ namespace Engine {
 			{
 				if (i->getFilePath() == filepath)
 				{
-					Message("Resource already loaded.", Engine::MessageType::Warning);
+					Message("Resource already loaded.", Engine::MessageType::Info);
 					i->pushResourceUsers(1);
 					
 					return i;
@@ -69,12 +70,19 @@ namespace Engine {
 				res = ResourceManager::LoadFontResource(filepath);
 				return res;
 			}
+			//obj
 			else if (filepath.substr(filepath.size() - 4) == ".obj")
 			{
 				Message("Loading obj file.", Engine::MessageType::Info);
 				res = ResourceManager::LoadObjectResource(filepath);
 
 				return res;
+			}
+			//Fbx
+			else if (filepath.substr(filepath.size() - 4) == ".fbx")
+			{
+				Message("Loading fbx file", Engine::MessageType::Info);
+				res = ResourceManager::LoadFbxResource(filepath);
 			}
 			//UnknownFile
 			else
@@ -245,6 +253,33 @@ namespace Engine {
 		res->setMaterials(materials);
 		
 		_resources.push_back(res);
+		return res;
+	}
+	std::shared_ptr<Resource> ResourceManager::LoadFbxResource(std::string filepath)
+	{
+		std::shared_ptr<Resource> res = std::make_shared<Resource>();
+		res->setFilePath(filepath);
+		res->setType(Resource_Type::Resource_Fbx);
+		res->setID(++ID_generator);
+		res->pushResourceUsers(1);
+
+		bool Ret = false;
+		Assimp::Importer Importer;
+		Mesh* Mesh;
+
+		const aiScene* pScene = Importer.ReadFile(filepath.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
+		
+		if (pScene)
+		{
+			Ret = Mesh->InitFromScene(pScene, filepath);
+		}
+		else
+		{
+			Message(std::string("Error loading fbx file. "), Engine::MessageType::Error);
+		}
+
+		Mesh->InitFromScene(pScene, filepath);
+
 		return res;
 	}
 }
