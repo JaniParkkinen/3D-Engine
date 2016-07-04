@@ -3,7 +3,6 @@
 in vec3 in_Position;
 in vec2 in_TexCoord;
 in vec3 in_Normal;
-in vec3 in_Tangent;
 
 out vec2 ex_TexCoord;
 out vec3 ex_Normal;

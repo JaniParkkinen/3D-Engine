@@ -37,6 +37,7 @@ namespace Engine {
 
 			std::vector<std::shared_ptr<Entity>> dirLights = _entityManager->GetEntities( DIRECTIONAL_LIGHT );
 			std::vector<std::shared_ptr<Entity>> pointLights = _entityManager->GetEntities( POINT_LIGHT );
+			std::vector<std::shared_ptr<Entity>> spotLights = _entityManager->GetEntities( SPOT_LIGHT );
 
 			std::vector<std::shared_ptr<Entity>> entities = _entityManager->GetEntities( );
 
@@ -81,13 +82,19 @@ namespace Engine {
 					GLAssert( );
 
 					// Bind Data
-					glUniform1i( glGetUniformLocation( shaderID, "numDirLight" ), dirLights.size( ) );
+					glUniform1i( glGetUniformLocation( shaderID, "gNumDirectionalLight" ), dirLights.size( ) );
 					for ( std::shared_ptr<Entity> light : dirLights ) {
 						light->GetComponent<DirectionalLight>( DIRECTIONAL_LIGHT )->Bind( shaderID );
 					}
+
 					glUniform1i( glGetUniformLocation( shaderID, "gNumPointLights" ), pointLights.size( ) );
 					for ( std::shared_ptr<Entity> light : pointLights ) {
 						light->GetComponent<PointLight>( POINT_LIGHT )->Bind( shaderID );
+					}
+
+					glUniform1i( glGetUniformLocation( shaderID, "gNumSpotLights" ), spotLights.size( ) );
+					for ( std::shared_ptr<Entity> light : spotLights ) {
+						light->GetComponent<SpotLight>( SPOT_LIGHT )->Bind( shaderID );
 					}
 
 					if ( ( entity->GetKey( ) & TEXTURE ) == TEXTURE ) {

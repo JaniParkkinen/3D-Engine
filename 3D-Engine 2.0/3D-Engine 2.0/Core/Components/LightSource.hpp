@@ -29,7 +29,9 @@ namespace Engine {
 	struct DirectionalLight : public BaseLight {
 		glm::vec3 _direction;
 
-		DirectionalLight( glm::vec3 direction = glm::vec3( 0.0f ), glm::vec3 color = glm::vec3( 1.0f ), float ambientIntensity = 0.5f, float diffuseIntensity = 0.5f );
+		size_t _id;
+
+		DirectionalLight( glm::vec3 direction, glm::vec3 color, size_t id, float ambientIntensity, float diffuseIntensity, size_t flag = DIRECTIONAL_LIGHT );
 		virtual ~DirectionalLight( );
 
 		virtual void Bind( GLuint shaderID ) override;
@@ -44,19 +46,23 @@ namespace Engine {
 			Attenuation( glm::vec3 atten ) : Constant( atten.x ), Linear( atten.y ), Exp( atten.z ) { }
 		} _attenuation;
 
-		int _id;
+		size_t _id;
 
-		PointLight( Attenuation attenuation, int id, glm::vec3 color = glm::vec3( 1.0f ), float ambientIntensity = 0.5f, float diffuseIntensity = 0.5f );
+		PointLight( Attenuation attenuation, size_t id, glm::vec3 color = glm::vec3( 1.0f ), float ambientIntensity = 0.5f, float diffuseIntensity = 0.5f, size_t flag = POINT_LIGHT );
 		virtual ~PointLight( );
 
 		virtual void Bind( GLuint shaderID ) override;
 	};
 
-	//class SpotLight : public BaseLight {
-	//public:
+	struct SpotLight : public PointLight {
+		glm::vec3 _direction;
+		float _cutoff;
 
-	//private:
+		size_t _id;
 
-	//};
+		SpotLight( glm::vec3 direction, float cutoff, size_t id, glm::vec3 atten, glm::vec3 color, float ambientIntensity, float diffuseIntensity, size_t flag = SPOT_LIGHT );
+
+		virtual void Bind( GLuint shaderID ) override;
+	};
 };
 #endif
