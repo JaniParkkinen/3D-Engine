@@ -10,7 +10,7 @@
 namespace Engine {
 	class Texture : public Component {
 	public:
-		Texture( const char* source );
+		Texture( const char* source, size_t flag = TEXTURE );
 
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;
@@ -21,5 +21,5 @@ namespace Engine {
 		Resource* tex;
 		GLuint texid;
 	};
-};
+}
 #endif

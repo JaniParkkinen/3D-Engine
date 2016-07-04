@@ -23,6 +23,7 @@ namespace Engine {
 	#define DIRECTIONAL_LIGHT		BIT(8)
 	#define POINT_LIGHT				BIT(9)
 	#define SPOT_LIGHT				BIT(10)
+	#define NORMAL_MAP				BIT(11)
 
 	#define NORMALMAP	BIT(8)
 
