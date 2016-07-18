@@ -26,8 +26,14 @@ namespace Engine {
 	void Texture::Cleanup( ) { }
 
 	void Texture::Bind( ) {
-		glActiveTexture( GL_TEXTURE0 );
-		glBindTexture( GL_TEXTURE_2D, texid );
+		if ( ( _type & TEXTURE ) == TEXTURE ) {
+			glActiveTexture( GL_TEXTURE0 );
+			glBindTexture( GL_TEXTURE_2D, texid );
+		}
+		else if ( ( _type & NORMAL_MAP ) == NORMAL_MAP ) {
+			glActiveTexture( GL_TEXTURE1 );
+			glBindTexture( GL_TEXTURE_2D, texid );
+		}
 	}
 
 	void Texture::Unbind( ) {

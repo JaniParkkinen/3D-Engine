@@ -12,7 +12,7 @@ namespace Engine {
 		std::vector<GLfloat> normalVector;
 		std::vector<size_t> indiceVector;
 		glm::vec3 tangent, bitangent;
-		std::vector<Vertex> verticeVec;
+//		std::vector<Vertex> verticeVec;
 
 		for ( size_t i = 0; i < _shapes.size( ); i++ ) {
 			for ( size_t ind : _shapes[ i ].mesh.indices ) { ind += vertexVector.size( ); }
@@ -22,9 +22,9 @@ namespace Engine {
 			indiceVector.insert( indiceVector.end( ), _shapes[ i ].mesh.indices.begin( ), _shapes[ i ].mesh.indices.end( ) );
 		}
 
-		for (size_t i = 0; i < vertexVector.size() / 3; i++) {
-			verticeVec.push_back(Vertex(glm::vec3(vertexVector[3 * i + 0], vertexVector[3 * i + 1], vertexVector[3 * i + 2]), glm::vec2(uvVector[2 * i + 0], uvVector[2 * i + 1]), glm::vec3(normalVector[3 * i + 0], normalVector[3 * i + 1], normalVector[3 * i + 2]), glm::vec3(0.0f)));
-		}
+//		for (size_t i = 0; i < vertexVector.size() / 3; i++) {
+//			verticeVec.push_back(Vertex(glm::vec3(vertexVector[3 * i + 0], vertexVector[3 * i + 1], vertexVector[3 * i + 2]), glm::vec2(uvVector[2 * i + 0], uvVector[2 * i + 1]), glm::vec3(normalVector[3 * i + 0], normalVector[3 * i + 1], normalVector[3 * i + 2]), glm::vec3(0.0f)));
+//		}
 
 		size_t vertices		= vertexVector.size( );
 		size_t uvs			= uvVector.size( );
@@ -39,45 +39,45 @@ namespace Engine {
 		//vertexVector.insert( vertexVector.end( ), uvVector.begin( ), uvVector.end( ) );
 		//vertexVector.insert( vertexVector.end( ), normalVector.begin( ), normalVector.end( ) );
 
-		for (unsigned i = 0; i <  _indices; i += 3)
-		{
-			//Vertex& v0 = Vertex(glm::vec3(vertexVector[indiceVector[3*i+0]], vertexVector[indiceVector[3*i+1]], vertexVector[indiceVector[3*i+2]]), glm::vec2(uvVector[2*i+0], uvVector[2*i+1]), glm::vec3(normalVector[]), glm::vec3());
-			
-			//Vertex& v0 = Vertex(glm::vec3(vertexVector[indiceVector[i]], vertexVector[indiceVector[i]], vertexVector[indiceVector[i]]), glm::vec2(uvVector[i], uvVector[i]), glm::vec3(normalVector[i]), glm::vec3());
-			//Vertex& v1 = Vertex(glm::vec3(vertexVector[indiceVector[i + 1]], vertexVector[indiceVector[i + 1]], vertexVector[indiceVector[i + 1]]), glm::vec2(uvVector[i + 1], uvVector[i + 1]), glm::vec3(normalVector[i + 1]), glm::vec3());
-			//Vertex& v2 = Vertex(glm::vec3(vertexVector[indiceVector[i + 2]], vertexVector[indiceVector[i + 2]], vertexVector[indiceVector[i + 2]]), glm::vec2(uvVector[i + 2], uvVector[i + 2]), glm::vec3(normalVector[i + 2]), glm::vec3());
-			
-			Vertex& v0 = verticeVec[indiceVector[i]];
-			Vertex& v1 = verticeVec[indiceVector[i + 1]];
-			Vertex& v2 = verticeVec[indiceVector[i + 2]];
-
-			glm::vec3 edge1 = v1.m_pos - v0.m_pos;
-			glm::vec3 edge2 = v2.m_pos - v0.m_pos;
-
-			float deltaU1 = v1.m_tex.x - v0.m_pos.x;
-			float deltaV1 = v1.m_tex.y - v0.m_pos.y;
-			float deltaU2 = v2.m_tex.x - v0.m_pos.x;
-			float deltaV2 = v2.m_tex.y - v0.m_pos.y;
-
-			float f = 1.0f / (deltaU1 * deltaV2 - deltaU2 * deltaV1);
-
-			tangent.x = f * (deltaV2 * edge1.x - deltaV1 * edge2.x);
-			tangent.y = f * (deltaV2 * edge1.y - deltaV1 * edge2.y);
-			tangent.z = f * (deltaV2 * edge1.z - deltaV1 * edge2.z);
-
-			bitangent.x = f * (-deltaU2 * edge1.x - deltaU1 * edge2.x);
-			bitangent.y = f * (-deltaU2 * edge1.y - deltaU1 * edge2.y);
-			bitangent.z = f * (-deltaU2 * edge1.z - deltaU1 * edge2.z);
-			
-			v0.m_tangent += tangent;
-			v1.m_tangent += tangent;
-			v2.m_tangent += tangent;			
-		}
-
-		for (unsigned i = 0; i < verticeVec.size(); i++)
-		{
-			verticeVec[i].m_tangent = glm::normalize(verticeVec[i].m_tangent);
-		}
+//		for (unsigned i = 0; i <  _indices; i += 3)
+//		{
+//			//Vertex& v0 = Vertex(glm::vec3(vertexVector[indiceVector[3*i+0]], vertexVector[indiceVector[3*i+1]], vertexVector[indiceVector[3*i+2]]), glm::vec2(uvVector[2*i+0], uvVector[2*i+1]), glm::vec3(normalVector[]), glm::vec3());
+//			
+//			//Vertex& v0 = Vertex(glm::vec3(vertexVector[indiceVector[i]], vertexVector[indiceVector[i]], vertexVector[indiceVector[i]]), glm::vec2(uvVector[i], uvVector[i]), glm::vec3(normalVector[i]), glm::vec3());
+//			//Vertex& v1 = Vertex(glm::vec3(vertexVector[indiceVector[i + 1]], vertexVector[indiceVector[i + 1]], vertexVector[indiceVector[i + 1]]), glm::vec2(uvVector[i + 1], uvVector[i + 1]), glm::vec3(normalVector[i + 1]), glm::vec3());
+//			//Vertex& v2 = Vertex(glm::vec3(vertexVector[indiceVector[i + 2]], vertexVector[indiceVector[i + 2]], vertexVector[indiceVector[i + 2]]), glm::vec2(uvVector[i + 2], uvVector[i + 2]), glm::vec3(normalVector[i + 2]), glm::vec3());
+//			
+//			Vertex& v0 = verticeVec[indiceVector[i]];
+//			Vertex& v1 = verticeVec[indiceVector[i + 1]];
+//			Vertex& v2 = verticeVec[indiceVector[i + 2]];
+//
+//			glm::vec3 edge1 = v1.m_pos - v0.m_pos;
+//			glm::vec3 edge2 = v2.m_pos - v0.m_pos;
+//
+//			float deltaU1 = v1.m_tex.x - v0.m_pos.x;
+//			float deltaV1 = v1.m_tex.y - v0.m_pos.y;
+//			float deltaU2 = v2.m_tex.x - v0.m_pos.x;
+//			float deltaV2 = v2.m_tex.y - v0.m_pos.y;
+//
+//			float f = 1.0f / (deltaU1 * deltaV2 - deltaU2 * deltaV1);
+//
+//			tangent.x = f * (deltaV2 * edge1.x - deltaV1 * edge2.x);
+//			tangent.y = f * (deltaV2 * edge1.y - deltaV1 * edge2.y);
+//			tangent.z = f * (deltaV2 * edge1.z - deltaV1 * edge2.z);
+//
+//			bitangent.x = f * (-deltaU2 * edge1.x - deltaU1 * edge2.x);
+//			bitangent.y = f * (-deltaU2 * edge1.y - deltaU1 * edge2.y);
+//			bitangent.z = f * (-deltaU2 * edge1.z - deltaU1 * edge2.z);
+//			
+//			v0.m_tangent += tangent;
+//			v1.m_tangent += tangent;
+//			v2.m_tangent += tangent;			
+//		}
+//
+//		for (unsigned i = 0; i < verticeVec.size(); i++)
+//		{
+//			verticeVec[i].m_tangent = glm::normalize(verticeVec[i].m_tangent);
+//		}
 
 		//for (size_t i = 0; i < _tangents.size(); i++) {
 		//	vertexVector.push_back(_tangents[i].x);

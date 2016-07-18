@@ -15,7 +15,7 @@ uniform mat4 Projection;
 void main() {
 	ex_TexCoord = in_TexCoord;
 	ex_Normal = mat3(transpose(inverse(Model))) * in_Normal;
-	ex_FragPos = vec3(Model * vec4(in_Position, 1.0f));
+	ex_FragPos = vec3(Model  * vec4(in_Position, 1.0f));
 	
 	gl_Position = Projection * View * Model * vec4(in_Position, 1.0);
 }

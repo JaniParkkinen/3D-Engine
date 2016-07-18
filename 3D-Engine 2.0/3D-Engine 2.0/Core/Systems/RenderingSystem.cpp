@@ -8,6 +8,7 @@ namespace Engine {
 		glFrontFace( GL_CCW );
 		glCullFace( GL_BACK );
 		glEnable( GL_CULL_FACE );
+		glEnable( GL_NORMALIZE );
 
 		glUseProgram( 0 );
 
@@ -79,12 +80,12 @@ namespace Engine {
 
 					glm::vec3 ViewPosition = glm::vec3( 0.0f, 0.0f, 0.0f );
 
-					GLAssert( );
-
+					GLAssert( ); 
 					// Bind Data
 					glUniform1i( glGetUniformLocation( shaderID, "gNumDirectionalLight" ), dirLights.size( ) );
 					for ( std::shared_ptr<Entity> light : dirLights ) {
 						light->GetComponent<DirectionalLight>( DIRECTIONAL_LIGHT )->Bind( shaderID );
+
 					}
 
 					glUniform1i( glGetUniformLocation( shaderID, "gNumPointLights" ), pointLights.size( ) );
@@ -101,9 +102,9 @@ namespace Engine {
 						texture->Bind( );
 					}
 
-					if ((entity->GetKey() & NORMALMAP) == NORMALMAP) {
-						entity->GetComponent<NormalMap>(NORMALMAP)->Bind();
-					}
+//					if ((entity->GetKey() & NORMALMAP) == NORMALMAP) {
+//						entity->GetComponent<NormalMap>(NORMALMAP)->Bind();
+//					}
 
 					if ( ( entity->GetKey( ) & MATERIAL ) == MATERIAL ) {
 						material->bind( shaderID );

@@ -25,8 +25,6 @@ namespace Engine {
 	#define SPOT_LIGHT				BIT(10)
 	#define NORMAL_MAP				BIT(11)
 
-	#define NORMALMAP	BIT(8)
-
 	// COMPONENT
 	struct Component {
 	public:

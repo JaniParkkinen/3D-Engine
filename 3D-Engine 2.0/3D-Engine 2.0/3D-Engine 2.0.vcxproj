@@ -161,7 +161,6 @@
     <ClInclude Include="Core\Components\Material.hpp" />
     <ClInclude Include="Core\Components\Physics.hpp" />
     <ClInclude Include="Core\Components\Mesh.h" />
-    <ClInclude Include="Core\Components\NormalMap.hpp" />
     <ClInclude Include="Core\Components\Renderable.hpp" />
     <ClInclude Include="Core\Components\Shader.hpp" />
     <ClInclude Include="Core\Components\Texture.hpp" />
@@ -185,7 +184,6 @@
     <ClCompile Include="Core\Components\Material.cpp" />
     <ClCompile Include="Core\Components\Physics.cpp" />
     <ClCompile Include="Core\Components\Mesh.cpp" />
-    <ClCompile Include="Core\Components\NormalMap.cpp" />
     <ClCompile Include="Core\Components\Renderable.cpp" />
     <ClCompile Include="Core\Components\Shader.cpp" />
     <ClCompile Include="Core\Components\Texture.cpp" />

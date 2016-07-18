@@ -10,18 +10,6 @@ in vec2 ex_TexCoord;
 in vec3 ex_Normal;
 in vec3 ex_FragPos;
 
-in vec4 LightSpacePos;
-in vec2 TexCoord0;
-in vec3 Normal0;
-in vec3 WorldPos0;
-in vec3 Tangent0;
-
-//in vec3 N;
-//in vec3 V;
-//in vec3 E;
-//in vec3 B;
-//in vec3 T;
-
 out vec4 gl_FragColor;
 
 struct BaseLight {
@@ -78,28 +66,24 @@ uniform SpotLight gSpotLights[MAX_SPOT_LIGHTS];
 //Camera
 uniform vec3 CameraPosition;
 
-vec3 CalcBumpedNormal()
+//Texture
+uniform sampler2D tex;
+uniform sampler2D normal_map;
+
 vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, vec3 Normal)
 {
 	vec4 AmbientColor = vec4(Light.Color, 1.0f) * Light.AmbientIntensity;
-	float DiffuseFactor = dot(Normal, -LightDirection);
-Tangent = normalize(Tangent - dot(Tangent, Normal)* Normal);
-	vec4 DiffuseColor = vec4(0, 0, 0, 0);
-	vec4 SpecularColor = vec4(0, 0, 0, 0);
-vec3 BumpMapNormal = texture(gNormalMap, TexCoord0).xyz;
-BumpMapNormal = 2.0 * BumpMapNormal - vec3(1.0, 1.0, 1.0);
-vec3 NewNormal;
-mat3 TBN = mat3(Tangent, Bitangent, Normal);
-NewNormal = TBN * BumpMapNormal;
-NewNormal = normalize(NewNormal);
-return NewNormal;
-
-	if (DiffuseFactor > 0) {
+	float DiffuseFactor = clamp(dot(-LightDirection, Normal), 0.0f, 1.0f);
+	
+	vec4 DiffuseColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    vec4 SpecularColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+	
+	if (DiffuseFactor > 0.0f) {
 		DiffuseColor = vec4(Light.Color * Light.DiffuseIntensity * DiffuseFactor, 1.0f);
 		vec3 VertexToEye = normalize(CameraPosition - ex_FragPos);
 		vec3 LightReflect = normalize(reflect(LightDirection, Normal));
-		float SpecularFactor = dot(VertexToEye, LightReflect);
-		if (SpecularFactor > 0) {
+		float SpecularFactor = clamp(dot(VertexToEye, LightReflect), 0.0f, 1.0f);
+		if (SpecularFactor > 0.0f) {
 			SpecularFactor = pow(SpecularFactor, 32);
 			SpecularColor = vec4(Light.Color * specular * SpecularFactor, 1.0f);
 		}
@@ -115,7 +99,7 @@ vec4 CalcDirectionalLight(struct DirectionalLight l, vec3 Normal)
 
 vec4 CalcPointLight(struct PointLight l, vec3 Normal)
 {
-	vec3 LightDirection = ex_FragPos - l.Position;
+	vec3 LightDirection = l.Position - ex_FragPos;
 	float Distance = length(LightDirection);
 	LightDirection = normalize(LightDirection);
 
@@ -129,15 +113,15 @@ vec4 CalcPointLight(struct PointLight l, vec3 Normal)
 
 vec4 CalcSpotLight(struct SpotLight l, vec3 Normal)
 {
-	vec3 LightToPixel = normalize(ex_FragPos - l.Base.Position);
+	vec3 LightToPixel = normalize(l.Base.Position - ex_FragPos);
 	float SpotFactor = dot(LightToPixel, l.Direction);
 
 	if (SpotFactor > l.Cutoff) {
 		vec4 Color = CalcPointLight(l.Base, Normal);
-		return Color * (1.0 - (1.0 - SpotFactor) * 1.0/(1.0 - l.Cutoff));
+		return Color * (1.0f - (1.0f - SpotFactor) * 1.0f/(1.0f - l.Cutoff));
 	}
 	else {
-		return vec4(0,0,0,0);
+		return vec4(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 }
 
@@ -159,15 +143,4 @@ void main()
 	}
 
 	gl_FragColor = texture2D(tex, ex_TexCoord) * TotalLight;
-//	vec3 viewDir = normalize(vec3(0.0f, 0.0f, 0.0f));
-//	vec3 reflectionDir = normalize(-reflect(-lightDir, norm));
-//
-//	float spec = pow(max(dot(reflectionDir, viewDir), 0.0), 1);
-//	vec3 specularasd = specular * spec * lightColor;
-//
-//	vec3 TextureNormal_tangentspace = texture(tex, ex_TexCoord).rgb;
-//	TextureNormal_tangentspace = normalize(TextureNormal_tangentspace * 2.0 -1.0);
-	gl_FragColor = N*V;
-	//gl_FragColor = texture(normtex, ex_TexCoord);
-	//gl_FragColor = vec4(((ambientasd + diffuseasd + specularasd) * gl_FragColor.xyz), 1.0f);
 }

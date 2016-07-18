@@ -82,7 +82,7 @@ namespace Engine {
 			else if (filepath.substr(filepath.size() - 4) == ".fbx")
 			{
 				Message("Loading fbx file", Engine::MessageType::Info);
-				res = ResourceManager::LoadFbxResource(filepath);
+//				res = ResourceManager::LoadFbxResource(filepath);
 			}
 			//UnknownFile
 			else
@@ -255,34 +255,34 @@ namespace Engine {
 		_resources.push_back(res);
 		return res;
 	}
-	std::shared_ptr<Resource> ResourceManager::LoadFbxResource(std::string filepath)
-	{
-		std::shared_ptr<Resource> res = std::make_shared<Resource>();
-		res->setFilePath(filepath);
-		res->setType(Resource_Type::Resource_Fbx);
-		res->setID(++ID_generator);
-		res->pushResourceUsers(1);
-
-		bool Ret = false;
-		Assimp::Importer Importer;
-		Mesh* Mesh = nullptr;
-		std::string Filepath = filepath;
-
-		const aiScene* pScene = Importer.ReadFile(filepath.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
-		
-		if (pScene)
-		{
-			GlobalInverseTransform = pScene->mRootNode->mTransformation;
-			GlobalInverseTransform.Inverse();
-			Ret = Mesh->InitFromScene(pScene, Filepath);
-		}
-		else
-		{
-			Message(std::string("Error loading fbx file. "), Engine::MessageType::Error);
-		}
-
-		//Mesh->InitFromScene(pScene, filepath);
-
-		return res;
-	}
+//	std::shared_ptr<Resource> ResourceManager::LoadFbxResource(std::string filepath)
+//	{
+//		std::shared_ptr<Resource> res = std::make_shared<Resource>();
+//		res->setFilePath(filepath);
+//		res->setType(Resource_Type::Resource_Fbx);
+//		res->setID(++ID_generator);
+//		res->pushResourceUsers(1);
+//
+//		bool Ret = false;
+//		Assimp::Importer Importer;
+//		Mesh* Mesh = nullptr;
+//		std::string Filepath = filepath;
+//
+//		const aiScene* pScene = Importer.ReadFile(filepath.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
+//		
+//		if (pScene)
+//		{
+//			GlobalInverseTransform = pScene->mRootNode->mTransformation;
+//			GlobalInverseTransform.Inverse();
+//			Ret = Mesh->InitFromScene(pScene, Filepath);
+//		}
+//		else
+//		{
+//			Message(std::string("Error loading fbx file. "), Engine::MessageType::Error);
+//		}
+//
+//		//Mesh->InitFromScene(pScene, filepath);
+//
+//		return res;
+//	}
 }
