@@ -1,7 +1,8 @@
 #ifndef Resourcemanager_h
 #define Resourcemanager_h
+
 #include <Core/Resource.h>
-#include <Core/Components/Mesh.h>
+
 #include <string>
 #include <iostream>
 #include <vector>

@@ -10,7 +10,10 @@
 
 #include <Core/Time.hpp>
 #include <Core/Buffer.hpp>
+
 #include <Core/Managers/EntityManager.hpp>
+
+//#include <Core/Components/Mesh.h>
 
 namespace Engine {
 
@@ -31,6 +34,7 @@ namespace Engine {
 
 		std::vector<tinyobj::shape_t> getShapes() { return _shapes; };
 		std::vector<glm::vec3> getVertexData();
+		//std::vector<Engine::Mesh> getAnimShape() { return _animShapes; };
 
 		void ScaleTexture(float scale);
 		void ScaleTexture(glm::vec2 scale);
@@ -38,14 +42,14 @@ namespace Engine {
 		
 	private:
 		std::vector<tinyobj::shape_t> _shapes;
+		//std::vector<Engine::Mesh> _animShapes;
 		std::vector<glm::vec3> _tangents;
 		std::vector<glm::vec3> _bitangents;
 
 		size_t _indices;
+		//Mesh* Mesh;
 		
-
-
-		unsigned int index;
+		unsigned index;
 	};
 }
 #endif

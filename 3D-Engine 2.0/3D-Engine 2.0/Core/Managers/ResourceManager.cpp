@@ -8,9 +8,10 @@
 #include <tinyobjloader/tinyobjloader.h>
 
 #include <Core/Message.hpp>
+
 #include <Core/Components/Material.hpp>
+
 #include <Core/Managers/ResourceManager.hpp>
-#include <Core/Components/Mesh.h>
 
 // collada/fbx
 
@@ -272,8 +273,11 @@ namespace Engine {
 		
 		if (pScene)
 		{
-			GlobalInverseTransform = pScene->mRootNode->mTransformation;
-			GlobalInverseTransform.Inverse();
+			Mesh->setGlobalInverseTransform(glm::mat4(glm::vec4(pScene->mRootNode->mTransformation.a1, pScene->mRootNode->mTransformation.a2, pScene->mRootNode->mTransformation.a3, pScene->mRootNode->mTransformation.a4),
+													  glm::vec4(pScene->mRootNode->mTransformation.b1, pScene->mRootNode->mTransformation.b2, pScene->mRootNode->mTransformation.b3, pScene->mRootNode->mTransformation.b4),
+													  glm::vec4(pScene->mRootNode->mTransformation.c1, pScene->mRootNode->mTransformation.c2, pScene->mRootNode->mTransformation.c3, pScene->mRootNode->mTransformation.c4),
+													  glm::vec4(pScene->mRootNode->mTransformation.d1, pScene->mRootNode->mTransformation.d2, pScene->mRootNode->mTransformation.d3, pScene->mRootNode->mTransformation.d4)));
+
 			Ret = Mesh->InitFromScene(pScene, Filepath);
 		}
 		else
@@ -282,7 +286,7 @@ namespace Engine {
 		}
 
 		//Mesh->InitFromScene(pScene, filepath);
-
+		
 		return res;
 	}
 }

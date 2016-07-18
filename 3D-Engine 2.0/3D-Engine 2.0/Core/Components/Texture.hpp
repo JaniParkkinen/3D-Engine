@@ -18,7 +18,6 @@ namespace Engine {
 		void Bind( );
 		void Unbind( );
 	private:
-		Resource* tex;
 		GLuint texid;
 	};
 };
