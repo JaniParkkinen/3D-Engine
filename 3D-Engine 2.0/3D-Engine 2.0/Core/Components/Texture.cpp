@@ -2,7 +2,7 @@
 
 namespace Engine {
 
-	Texture::Texture( const char* source ) : Component( TEXTURE ) {
+	Texture::Texture( const char* source, size_t flag ) : Component( flag ) {
 		std::shared_ptr<Engine::Resource> tex = ResourceManager::GetInstance( )->LoadResource( source );
 
 		// Create one OpenGL texture
