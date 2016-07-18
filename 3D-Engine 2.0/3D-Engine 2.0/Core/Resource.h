@@ -1,5 +1,5 @@
-#ifndef Resource_H
-#define Resource_H
+#ifndef Engine_Resource_H
+#define Engine_Resource_H
 
 #include <iostream>
 #include <string>
@@ -11,7 +11,10 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tinyobjloader/tinyobjloader.h>
 
+#include <Core/Components/Mesh.h>
+
 //http://gamedev.stackexchange.com/questions/17066/designing-a-resourcemanager-class/17082#17082
+
 namespace Engine {
 	typedef enum class Resource_Type
 	{
@@ -37,6 +40,7 @@ namespace Engine {
 
 		void Load();
 		void Unload();
+
 		void setTextData(std::string readFile) { textData = readFile; }
 		void setImageData(Image img) { _image = img; }
 		//void setAudioData(irrklang::ISoundSource* audioFile) { std::cout << "Setting audio data " << std::endl; audioData = audioFile; }
@@ -54,6 +58,8 @@ namespace Engine {
 		Image getImageData() { return _image; }
 		std::vector<tinyobj::shape_t> getShapes() { return _shapes; }
 		std::vector<tinyobj::material_t> getMaterial() { return _materials; }
+		std::vector<Mesh>& getAnimShape() { return _animShapes; }
+		std::vector<Mesh>& getAnimMaterial() { return _animMaterial; }
 
 		std::string getFilePath() { return filepath; }
 		std::string getTextData() { return textData; }
@@ -71,7 +77,9 @@ namespace Engine {
 		//int iHeight, iWidth;
 		std::vector<tinyobj::shape_t> _shapes;
 		std::vector<tinyobj::material_t> _materials;
-		
+		std::vector<Mesh> _animShapes;
+		std::vector<Mesh> _animMaterial;
+
 	private:
 		std::string textData;
 		Image _image;

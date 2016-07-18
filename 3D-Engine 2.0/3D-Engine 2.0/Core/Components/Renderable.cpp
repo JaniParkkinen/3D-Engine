@@ -1,8 +1,6 @@
 #include <Core/Components/Renderable.hpp>
 #include <Core/Components/Mesh.h>
 
-
-
 namespace Engine {
 
 	void Render::bind( Buffer& vertexBuffer, Buffer& indexBuffer, GLuint shaderID ) {
@@ -97,7 +95,8 @@ namespace Engine {
 		GLint NormalLocation		= glGetAttribLocation( shaderID, "in_Normal" );
 		GLint TangentLocation		= glGetAttribLocation( shaderID, "in_Tangent" );
 		//GLint BitangentLocation		= glGetAttribLocation( shaderID, "in_Bitangent" );
-		GLint FbxLocation			= glGetAttribLocation( shaderID, "in_Fbx" );
+		GLint BoneLocation			= glGetAttribLocation( shaderID, "in_BoneIDs" );
+		GLint BoneWeightLocation = glGetAttribLocation(shaderID, "in_Weights");
 
 		if ( PositionLocation != -1 ) {
 			glEnableVertexAttribArray( PositionLocation );
@@ -118,19 +117,16 @@ namespace Engine {
 			glEnableVertexAttribArray( TangentLocation );
 			glVertexAttribPointer( TangentLocation, 3, GL_FLOAT, GL_FALSE, 0, (void* )( (vertices + uvs + normals ) * sizeof(GLfloat ) ) );
 		} //if (TangentLocation != -1)
-		//if (FbxLocation != -1)
-		//{
-		//	glEnableVertexAttribArray(0);
-		//	glEnableVertexAttribArray(1);
-		//	glEnableVertexAttribArray(2);
-		//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-		//	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)12);
-		//	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)20);
-		//} //if(FbxLocation != -1)
-		//if ( BitangentLocation != -1) {
-		//	glEnableVertexAttribArray(BitangentLocation);
-		//	glVertexAttribPointer(BitangentLocation, 3, GL_FLOAT, GL_FALSE, 0, (void*)((vertices + uvs + normals + sTangent) * sizeof(GLfloat)));
-		//} //if (BitangentLocation != -1)
+		if ( BoneLocation != -1)
+		{
+			glEnableVertexAttribArray( BoneLocation );
+			glVertexAttribIPointer(BoneLocation, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)16);
+		} //if (BoneLocation != -1)
+		if (BoneWeightLocation != -1)
+		{
+			glEnableVertexAttribArray(BoneWeightLocation);
+			glVertexAttribPointer(BoneWeightLocation, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
+		}
 	}
 
 	void Render::unbind( ) { }
