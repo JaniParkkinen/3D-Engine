@@ -8,8 +8,10 @@
 
 #include <GLM/glm.hpp>
 
+#ifndef TINYOBJLOADER_IMPLEMENTATION
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tinyobjloader/tinyobjloader.h>
+#endif
 
 #include <Core/Components/Mesh.h>
 

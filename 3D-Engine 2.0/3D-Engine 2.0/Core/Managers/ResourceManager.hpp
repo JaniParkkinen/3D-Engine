@@ -37,7 +37,7 @@ namespace Engine {
 			std::shared_ptr<Resource> LoadAudioResource(std::string filepath);
 			std::shared_ptr<Resource> LoadFontResource(std::string filepath);
 			std::shared_ptr<Resource> LoadObjectResource(std::string filepath);
-			//std::shared_ptr<Resource> LoadFbxResource(std::string filepath);
+			std::shared_ptr<Resource> LoadFbxResource(std::string filepath);
 
 	};
 }

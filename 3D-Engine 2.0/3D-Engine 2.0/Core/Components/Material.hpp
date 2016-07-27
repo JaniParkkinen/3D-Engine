@@ -7,11 +7,10 @@
 
 #include <GLM/glm.hpp>
 
+#ifndef TINYOBJLOADER_IMPLEMENTATION
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tinyobjloader/tinyobjloader.h>
-
-#define TINYOBJLOADER_IMPLEMENTATION
-#include <tinyobjloader/tinyobjloader.h>
+#endif
 
 #include <Core/Time.hpp>
 #include <Core/Managers/EntityManager.hpp>
@@ -20,10 +19,10 @@ namespace Engine {
 
 	class Material : public Component {
 	public:
-		Material( std::vector<tinyobj::material_t> materials) : _materials(materials), Component(MATERIAL) { };
-		virtual ~Material( ) { };
+		Material(std::vector<tinyobj::material_t> materials);
+		virtual ~Material( );
 
-		void bind(GLuint shaderID);
+		virtual void bind(GLuint shaderID);
 
 		virtual void Init( ) override;
 		virtual void Cleanup( ) override;

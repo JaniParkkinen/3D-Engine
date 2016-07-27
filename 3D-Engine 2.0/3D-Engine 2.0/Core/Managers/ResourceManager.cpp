@@ -4,8 +4,10 @@
 #include <lodepng/lodepng.h>
 #include <lodepng/lodepng.cpp>
 
+#ifndef TINYOBJLOADER_IMPLEMENTATION
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tinyobjloader/tinyobjloader.h>
+#endif
 
 #include <Core/Message.hpp>
 
