@@ -21,6 +21,8 @@ namespace Engine {
 		std::vector<std::shared_ptr<Entity>> entities = _entityManager->GetEntities( );
 		for ( std::shared_ptr<Entity> entity : entities ) {
 			if ( ( entity->GetKey( ) & PHYS ) == PHYS ) {
+				entity->GetComponent<Physics>(PHYS)->SetAcceleration(glm::vec3(0.0f, -5.0f, 0.0f));
+
 				entity->GetComponent<Physics>( PHYS )->Update( deltaTime );
 			}
 			if ( ( entity->GetKey( ) & PHYSICS ) == PHYSICS ) {
@@ -91,4 +93,12 @@ namespace Engine {
 		}
 		return false;
 	}
+
+	//bool PhysicsSystem::Gravity(std::shared_ptr<Entity> gravityEntity)
+	//{
+	//	std::shared_ptr<Transform> gravity = gravityEntity->GetComponent<Transform>(TRANSFORM);
+	//	
+	//	glm::vec3 gravityModel = Engine::EntityManager::GetInstance()->GetComponent<Engine::Physics>()
+
+	//}
 }
