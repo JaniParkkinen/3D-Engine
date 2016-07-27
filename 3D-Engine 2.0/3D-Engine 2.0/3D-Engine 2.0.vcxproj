@@ -156,6 +156,7 @@
     <ClInclude Include="Core\3DEngine.hpp" />
     <ClInclude Include="Core\Buffer.hpp" />
     <ClInclude Include="Core\Components\AABB.hpp" />
+    <ClInclude Include="Core\Components\BoundingSphere.hpp" />
     <ClInclude Include="Core\Components\Camera.hpp" />
     <ClInclude Include="Core\Components\LightSource.hpp" />
     <ClInclude Include="Core\Components\Material.hpp" />

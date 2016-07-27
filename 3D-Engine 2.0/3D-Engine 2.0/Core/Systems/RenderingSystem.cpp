@@ -147,7 +147,7 @@ namespace Engine {
 					if ( ( entity->GetKey( ) & NORMAL_MAP ) == NORMAL_MAP ) {
 						normal->Unbind( );
 					}
-
+					#define DRAW_AABB
 					#ifdef  DRAW_AABB
 					if ( ( entity->GetKey( ) & AABB ) == AABB ) {
 						_vertexBuffer.BindBufferData( aabb->GetVertexData( ).size( ) * sizeof( glm::vec3 ), &aabb->GetVertexData( )[ 0 ].x );

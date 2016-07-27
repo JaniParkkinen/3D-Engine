@@ -21,8 +21,9 @@ namespace Engine {
 		std::vector<std::shared_ptr<Entity>> entities = _entityManager->GetEntities( );
 		for ( std::shared_ptr<Entity> entity : entities ) {
 			if ( ( entity->GetKey( ) & PHYS ) == PHYS ) {
-				entity->GetComponent<Physics>(PHYS)->SetAcceleration(glm::vec3(0.0f, -5.0f, 0.0f));
-
+				if ( entity->GetComponent<Physics>( PHYS )->GetGravity( ) ) {
+					entity->GetComponent<Physics>( PHYS )->SetAcceleration( glm::vec3( 0.0f, -100.0f, 0.0f ) );
+				} else { entity->GetComponent<Physics>( PHYS )->SetAcceleration( glm::vec3( 0.0f, 0.0f, 0.0f ) ); entity->GetComponent<Physics>( PHYS )->SetVelocity( glm::vec3( entity->GetComponent<Physics>( PHYS )->GetVelocity().x, std::max(0.0f, entity->GetComponent<Physics>( PHYS )->GetVelocity().y), entity->GetComponent<Physics>( PHYS )->GetVelocity().z) ); }
 				entity->GetComponent<Physics>( PHYS )->Update( deltaTime );
 			}
 			if ( ( entity->GetKey( ) & PHYSICS ) == PHYSICS ) {
@@ -90,6 +91,68 @@ namespace Engine {
 			if ( lhsTransMax.z < rhsTransMin.z ) return false;
 
 			return true;
+		}
+		return false;
+	}
+
+	double PhysicsSystem::SquaredDistPointAABB( glm::vec3 & p, std::shared_ptr<Entity> & aabb ) {
+		std::shared_ptr<AxisAlignedBoundingBox> rhsAABB = aabb->GetComponent<AxisAlignedBoundingBox>( AABB );
+
+		std::shared_ptr<Transform> rhsTransform = aabb->GetComponent<Transform>( TRANSFORM );
+
+		glm::mat4 rhsModel = glm::translate( glm::mat4( 1 ), rhsTransform->GetPosition( ) );
+
+		glm::vec4 rhsTransMin = rhsModel * glm::vec4( rhsAABB->_min, 1.0f );
+		glm::vec4 rhsTransMax = rhsModel * glm::vec4( rhsAABB->_max, 1.0f );
+
+		auto check = [ & ](
+			const double pn,
+			const double bmin,
+			const double bmax ) -> double {
+			double out = 0;
+			double v = pn;
+
+			if ( v < bmin ) {
+				double val = ( bmin - v );
+				out += val * val;
+			}
+
+			if ( v > bmax ) {
+				double val = ( v - bmax );
+				out += val * val;
+			}
+
+			return out;
+		};
+
+		// Squared distance
+		double sq = 0.0;
+
+		sq += check( p.x, rhsTransMin.x, rhsTransMax.x );
+		sq += check( p.y, rhsTransMin.y, rhsTransMax.y );
+		sq += check( p.z, rhsTransMin.z, rhsTransMax.z );
+
+		return sq;
+	}
+
+	bool PhysicsSystem::SphereAABBCollision( std::shared_ptr<Entity> sphere, std::shared_ptr<Entity> aabb ) {
+		if ( ( ( sphere->GetKey( ) & AABB ) == AABB ) && ( ( aabb->GetKey( ) & AABB ) == AABB ) ) {
+			std::shared_ptr<AxisAlignedBoundingBox> lhsAABB = sphere->GetComponent<AxisAlignedBoundingBox>( AABB );
+			std::shared_ptr<AxisAlignedBoundingBox> rhsAABB = aabb->GetComponent<AxisAlignedBoundingBox>( AABB );
+
+			std::shared_ptr<Transform> rhsTransform = aabb->GetComponent<Transform>( TRANSFORM );
+
+			glm::mat4 rhsModel = glm::translate( glm::mat4( 1 ), rhsTransform->GetPosition( ) );
+
+			glm::vec4 rhsTransMin = rhsModel * glm::vec4( rhsAABB->_min, 1.0f );
+			glm::vec4 rhsTransMax = rhsModel * glm::vec4( rhsAABB->_max, 1.0f );
+
+			float dist_sqrt = lhsAABB->_radius * lhsAABB->_radius;
+			glm::vec3 spherePos = sphere->GetComponent<Transform>( TRANSFORM )->GetPosition( );
+
+			double squaredDistance = SquaredDistPointAABB( spherePos, aabb );
+
+			return squaredDistance <= ( lhsAABB->_radius * lhsAABB->_radius );
 		}
 		return false;
 	}

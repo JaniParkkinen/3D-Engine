@@ -16,6 +16,11 @@ namespace Engine {
 		_min = min;
 		_max = max;
 
+		_radius = 0.0f;
+
+		if ( abs( min.x ) < abs( max.x ) ) { _radius = sqrt( ( max.x*max.x + max.y*max.y + max.z*max.z ) ); }
+		else { _radius = sqrt( ( min.x*min.x + min.y*min.y + min.z*min.z ) ); }
+
 		_AABBVetrexData.clear( );
 
 		_AABBVetrexData.push_back( glm::vec3( max.x, max.y, max.z ) );

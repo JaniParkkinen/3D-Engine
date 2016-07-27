@@ -24,7 +24,7 @@ public:
 	virtual void Init( ) override {
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>( _name, std::make_shared<Engine::Material>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getMaterial( ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( _name, std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getShapes( ) ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( _name, std::make_shared<Engine::Transform>( glm::vec3( 0.0f, -5.0f, 13.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ) * glm::vec3( 0.5f ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( _name, std::make_shared<Engine::Transform>( glm::vec3( 0.0f, 0.0f, 13.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ) * glm::vec3( 0.5f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( _name, std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( _name, std::make_shared<Engine::Texture>( "Assets/asd.png" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( _name, std::make_shared<Engine::Texture>( "Assets/Normal.png", NORMAL_MAP ) );
@@ -72,6 +72,13 @@ public:
 		if ( !turn ) {
 			Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->SetAngularVelocity( Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->GetAngularVelocity( ) * 0.9f );
 		}
+
+		int counter = 0;
+		std::vector<std::shared_ptr<Engine::Entity>> entities = Engine::EntityManager::GetInstance( )->GetEntities( );
+		for ( std::shared_ptr<Engine::Entity> entity : entities ) {
+			if ( Engine::SystemManager::GetInstance( )->GetSystem<Engine::PhysicsSystem>( PHYSICS )->CheckAABBCollision( Engine::EntityManager::GetInstance( )->GetEntity<Entity>( _name ), entity ) && Engine::EntityManager::GetInstance( )->GetEntity<Entity>( _name ) != entity ) { counter++; }
+		}
+		if ( counter > 0 ) { GetComponent<Engine::Physics>( PHYS )->SetGravity( false ); } else { GetComponent<Engine::Physics>( PHYS )->SetGravity( true ); }
 	}
 private:
 };
@@ -101,7 +108,7 @@ private:
 
 struct Point : Engine::Entity {
 public:
-	Point(std::string name, glm::vec3 pos) : points(0), Entity(name) {
+	Point( std::string name, glm::vec3 pos ) : points( 0 ), Entity( name ) {
 		pointPos = pos;
 	}
 	virtual ~Point( ) { }
@@ -120,8 +127,8 @@ public:
 
 	virtual void Cleanup( ) override { }
 	virtual void Update( Engine::DeltaTime deltaTime ) override { }
-	virtual void addPoint(const int Points) { points += Points; }
-	virtual void getPoints(int& getPoint) { getPoint = points; }
+	virtual void addPoint( const int Points ) { points += Points; }
+	virtual void getPoints( int& getPoint ) { getPoint = points; }
 private:
 	glm::vec3 pointPos;
 	int points;
@@ -281,7 +288,7 @@ int main( ) {
 		//{
 		//point->addPoint(1);
 		//}
-		
+
 		while ( window.IsOpen( ) ) {
 			deltaTime.Update( );
 

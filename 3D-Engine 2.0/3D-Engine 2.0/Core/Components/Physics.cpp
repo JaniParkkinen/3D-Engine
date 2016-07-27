@@ -11,6 +11,7 @@ namespace Engine {
 		, _velocity( glm::vec3( 0.0f, 0.0f, 0.0f ) )
 		, _angularAcceleration( glm::vec3( 0.0f, 0.0f, 0.0f ) )
 		, _angularVelocity( glm::vec3( 0.0f ) )
+		, _gravity( false )
 		, Component( PHYS ) {
 
 	}
@@ -74,5 +75,9 @@ namespace Engine {
 
 	void Physics::AddVelocity( glm::vec3 velocity ) {
 		_velocity += velocity;
+	}
+
+	void Physics::SetGravity( bool grav ) {
+		_gravity = grav;
 	}
 }
