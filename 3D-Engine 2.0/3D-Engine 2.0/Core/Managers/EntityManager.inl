@@ -4,8 +4,8 @@
 template <typename T> std::shared_ptr<T> Entity::AddComponent( std::shared_ptr<Component> component ) {
 	if ( _components.find( component->GetType( ) ) == _components.end( ) ) {
 		_components.insert( std::make_pair( component->GetType( ), component ) );
-		component->Init( );
 		component->SetOwner( shared_from_this( ) );
+		component->Init( );
 		key = key | component->GetType( );
 		return std::static_pointer_cast< T >( component );
 	}

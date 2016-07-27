@@ -130,7 +130,7 @@ namespace Engine {
 	///-----------------------------------------------------
 
 	glm::vec3 Transform::GetPosition( ) { return _position; };
-	glm::vec3 Transform::GetRotationCam( ) { return glm::degrees( glm::vec3( cos( _rotation.x ), tan( _rotation.y ), sin( _rotation.x ) ) ); };
+	glm::vec3 Transform::GetRotationCam( ) { return glm::vec3( glm::column(glm::toMat4(_rotationQuat), 2) ); };
 	glm::vec3 Transform::GetRotationRad( ) { return _rotation; };
 	glm::vec3 Transform::GetRotationDeg( ) { return glm::degrees( _rotation ); };
 	glm::quat Transform::GetRotationQuat( ) { return _rotationQuat; }

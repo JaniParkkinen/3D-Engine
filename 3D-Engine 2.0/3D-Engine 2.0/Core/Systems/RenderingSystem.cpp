@@ -72,13 +72,15 @@ namespace Engine {
 
 					glm::mat4 Model = translate * Rotate * Scale;
 
-					glm::mat4 View = glm::lookAt( glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.0f, 0.0f, 1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ) );
+					//glm::mat4 View = glm::lookAt( glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 0.0f, 0.0f, 1.0f ), glm::vec3( 0.0f, 1.0f, 0.0f ) );
 
-					//glm::mat4 View = _cam->GetViewMatrix( );
+					glm::mat4 View = _cam->GetViewMatrix( );
 
 					glm::mat4 Projection = glm::perspective( glm::radians( 60.0f ), _window->GetSize( ).x / _window->GetSize( ).y, 0.01f, 400.0f );
 
-					glm::vec3 ViewPosition = glm::vec3( 0.0f, 0.0f, 0.0f );
+					//glm::vec3 ViewPosition = glm::vec3( 0.0f, 0.0f, 0.0f );
+
+					glm::vec3 ViewPosition = _cam->GetPosition( );
 
 					GLAssert( ); 
 					// Bind Data

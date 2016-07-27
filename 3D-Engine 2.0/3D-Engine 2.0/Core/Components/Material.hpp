@@ -7,14 +7,10 @@
 
 #include <GLM/glm.hpp>
 
-#define TINYOBJLOADER_IMPLEMENTATION
-#include <tinyobjloader/tinyobjloader.h>
-
-#define TINYOBJLOADER_IMPLEMENTATION
-#include <tinyobjloader/tinyobjloader.h>
-
 #include <Core/Time.hpp>
 #include <Core/Managers/EntityManager.hpp>
+
+#include <Core/Resource.h>
 
 namespace Engine {
 

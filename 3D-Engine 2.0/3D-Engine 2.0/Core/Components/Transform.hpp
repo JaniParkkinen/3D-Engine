@@ -7,6 +7,7 @@
 
 #include <GLM/glm.hpp>
 #include <GLM/gtx/quaternion.hpp>
+#include <GLM/gtc/matrix_access.hpp>
 
 #include <GL/glew.h>
 

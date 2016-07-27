@@ -5,13 +5,12 @@
 
 #include <GLM/glm.hpp>
 
-#define TINYOBJLOADER_IMPLEMENTATION
-#include <tinyobjloader/tinyobjloader.h>
-
 #include <Core/Time.hpp>
 #include <Core/Buffer.hpp>
 
 #include <Core/Managers/EntityManager.hpp>
+
+#include <Core/Resource.h>
 
 //#include <Core/Components/Mesh.h>
 
