@@ -1,6 +1,17 @@
 #include <Core/Components/Material.hpp>
 
 namespace Engine {
+
+	Material::Material(std::vector<tinyobj::material_t> materials) : _materials(materials), Component(MATERIAL)
+	{
+
+	}
+
+	Material::~Material()
+	{
+
+	}
+
 	void Material::Init( ) { };
 
 	void Material::bind(GLuint shaderID)

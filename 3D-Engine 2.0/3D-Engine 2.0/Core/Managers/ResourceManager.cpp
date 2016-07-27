@@ -4,6 +4,8 @@
 #include <lodepng/lodepng.h>
 #include <lodepng/lodepng.cpp>
 
+#ifndef TINYOBJLOADER_IMPLEMENTATION
+#endif
 #include <Core/Message.hpp>
 
 #include <Core/Components/Material.hpp>

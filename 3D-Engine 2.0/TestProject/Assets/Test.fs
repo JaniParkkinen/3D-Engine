@@ -2,8 +2,8 @@
 
 precision mediump float;
 
-const int MAX_DIRECTIONAL_LIGHTS = 2;
-const int MAX_POINT_LIGHTS = 2;
+const int MAX_DIRECTIONAL_LIGHTS = 1;
+const int MAX_POINT_LIGHTS = 5;
 const int MAX_SPOT_LIGHTS = 2;
 
 in vec2 ex_TexCoord;
