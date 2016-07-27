@@ -8,7 +8,7 @@ namespace Engine {
 		glFrontFace( GL_CCW );
 		glCullFace( GL_BACK );
 		glEnable( GL_CULL_FACE );
-		glEnable( GL_NORMALIZE );
+		//glEnable( GL_NORMALIZE );
 
 		glUseProgram( 0 );
 
@@ -54,6 +54,7 @@ namespace Engine {
 					std::shared_ptr<Render>						render = entity->GetComponent<Render>( RENDERABLE );
 					std::shared_ptr<Shader>						shader = entity->GetComponent<Shader>( SHADER );
 					std::shared_ptr<Texture>					texture = entity->GetComponent<Texture>( TEXTURE );
+					std::shared_ptr<Texture>					normal = entity->GetComponent<Texture>( NORMAL_MAP );
 					std::shared_ptr<Transform>					transform = entity->GetComponent<Transform>( TRANSFORM );
 
 					GLAssert( );
@@ -104,6 +105,10 @@ namespace Engine {
 						texture->Bind( );
 					}
 
+					if ( ( entity->GetKey( ) & NORMAL_MAP ) == NORMAL_MAP ) {
+						normal->Bind( );
+					}
+
 //					if ((entity->GetKey() & NORMALMAP) == NORMALMAP) {
 //						entity->GetComponent<NormalMap>(NORMALMAP)->Bind();
 //					}
@@ -137,6 +142,10 @@ namespace Engine {
 
 					if ( (entity->GetKey( ) & TEXTURE) == TEXTURE ) {
 						texture->Unbind( );
+					}
+
+					if ( ( entity->GetKey( ) & NORMAL_MAP ) == NORMAL_MAP ) {
+						normal->Unbind( );
 					}
 
 					#ifdef  DRAW_AABB

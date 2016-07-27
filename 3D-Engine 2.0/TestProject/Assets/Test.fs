@@ -127,6 +127,9 @@ vec4 CalcSpotLight(struct SpotLight l, vec3 Normal)
 
 void main()
 {
+	//vec4 normalmap = texture(normal_map, ex_TexCoord);
+    //normalmap = normalize(normal * 2.0 - 1.0); 
+
 	vec3 Normal = normalize(ex_Normal);
 	vec4 TotalLight = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 	

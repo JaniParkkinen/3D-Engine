@@ -29,6 +29,11 @@ namespace Engine {
 		void AddAngularVelocity( glm::vec3 velocity );
 		void SetVelocity( glm::vec3 velocity );
 		void AddVelocity( glm::vec3 velocity );
+
+		glm::vec3 GetAngularAcceleration( ) { return _angularAcceleration; }
+		glm::vec3 GetAngularVelocity( ) { return _angularVelocity; }
+		glm::vec3 GetAcceleration( ) { return _acceleration; }
+		glm::vec3 GetVelocity( ) { return _velocity; }
 	private:
 		glm::vec3 _acceleration;
 		glm::vec3 _velocity;

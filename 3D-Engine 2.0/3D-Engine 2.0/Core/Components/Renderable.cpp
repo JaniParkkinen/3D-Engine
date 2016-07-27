@@ -34,8 +34,8 @@ namespace Engine {
 		//size_t tangents		= _tangents.size();
 		//size_t bitangents	= _bitangents.size();
 
-		//vertexVector.insert( vertexVector.end( ), uvVector.begin( ), uvVector.end( ) );
-		//vertexVector.insert( vertexVector.end( ), normalVector.begin( ), normalVector.end( ) );
+		vertexVector.insert( vertexVector.end( ), uvVector.begin( ), uvVector.end( ) );
+		vertexVector.insert( vertexVector.end( ), normalVector.begin( ), normalVector.end( ) );
 
 //		for (unsigned i = 0; i <  _indices; i += 3)
 //		{
