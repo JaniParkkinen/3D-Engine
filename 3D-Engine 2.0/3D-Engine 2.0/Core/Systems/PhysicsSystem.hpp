@@ -32,6 +32,7 @@ namespace Engine {
 		virtual void Update( DeltaTime deltaTime ) override;
 
 		bool CheckAABBCollision( std::shared_ptr<Entity> lhsEntity, std::shared_ptr<Entity> rhsEntity );
+		//bool Gravity(std::shared_ptr<Entity> gravityEntity);
 	private:
 		EntityManager* _entityManager;
 	};

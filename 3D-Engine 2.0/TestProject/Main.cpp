@@ -22,8 +22,8 @@ public:
 	Player( std::string name ) : Entity( name ) { }
 	virtual ~Player( ) { }
 	virtual void Init( ) override {
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>( _name, std::make_shared<Engine::Material>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Sphere.obj" )->getMaterial( ) ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( _name, std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Sphere.obj" )->getShapes( ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>( _name, std::make_shared<Engine::Material>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getMaterial( ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( _name, std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Box.obj" )->getShapes( ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( _name, std::make_shared<Engine::Transform>( glm::vec3( 0.0f, -5.5f, 13.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ) * glm::vec3( 0.5f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( _name, std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( _name, std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
@@ -57,9 +57,9 @@ public:
 		if ( keyboard.getKey( 'E' ) ) {
 			//Use/interact
 		}
-		if ( keyboard.getKey( VK_SPACE ) ) {
+		if ( keyboard.getKeyDown( VK_SPACE ) ) {
 			//Jump
-			Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( glm::vec3( 0.0f, -1.0f, 0.0f ) );
+			Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( glm::vec3( 0.0f, 50.0f, 0.0f ) );
 		}
 	}
 private:
@@ -91,7 +91,7 @@ private:
 struct Point : Engine::Entity
 {
 public:
-	Point(std::string name, glm::vec3 pos) : Entity(name) {
+	Point(std::string name, glm::vec3 pos) : points(0), Entity(name) {
 		pointPos = pos;
 	}
 	virtual ~Point() {}
@@ -109,8 +109,11 @@ public:
 
 	virtual void Cleanup() override {}
 	virtual void Update(Engine::DeltaTime deltaTime) override {}
+	virtual void addPoint(const int Points) { points += Points; }
+	virtual void getPoints(int& getPoint) { getPoint = points; }
 private:
 	glm::vec3 pointPos;
+	int points;
 };
 
 
@@ -202,6 +205,9 @@ int main( ) {
 		Engine::SystemManager::GetInstance( )->AddSystem<Engine::PhysicsSystem>( std::make_shared<Engine::PhysicsSystem>( ) );
 		Engine::SystemManager::GetInstance( )->AddSystem<Engine::RenderingSystem>( std::make_shared<Engine::RenderingSystem>( &window ) );
 
+
+
+
 		Engine::Time deltaTime;
 		Engine::EntityManager::GetInstance()->AddEntity<Point>(std::make_shared<Point>("Point", glm::vec3(0.0f, -5.5f, 19.0f)));
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::PointLight>("Point", std::make_shared<Engine::PointLight>(glm::vec3(1.0f, 0.95f, 0.95f), 0/*glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0, 1.0f, 1.0f)*/));
@@ -211,6 +217,14 @@ int main( ) {
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::PointLight>("Point2", std::make_shared<Engine::PointLight>(glm::vec3(1.0f, 0.95f, 0.95f), 2/*glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0, 1.0f, 1.0f)*/));
 		Engine::EntityManager::GetInstance()->AddEntity<Point>(std::make_shared<Point>("Point3", glm::vec3(16.0f, -5.5f, 25.0f)));
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::PointLight>("Point3", std::make_shared<Engine::PointLight>(glm::vec3(1.0f, 0.95f, 0.95f), 3/*glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0, 1.0f, 1.0f)*/));
+
+		//int test = 0;
+
+		//Engine::EntityManager::GetInstance()->GetEntity<Point>("Point")->addPoint(2);
+		//Engine::EntityManager::GetInstance()->GetEntity<Point>("Point")->getPoints(test);
+
+		//std::cout << test << std::endl;
+
 
 		Engine::EntityManager::GetInstance()->AddEntity<Exit>(std::make_shared<Exit>("Exit", glm::vec3(16.0f, -5.8f, 23.0f)));
 
@@ -252,6 +266,11 @@ int main( ) {
 		
 		Engine::EntityManager::GetInstance()->AddEntity<Player>(std::make_shared<Player>("Player"));
 
+		//if(player collide with point)
+		//{
+		//point->addPoint(1);
+		//}
+		
 		while ( window.IsOpen( ) ) {
 			deltaTime.Update( );
 			//jatka tästä
