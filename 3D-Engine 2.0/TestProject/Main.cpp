@@ -24,12 +24,12 @@ public:
 	virtual void Init( ) override {
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Material>( _name, std::make_shared<Engine::Material>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Sphere.obj" )->getMaterial( ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Render>( _name, std::make_shared<Engine::Render>( Engine::ResourceManager::GetInstance( )->LoadResource( "Assets/Sphere.obj" )->getShapes( ) ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( _name, std::make_shared<Engine::Transform>( glm::vec3( 0.0f, 0.0f, 5.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ) * glm::vec3( 0.5f ) ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Transform>( _name, std::make_shared<Engine::Transform>( glm::vec3( 0.0f, -5.5f, 13.0f ), glm::vec3( 0.0f, 0.0f, 0.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ) * glm::vec3( 0.5f ) ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Shader>( _name, std::make_shared<Engine::Shader>( "Assets/Test.vs", "Assets/Test.fs" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Texture>( _name, std::make_shared<Engine::Texture>( "Assets/Box.png" ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::AxisAlignedBoundingBox>( _name, std::make_shared<Engine::AxisAlignedBoundingBox>( ) );
 		Engine::EntityManager::GetInstance( )->AddComponent<Engine::Physics>( _name, std::make_shared<Engine::Physics>( ) );
-		Engine::EntityManager::GetInstance( )->AddComponent<Engine::DirectionalLight>( _name, std::make_shared<Engine::DirectionalLight>( glm::vec3( 0.0f, 0.0f, 1.0f ), glm::vec3( 1.0f, 1.0f, 1.0f ), 0, 0.75f, 0.5f ) );
+		Engine::EntityManager::GetInstance( )->AddComponent<Engine::PointLight>( _name, std::make_shared<Engine::PointLight>( glm::vec3( 0.0f, 0.1f, 0.1f ), 5/*glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0, 1.0f, 1.0f)*/ ) );
 
 		std::string name = _name + "_camera";
 		Engine::EntityManager::GetInstance( )->AddEntity<Camera>( std::make_shared<Camera>( name ) );
@@ -44,7 +44,7 @@ public:
 		}
 		if ( keyboard.getKey( 'S' ) ) {
 			//Move backward
-			Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( glm::vec3( 0.0f, 0.0f, -1.0f ) );
+			Engine::EntityManager::GetInstance( )->GetComponent<Engine::Physics>( "Player", PHYS )->AddVelocity( -Engine::EntityManager::GetInstance( )->GetComponent<Engine::Transform>( _name, TRANSFORM )->GetRotationCam( ) );
 		}
 		if ( keyboard.getKey( 'A' ) ) {
 			//Turn left
@@ -100,7 +100,7 @@ public:
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::Material>(_name, std::make_shared<Engine::Material>(Engine::ResourceManager::GetInstance()->LoadResource("Assets/Box.obj")->getMaterial()));
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::Render>(_name, std::make_shared<Engine::Render>(Engine::ResourceManager::GetInstance()->LoadResource("Assets/Box.obj")->getShapes()));
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::Transform>(_name, std::make_shared<Engine::Transform>(pointPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.2f, 0.2f, 0.2f)));
-		Engine::EntityManager::GetInstance()->AddComponent<Engine::Texture>(_name, std::make_shared<Engine::Texture>("Assets/Normal.png"));
+		Engine::EntityManager::GetInstance()->AddComponent<Engine::Texture>(_name, std::make_shared<Engine::Texture>("Assets/Box.png"));
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::Shader>(_name, std::make_shared<Engine::Shader>("Assets/Test.vs", "Assets/Test.fs"));
 		Engine::EntityManager::GetInstance()->AddComponent<Engine::AxisAlignedBoundingBox>(_name, std::make_shared<Engine::AxisAlignedBoundingBox>());
 		//Engine::EntityManager::GetInstance()->AddComponent<Engine::PointLight>(_name, std::make_shared<Engine::PointLight>(glm::vec3(1.0f, 0.95f, 0.95f), 0/*glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0, 1.0f, 1.0f)*/));
@@ -250,7 +250,7 @@ int main( ) {
 		Engine::EntityManager::GetInstance()->AddEntity<Ground>(std::make_shared<Ground>("Ground26", glm::vec3(8.0f, -6.0f, 21.0f)));
 		Engine::EntityManager::GetInstance()->AddEntity<Ground>(std::make_shared<Ground>("Ground27", glm::vec3(8.0f, -6.0f, 19.0f)));
 		
-		//Engine::EntityManager::GetInstance()->AddEntity<Engine::Camera>(std::make_shared<Engine::Camera>("Camera"));
+		Engine::EntityManager::GetInstance()->AddEntity<Player>(std::make_shared<Player>("Player"));
 
 		while ( window.IsOpen( ) ) {
 			deltaTime.Update( );
